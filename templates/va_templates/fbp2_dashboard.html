@@ -1,0 +1,214 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Verifier</title>
+    {% include 'cdnlines.html' %}
+    {% include 'va_templates/fbp2_navbar.html' %}
+   
+   
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">    
+    <link rel="stylesheet" href="{% static 'va_static/css/fbp2_dashboard.css' %}">
+</head>
+<body>
+    
+    <div class="container-fluid">
+        <div class="form-container" style="width: 50%;">
+            <div class="card">
+                <div class="card-header">
+                    Verifier Home Page                    
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'fbp_checker_emp' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb-2">
+                            <label for="claimNo" class="form-label">Claim No.</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="claimNo" name="claimNo">
+                                <button type="submit" class="input-group-text"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label for="cNum" class="form-label">Cnum</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="cNum" name="cNum">
+                                <button type="submit" class="input-group-text"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                        <div class="mb-2 d-flex justify-content">
+                            <div>
+                                <label for="fromDate" class="form-label">From Date</label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control" name="fromDate" id="fromDate">
+                                </div>
+                            </div>
+                            <div>
+                                <label for="toDate" class="form-label">To Date</label>
+                                <div class="input-group">
+                                    <input type="date" class="form-control" name="toDate" id="toDate">
+                                    <button type="submit" class="input-group-text"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Default Table Container -->
+
+            {% if default_emp_data %}
+            <div id="simpleTableContainer" class="simple-table-container">
+                <div class="card">                    
+                    <div class="card-body">                        
+                        <div class="table-responsive">
+                            <table id="simpleTable" class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="sl-no">SL No.</th>
+                                        <th scope="col" class="cnum">CNUM</th>
+                                        <th scope="col" class="date-of-submission">Date of Submission</th>
+                                        <th scope="col" class="claim-no">Claim No.</th>
+                                        <th scope="col" class="sla1">SLA1</th>
+                                        <th scope="col" class="user">User</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for index, i, days_diff in default_emp_data_1 %}
+                                    <tr>
+                                        <td class="sl-no">{{index}}</td>
+                                        <td class="cnum">{{i.empid}}</td>
+                                        <td class="date-of-submission">{{i.SubDate|date:'d/m/Y'}}</td>
+                                        <td class="claim-no"><a href="{% url 'fbp_checker_verify' i.ClaimNo %}">{{i.ClaimNo}}</a></td>
+                                        <td class="sla1">{{days_diff}}</td>
+                                        <td class="user">
+                                            {% for j in all_verifier %}
+                                            {% if j.roles == 'fbp_verifier1' %}                                            
+                                            {% if j.user_id == i.verL1User %}
+
+                                            {{j.username}}
+
+                                            {% endif %}
+                                            {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                    </tr>   
+                                    {% endfor %}                                 
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- search result -->
+
+            {% if emp_data %}
+            <div id="simpleTableContainer" class="simple-table-container">
+                <div class="card">                    
+                    <div class="card-body">                        
+                        <div class="table-responsive">
+                            <table id="simpleTable" class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="sl-no">SL No.</th>
+                                        <th scope="col" class="cnum">CNUM</th>
+                                        <th scope="col" class="date-of-submission">Date of Submission</th>
+                                        <th scope="col" class="claim-no">Claim No.</th>
+                                        <th scope="col" class="sla1">SLA1</th>
+                                        <th scope="col" class="user">User</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for index, i, days_diff in emp_data_1 %}
+                                    <tr>
+                                        <td class="sl-no">{{index}}</td>
+                                        <td class="cnum">{{i.empid}}</td>
+                                        <td class="date-of-submission">{{i.SubDate|date:'d/m/Y'}}</td>
+                                        <td class="claim-no"><a href="{% url 'fbp_checker_verify' i.ClaimNo %}">{{i.ClaimNo}}</a></td>
+                                        <td class="sla1">{{days_diff}}</td>
+                                        <td class="user">
+                                            {% for j in all_verifier %}
+                                            {% if j.roles == 'fbp_verifier1' %}                                            
+                                            {% if j.user_id == i.verL1User %}
+
+                                            {{j.username}}
+
+                                            {% endif %}
+                                            {% endif %}
+                                            {% endfor %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+
+        </div>
+
+        
+        {% if hold_emp_data %}
+        <div style="width: 45%;">
+            <h4>Yet to Resub Employee List</h4>
+            <table id="employeeTable" class="table" >
+                <thead>
+                    <tr>
+                        <th scope="col" class="sl-no">SL No.</th>
+                        <th scope="col" class="cnum">CNUM</th>
+                        <th scope="col" class="date-of-submission">Date of Submission</th>
+                        <th scope="col" class="claim-no">Claim No.</th>
+                        <th scope="col" class="sla1">SLA1</th>
+                        <th scope="col" class="user">User</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, i, days_diff in hold_emp_data_1 %}
+                    <tr>
+                        <td class="sl-no">{{index}}</td>
+                        <td class="cnum">{{i.empid}}</td>
+                        <td class="date-of-submission">{{i.SubDate|date:'d/m/Y'}}</td>
+                        <td class="claim-no"><a href="{% url 'fbp_checker_onhold' i.ClaimNo %}">{{i.ClaimNo}}</a></td>
+                        <td class="sla1">{{days_diff}}</td>
+                        <td class="user">
+                            {% for j in all_verifier %}
+                            {% if j.roles == 'fbp_verifier1' %}                                            
+                            {% if j.user_id == i.verL1User %}
+
+                            {{j.username}}
+
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>  
+                    {% endfor %}                      
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+
+
+
+    </div>
+
+    {% if message %}
+    <script>     
+        window.onload = function () {
+            alert("{{  message|safe }}");                
+            window.location.href = "{% url 'fbp_verifier2' %}";
+        };
+    </script>
+    {% endif %}
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

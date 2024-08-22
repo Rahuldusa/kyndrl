@@ -1,0 +1,100 @@
+{% load static %}
+
+<html>
+
+<head>
+    <title>Tax Declaration</title>
+    {% include 'cdnlines.html' %}
+    {% include 'header.html' %}
+    {% include 'menubar.html' %}
+
+    <link rel="stylesheet" href="{% static 'css/cardeclaration_view.css' %}">
+</head>
+
+<body>
+    <div class="container-fluid c2">
+        <div class="row cartbr1">
+            
+            <div class="col-md-12">
+                <h4>Your Car Declaration here</h4>
+            </div>
+        </div>
+        <div class="row cartbr2">
+            <div class="col-md-8">
+                <a href="{% url 'workhistory' %}" class="btn btn-sm btn-secondary mb-3">Back</a>
+                <table class="table table-bordered">
+                    <thead class="text-white">
+                        <tr class="A1">
+                            <th>Field Name</th>
+
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Do you have a CLC/Personal Car</td>
+                            {% if cardec1.clc == True %}
+                                <td>CLC</td>
+                                <tr>
+                                    <td>Car Engine Capacity</td>
+                                    <td>{{cardec1.cc}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Car Registration Date</td>
+                                    <td>{{cardec1.carregdt|date:"d-m-Y"}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Car Registration Number</td>
+                                    <td>{{cardec1.registration}}</td>
+                                </tr>
+                                {% if band in bandlist2 %}
+                                <tr>
+                                    <td>Do you have Driver</td>
+                                    <td>{{cardec1.no_driver}}</td>
+                                </tr>
+                                {% endif %}
+
+                            {% endif%}
+
+                            {% if cardec1.have_car == True %}
+                                <td>Personal</td>
+                                <tr>
+                                    <td>Do you have own car</td>
+                                    {% if cardec1.own_car == True %}
+                                    <td>Yes</td>
+    
+                                    <tr>
+                                        <td>Car Engine Capacity</td>
+                                        <td>{{cardec1.cc}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Car Registration Date</td>
+                                        <td>{{cardec1.carregdt|date:"d-m-Y"}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Car Registration Number</td>
+                                        <td>{{cardec1.registration}}</td>
+                                    </tr>
+                                    {% if band in bandlist2 %}
+                                    <tr>
+                                        <td>Do you have Driver</td>
+                                        <td>{{cardec1.no_driver}}</td>
+                                    </tr>
+                                    {% endif %}
+    
+                                {% else %}
+                                    <td>No</td>
+                                {% endif %}
+                                </tr>
+                            {% endif %}
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

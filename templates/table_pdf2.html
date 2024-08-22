@@ -1,0 +1,97 @@
+<html>
+<head>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+        table, th, td{
+            border: 1px solid black;
+            padding-top: 3px;
+            padding-left: 2px;
+            text-align: left;
+            font-size: 16px;           
+        }
+        #headertbl{
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        #headertbl tr th{
+            background-color: #9abbe7;
+        }
+        
+        #valuetbl td{
+            width: 50%;
+        } 
+       
+        p{
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+<body>
+    <p>Dear {{ empname }} ({{ empid }}),</p>
+    <p>Thanks for submitting the Declaration.</p>
+    <p>Below are the details of your submission of Income Tax Declaration.</p>
+    
+    <table id="valuetbl">
+        <tr>
+            <td>Employee Name: {{ empname }}</td>
+            <td>Employee ID: {{ empid }}</td>     
+        </tr>
+        
+      
+    </table>
+
+    
+
+    <table id="headertbl">
+       
+        <tr>
+            <th>Other Income Unspecified Section</th>
+        </tr>
+    
+    </table>
+    
+    <table id="valuetbl">
+
+        <tr>
+            <td>80TTA Other Unspecified Income</td>
+            <td>{{otherincome}}</td>
+        </tr>
+        
+    </table>
+
+    
+    {% if joindate >= financial_year_start and financial_year_end >= joindate %}
+    <table id="headertbl">
+        <tr>
+            <th>Previous Employeement</th>
+        </tr>
+    </table>
+    <table id="valuetbl">
+    
+        <tr>
+            <td>Salary</td>
+            <td>{{empsalary}}</td>
+        </tr>
+        <tr>
+            <td>Professional Tax</td>
+            <td>{{professionaltax}}</td>
+        </tr>
+        <tr>
+            <td>Provident Fund</td>
+            <td>{{providentfund}}</td>
+        </tr>
+        <tr>
+            <td>Income Tax</td>
+            <td>{{incometax6}}</td>
+        </tr>
+      
+    </table>
+    {% endif %}
+</body>
+</html>

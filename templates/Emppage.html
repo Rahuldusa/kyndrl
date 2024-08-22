@@ -1,0 +1,94 @@
+
+
+{% load static %}
+<html>
+
+<head>
+    <title>
+        Tax_Declaration
+    </title>
+    {% include 'cdnlines.html' %}
+    {% include 'header.html' %}
+    {% include 'menubar.html' %}
+
+    <link rel="stylesheet" href="{% static 'css/emppage.css' %}">
+</head>
+
+
+<body>
+    <div class="container-fluid c2">
+        <div class="row empr1">        
+            <div class="col-md-12">
+                <h4 class="emph1">Basic Details:</h4>
+            </div>
+        </div>
+        <div class="row empr2">
+            
+            <div class="col-md-6 col-12  ">
+                <div class="d-flex align-items-center">
+                    <p class="id1">Employee Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp; {{data.empname|title}}</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <p class="id2">Employee Cnum &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp; {{data.empid}}</p>
+                </div>
+            </div>
+            
+            <div class="col-md-6 col-12 ">
+                <div class="d-flex align-items-center">
+                    <p class="id3">Employee Email ID &nbsp; : &nbsp; {{data.empemail}}</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <p class="id4">Tax Regime &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp; : &nbsp; <strong {% if data1.Regime == 'Old' %} id="regime" {% else %} id="regime1" {% endif %}>{{data1.Regime}}</strong></p>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="row empr3 ">
+            
+            <div class="col-md-12">
+                <h4 class="emph2">Guidelines:</h4>
+            </div>
+        </div>
+        <div class="row empr4">
+            
+            <div class="col-md-6 guid">
+                <div class="text-center lk">
+                    <h5>FBP Policy Link:</h5>
+                    <a href="">Click Here</a>
+                </div>
+                <div class="text-center lk">
+                    <h5>Video on Income Tax Declaration & FBP Claims:</h5>
+                    <a href="">Click Here</a>
+                </div>
+                <div class="text-center lk">
+                    <h5>Video on Income Tax Submission:</h5>
+                    <a href="">Click Here</a>
+                </div>
+            </div>
+            <div class="col-md-6 guid ">
+                <div class="text-center lk">
+                    <h5>FBP Document Requirements:</h5>
+                    <a href="">Click Here</a>
+                </div>
+                <div class="text-center lk">
+                    <h5>Download Income Tax Proof declaration Forms:</h5>
+                    <a href="">Click Here</a>
+                </div>
+                <div class="text-center lk">
+                    <h5>FAQS on Income Tax Proof Submission:</h5>
+                    <a href="">Click Here</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+
+    
+
+
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+
+.c2{
+    margin-top: 20px;
+}
+
+.navbar-nav a h4 {
+    color: black;
+    font-size: 14px;
+}
+
+.table_heading{
+    background-color: #9abbe7;    
+    padding: 10px 2px;
+    font-weight: 400;    
+}
+
+.form_h1 {
+    color: #4793af;
+    border-bottom: 1px dashed #4793af;
+    margin-top: 5px; 
+}
+
+#self_file, #education_file{
+    border: none !important;
+}
+
+.itdr2 {
+    padding-top: 5px;
+
+}
+
+[type="radio"] {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+.nav-link {
+    text-align: center;
+    box-shadow: 0px 0px 4px rgb(117, 114, 114);
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+
+}
+
+.active-nav-link {
+    background-color: #a8a8a8;
+    color: #ffffff;
+}
+
+.itdr3 {
+    overflow-y: auto;
+    height: 465px;
+}
+
+.nav_links {
+    margin-top: 10px;
+}
+
+.re {
+    height: 50px;
+}
+
+.modal-content {
+    overflow-y: auto;
+
+}
+
+#Allpreviewmodal {
+    height: 600px;
+}
+
+.itdr1{
+    margin-top: 20px;
+}
+
+
+.itdr1,
+.itdr2,
+.itdr3,
+.itdr4 {
+    margin-left: 45px;
+}
+
+
+.itdr4 {
+    margin-top: 30px;
+    color: red;
+}
+
+.sidebar {
+    transition: all 0.3s ease;
+}
+
+
+.container-fluid {
+    transition: margin-left 0.3s ease;
+}
+
+.itdr1,
+.itdr2,
+.itdr3,
+.itdr4{
+    transition: margin-left 0.3s ease;
+}
+
+
+body.sidebar-open .itdr1,
+body.sidebar-open .itdr2,
+body.sidebar-open .itdr3,
+body.sidebar-open .itdr4 {
+    margin-left: 240px;
+    transition: margin-left 0.3s ease;
+}
+
+
+
+@media (max-width: 768px) {
+
+    body.sidebar-open .itdr1,
+    body.sidebar-open .itdr2,
+    body.sidebar-open .itdr3,
+    body.sidebar-open .itdr4 {
+        margin-left: 45px;
+        transition: margin-left 0.3s ease;
+    }
+
+    .formh1 {
+        font-size: 12px;
+    }
+
+    .mr {
+        flex-wrap: wrap;
+    }
+
+    #PreviewSubmit {
+        margin-top: 5px;
+    }
+
+    .navbar-nav a h4 {
+        color: black;
+        font-size: 10px;
+    }
+
+    .nav-link {
+        text-align: center;
+        box-shadow: 0px 0px 1px rgb(117, 114, 114);
+        border-radius: 5px;
+        height: 25px;
+
+    }
+
+    .itdr3 {
+        height: 350px;
+    }
+}
+
+
+#prevBtn, #nextBtn{        
+    width:70px;       
+    padding: 5px;
+}

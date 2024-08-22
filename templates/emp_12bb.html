@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+    .header {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    #Statement {
+        font-size: 14px;
+    }
+
+    #table1 {
+        margin-left: 50px;
+        font-size: 14px;
+    }
+
+    #table1 tr td {
+        padding-top: 5px;
+        vertical-align: top;
+    }
+
+   
+
+   #table2-container {
+        display: inline-block;
+        width: 100%;
+    }
+
+    
+   .table2 tr td h5 {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+    }
+
+   .table2 tr .col_1,
+   .table2 tr .col_1_ {
+        width: 50px;
+    }
+
+   .table2 tr .col_2,
+   .table2 tr .col_2_ {
+        width: 360px;
+    }
+
+   .table2 tr .col_3,
+   .table2 tr .col_3_ {
+        width: 220px;
+    }
+
+    .table2 tr td{
+        border: 1px solid black;
+        padding-top: 5px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+   .table2 .tr_3 td {
+        font-size: 12px;
+    }
+
+    .col_1,
+    .col_2,
+    .col_3,
+    .col_4{        
+        background-color: #B4D4FF;  
+        border: 1px solid red !important ;          
+    }
+
+    .col_1_,
+    .col_2_,
+    .col_3_,
+    .col_4_{        
+        background-color: #B4D4FF;        
+    }
+
+  
+    
+</style>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10 header">
+                <h1 id="formNo">FORM NO. 12BB</h1>
+                <h2>(See rule 26c)</h2>
+                <h2 id="Statement">Statement showing particulars of claims by an employee for deduction of tax under
+                    section 192</h2>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <table id="table1">
+                    <tr>
+                        <td style="width: 400px;">1. Name and address of the employee:</td>
+                        <td>{{ saved_basic.empname }} {{ saved_basic.fathername }}</td>
+                    </tr>
+                    <tr>
+                        <td>2. Permanent Account Number of the employee:</td>
+                        <td>{{ saved_basic.pan }}</td>
+                    </tr>
+                    <tr>
+                        <td>3. Financial year:</td>
+                        <td>{{ financial_year_start|date:"Y" }} - {{ financial_year_end|date:"Y" }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" id="table2-container">
+                <table class="table2">
+                    <tr>
+                        <td colspan="4">
+                            <h5>Details of claims and evidence thereof</h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col_1_">
+                            SL.No
+                        </td>
+                        <td class="col_2_">Nature of claim</td>
+                        <td class="col_3_">Amount
+                            (Rs.)
+                        </td>
+                        <td class="col_4_">Evidence /
+                            particulars
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h5>(1)</h5>
+                        </td>
+                        <td>
+                            <h5>(2)</h5>
+                        </td>
+                        <td>
+                            <h5>(3)</h5>
+                        </td>
+                        <td>
+                            <h5>(4)</h5>
+                        </td>
+                    </tr>
+                </table>
+                
+                {% if saved_hra %} 
+                    <table class="table2" style="margin-top: 20px;">                        
+                        <tr class="no_border">
+                            <td class="col_1"></td>
+                            <td class="col_2" style="text-align: left; font-weight: bold; padding-left: 3px;">House Rent Allowance: Total Rent Paid: {{total_rent}}</td>
+                            <td class="col_3"></td>
+                            <td class="col_4"></td>
+                        </tr>
+
+                        {% if saved_hra.itd1enddt %}
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">1a.</td>
+                            <td style="text-align: left; padding-left: 3px;">(i) Rent paid to the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.itd1}}</td>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">{% if saved_hra.itd1 %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(ii) Name of the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.landlordName}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(iii) Address of the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandlordAddress}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(iv) Permanent Account Number of the landlord
+                            </td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandLordPan}}</td>
+                        </tr>
+                        </tr>
+                        {% endif %}
+
+                        {% if saved_hra.itd2enddt %}
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">1b.</td>
+                            <td style="text-align: left; padding-left: 3px;">(i) Rent paid to the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.itd2}}</td>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">{% if saved_hra.itd2 %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(ii) Name of the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandlordName2}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(iii) Address of the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandlordAdd2}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(iv) Permanent Account Number of the landlord
+                            </td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandlordPan2}}</td>
+                        </tr>
+                        </tr>
+                        {% endif %}
+
+                        {% if saved_hra.itd3enddt %}
+
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">1c.</td>
+                            <td style="text-align: left; padding-left: 3px;">(i) Rent paid to the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.itd3}}</td>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">{% if saved_hra.itd3 %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(ii) Name of the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandlordName3}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(iii) Address of the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandlordAdd3}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(iv) Permanent Account Number of the landlord
+                            </td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandlordPan3}}</td>
+                        </tr>
+                        </tr>
+                        {% endif %}
+
+                        {% if saved_hra.itd4enddt %}
+
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">1d.</td>
+                            <td style="text-align: left; padding-left: 3px;">(i) Rent paid to the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.itd4}}</td>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">{% if saved_hra.itd4 %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(ii) Name of the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandlordName4}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(iii) Address of the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandlordAdd4}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(iv) Permanent Account Number of the landlord
+                            </td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandlordPan4}}</td>
+                        </tr>
+                        </tr>
+
+                        {% endif %}
+
+                        {% if saved_hra.itd5enddt %}
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">1e.</td>
+                            <td style="text-align: left; padding-left: 3px;">(i) Rent paid to the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.itd5}}</td>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">{% if saved_hra.itd5 %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(ii) Name of the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandlordName5}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(iii) Address of the landlord</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandlordAdd5}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">(iv) Permanent Account Number of the landlord
+                            </td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_hra.LandlordPan5}}</td>
+                        </tr>
+                        </tr>
+                        {% endif %} 
+                    </table>                                     
+                {% endif %}  
+                
+                {% if saved_Ilhp %}
+                    <table class="table2" style="margin-top: 20px;">
+                        <tr >
+                            <td class="col_1"></td>
+                            <td class="col_2" style="text-align: left;  font-weight: bold; padding-left: 3px;">Income/Loss from House Property</td>
+                            <td class="col_3"></td>
+                            <td class="col_4"></td>
+                        </tr>
+                        {% if saved_Ilhp.selfOccupiedHouseProperty %}
+
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="5" style="text-align: left; padding-left: 3px;">2a.</td>
+                            <td style="text-align: left; padding-left: 3px;">Deduction of interest on borrowing: Self
+                                Occupied Propert</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.selfOccupiedHouseProperty}}</td>
+                            <td rowspan="5" style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.selfOccupiedHouseProperty %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Name of the loan lender</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.selfHomeLoanLenderName}}</td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Loan lender PAN</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.selfHomeLoanLenderPAN}}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Name of ther other loan lender</td>
+                            <td style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.otherselfHomeLoanLenderName %}{{saved_Ilhp.otherselfHomeLoanLenderName}}{% else %}-{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Other loan lender PAN</td>
+                            <td style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.otherselfHomeLoanLenderPAN %}{{saved_Ilhp.otherselfHomeLoanLenderPAN}}{% else %}-{% endif %}</td>
+                        </tr>
+                                                        
+                        </tr>
+                        {% endif %}
+
+
+                        {% if saved_Ilhp.annualLettableValue %}
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="9" style="text-align: left; padding-left: 3px;">2b.</td>
+                            <td style="text-align: left; padding-left: 3px;">Rent Received for the Full Financial
+                                Year(Annual Lettable value)</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.annualLettableValue}}</td>
+                            <td rowspan="9" style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.annualLettableValue %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Municipal Property Tax</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.municipalPropertyTax}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Home Loan Interest</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.homeLoanInterest}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Income/Loss on House Property</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.incomeLossOnHouseProperty}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Standard Deduction (30%)</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.standardDeduction}}</td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Name of the loan lender</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.loanLenderName}}</td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Loan lender PAN</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.loanLenderPAN}}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Name of ther other loan lender</td>
+                            <td style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.otherloanLenderName %}{{saved_Ilhp.otherloanLenderName}}{% else %}-{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Other loan lender PAN</td>
+                            <td style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.otherloanLenderPAN %}{{saved_Ilhp.otherloanLenderPAN}}{% else %}-{% endif %}</td>
+                        </tr>                                
+                        </tr>
+                        {% endif %}
+
+                        {% if saved_Ilhp.loan_sanctioned_date %}
+                        <tr class="tr_3">
+                            <tr>
+                                <td rowspan="8" style="text-align: left; padding-left: 3px;">2c.</td>
+                                <td style="text-align: left; padding-left: 3px;">Loan sanctioned date</td>
+                                <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.loan_sanctioned_date}}</td>
+                                <td rowspan="8" style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.loan_sanctioned_date %} As attached {% else %} - {% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left; padding-left: 3px;">Loan amount</td>
+                                <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.loan_amount}}</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left; padding-left: 3px;">Property Value</td>
+                                <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.property_value}}</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left; padding-left: 3px;">Home Loan Interest</td>
+                                <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.home_loan}}</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left; padding-left: 3px;">Name of the loan lender</td>
+                                <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.loan_lender}}</td>
+                            </tr>    
+                            <tr>
+                                <td style="text-align: left; padding-left: 3px;">Loan lender PAN</td>
+                                <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.lender_pan}}</td>
+                            </tr>                            
+                            <tr>
+                                <td style="text-align: left; padding-left: 3px;">Name of the other loan lender</td>
+                                <td style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.otherloan_lender %}{{saved_Ilhp.otherloan_lender}}{% else %}-{% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left; padding-left: 3px;">Other loan lender PAN</td>
+                                <td style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.otherlender_pan %}{{saved_Ilhp.otherlender_pan}}{% else %}-{% endif %}</td>
+                            </tr>                      
+                        </tr>
+                        {% endif %}
+
+                        {% if saved_Ilhp.loan_sanctioned_date_ee %}
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">2d.</td>
+                            <td style="text-align: left; padding-left: 3px;">Loan sanctioned date</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.loan_sanctioned_date_ee}}</td>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.loan_sanctioned_date_ee %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Do you own another property other than this</td>
+                            <td style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.op80eea_other_property == true %} Yes {% else %} No {% endif %} </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Property Value</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.property_value_other}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Eligibility</td>
+                            <td style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.op80eea %} Yes {% else %} No {% endif %}</td>
+                        </tr>
+
+                        </tr>
+                        {% endif %}
+
+                        {% if saved_Ilhp.other_income_oi %}
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="1" style="text-align: left; padding-left: 3px;">2e.</td>
+                            <td style="text-align: left; padding-left: 3px;">Other Income (Unspecified)</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.other_income_oi}}</td>
+                            <td rowspan="1" style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.other_income_oi %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+
+                        </tr>
+                        {% endif %}
+
+                        {% if saved_Ilhp.interest_80tta %}
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="1" style="text-align: left; padding-left: 3px;">2f.</td>
+                            <td style="text-align: left; padding-left: 3px;">Interest Income from Savings account</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_Ilhp.interest_80tta}}</td>
+                            <td rowspan="1" style="text-align: left; padding-left: 3px;">{% if saved_Ilhp.interest_80tta %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+
+                        </tr>
+                        {% endif %}
+
+                    </table>
+                {% endif %}
+
+
+                {% if saved_other80 %}
+                    <table class="table2" style="margin-top: 20px;">
+                        <tr >
+                            <td class="col_1"></td>
+                            <td class="col_2" style="text-align: left;  font-weight: bold; padding-left: 3px;">80 Other Deductions</td>
+                            <td class="col_3"></td>
+                            <td class="col_4"></td>
+                        </tr>
+                        
+                        {% if saved_other80.medical_insurance_self_mip or saved_other80.medical_insurance_parents_mip or saved_other80.medical_insurance_Senior_Citizen or saved_other80.preventive_health_checkup_mip %}
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">3a.</td>
+                            <td style="text-align: left; padding-left: 3px;">Mediclaim Insurance for Self/Spouse and
+                                Children</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.medical_insurance_self_mip}}
+                            </td>
+                            <td rowspan="4" style="text-align: left; padding-left: 3px;">{% if saved_other80.medical_insurance_self_mip  or saved_other80.medical_insurance_parents_mip or saved_other80.medical_insurance_Senior_Citizen or saved_other80.preventive_health_checkup_mip %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Mediclaim Insurance for Parents - Non Senior
+                                Citizen</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.medical_insurance_parents_mip}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Mediclaim Insurance for Parents - Senior
+                                Citizen</td>
+                            <td style="text-align: left; padding-left: 3px;">
+                                {{saved_other80.medical_insurance_Senior_Citizen}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Preventive Health Checkup</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.preventive_health_checkup_mip}}
+                            </td>
+                        </tr>
+
+
+                        </tr>
+                        {% endif %}
+
+                        {% if saved_other80.selected_illness %}
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="3" style="text-align: left; padding-left: 3px;">3b.</td>
+                            <td style="text-align: left; padding-left: 3px;">Critical Illness</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.selected_illness}}</td>
+                            <td rowspan="3" style="text-align: left; padding-left: 3px;">{% if saved_other80.selected_illness %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Critical Illness for</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.citizenship_status}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Treatment Value</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.treatment_value}}</td>
+                        </tr>
+
+                        </tr>
+                        {% endif %}
+
+                        {% if saved_other80.interest_education %}
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="1" style="text-align: left; padding-left: 3px;">3c.</td>
+                            <td style="text-align: left; padding-left: 3px;">Interest on education loan for higher studies
+                            </td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.interest_education}}</td>
+                            <td rowspan="1" style="text-align: left; padding-left: 3px;">{% if saved_other80.interest_education %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+                        </tr>
+                        {% endif %}
+
+                        {% if saved_other80.paymentDependentDisability %}
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="1" style="text-align: left; padding-left: 3px;">3c.</td>
+                            <td style="text-align: left; padding-left: 3px;">Deduction for Dependent
+                                disability/handicapped(Deduction under Section 80DD)</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.paymentDependentDisability}}
+                            </td>
+                            <td rowspan="1" style="text-align: left; padding-left: 3px;">{% if saved_other80.paymentDependentDisability %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+                        </tr>
+                        {% endif %}
+
+                        {% if saved_other80.paymentSelfDisability %}
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="1" style="text-align: left; padding-left: 3px;">3c.</td>
+                            <td style="text-align: left; padding-left: 3px;">Deduction for self disability/handicapped
+                                (Deduction under Section 80U)</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.paymentSelfDisability}}</td>
+                            <td rowspan="1" style="text-align: left; padding-left: 3px;">{% if saved_other80.paymentSelfDisability %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+                        </tr>
+                        {% endif %}
+
+                        {% if saved_other80.loan_sanctioned_date_80eeb %}
+
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="6" style="text-align: left; padding-left: 3px;">3d.</td>
+                            <td style="text-align: left; padding-left: 3px;">Loan sanctioned date</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.loan_sanctioned_date_80eeb}}
+                            </td>
+                            <td rowspan="6" style="text-align: left; padding-left: 3px;">{% if saved_other80.loan_sanctioned_date_80eeb %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Interest on vehicle loan</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.vehicle_loan_80eeb}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Name of the loan lender</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.loan_lender_80eeb}}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Loan lender PAN</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.lender_pan_80eeb}}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Name of ther other loan lender</td>
+                            <td style="text-align: left; padding-left: 3px;">{% if saved_other80.other80eebLender %}{{saved_other80.other80eebLender}}{% else %}-{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">Other loan lender PAN</td>
+                            <td style="text-align: left; padding-left: 3px;">{% if saved_other80.other80eebPAN %}{{saved_other80.other80eebPAN}}{% else %}-{% endif %}</td>
+                        </tr>
+             
+                        </tr>
+                        {% endif %}
+
+                        {% if saved_other80.nps_80ccd1b %}
+                        <tr class="tr_3">
+                        <tr>
+                            <td rowspan="2" style="text-align: left; padding-left: 3px;">3c.</td>
+                            <td style="text-align: left; padding-left: 3px;">Deduction for Self-contribution to Pension Account (NPS)</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.nps_80ccd1b}}</td>
+                            <td rowspan="2" style="text-align: left; padding-left: 3px;">{% if saved_other80.nps_80ccd1b %} As attached {% else %} - {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 3px;">PRAN number</td>
+                            <td style="text-align: left; padding-left: 3px;">{{saved_other80.prannumber}}</td>
+                        </tr>
+                        </tr>
+                        {% endif %}
+                    </table>
+                {% endif %}
+                
+                {% if saved_80C_deduction %}
+                <table class="table2" style="margin-top: 20px;">    
+                    <tr >
+                        <td class="col_1"></td>
+                        <td class="col_2" style="text-align: left;  font-weight: bold; padding-left: 3px;">80C Contributions</td>
+                        <td class="col_3"></td>
+                        <td class="col_4"></td>
+                    </tr>
+
+                    <tr class="tr_3">
+                    <tr>
+                        <td rowspan="12" style="text-align: left; padding-left: 3px;">4a.</td>
+                        <td style="text-align: left; padding-left: 3px;">Payment towards Life Insurance Policy</td>
+                        <td style="text-align: left; padding-left: 3px;">{{saved_80C_deduction.paymentLifeInsurance}}</td>
+                        <td rowspan="12" style="text-align: left; padding-left: 3px;">{% if saved_80C_deduction.paymentLifeInsurance %} As attached {% else %} - {% endif %}</td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="text-align: left; padding-left: 3px;">5 year time deposit under the Post Office Time Deposit Rules 1981</td>
+                        <td style="text-align: left; padding-left: 3px;">{{saved_80C_deduction.timeDeposit}}</td>                        
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; padding-left: 3px;">Contribution to ULIP</td>
+                        <td style="text-align: left; padding-left: 3px;">{{saved_80C_deduction.ulipContribution}}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; padding-left: 3px;">Subscription to notified Central Govt Savings certificate (NSC VIII issue)</td>
+                        <td style="text-align: left; padding-left: 3px;">{{saved_80C_deduction.nscSubscription}}
+                        </td>
+                    </tr> 
+                                            
+                    <tr>
+                        <td style="text-align: left; padding-left: 3px;">Interest on NSC</td>
+                        <td style="text-align: left; padding-left: 3px;">{{saved_80C_deduction.nscInterest}}</td>                        
+                    </tr>
+                    
+                    <tr>
+                        <td style="text-align: left; padding-left: 3px;">Contribution to Public Provident Fund</td>
+                        <td style="text-align: left; padding-left: 3px;">{{saved_80C_deduction.ppfContribution}}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; padding-left: 3px;">House loan principal Only / Stamp Duty & Registration fees</td>
+                        <td style="text-align: left; padding-left: 3px;">{{saved_80C_deduction.houseLoan}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; padding-left: 3px;">Tuition fee - Children(Max two children)</td>
+                        <td style="text-align: left; padding-left: 3px;">{{saved_80C_deduction.tuitionFee}}</td>                        
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; padding-left: 3px;">Subscription to notified Mutual Fund</td>
+                        <td style="text-align: left; padding-left: 3px;">{{saved_80C_deduction.mutualFundSubscription}}</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; padding-left: 3px;">5 Year Term Deposit(Fixed Deposit)</td>
+                        <td style="text-align: left; padding-left: 3px;">{{saved_80C_deduction.termDeposits}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; padding-left: 3px;">Contribution to certain Pension Funds(80CCC)</td>
+                        <td style="text-align: left; padding-left: 3px;">{{saved_80C_deduction.pensionContribution}}</td>                        
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; padding-left: 3px;">Sukanya Samriddhi</td>
+                        <td style="text-align: left; padding-left: 3px;">{{saved_80C_deduction.sukanyaSamriddhi}}</td>
+                    </tr>
+
+                    </tr>
+                </table>
+
+                {% endif %}
+
+                {% if saved_previous_emp %}
+                    <table class="table2" style="margin-top: 20px;">
+                        <tr >
+                            <td class="col_1"></td>
+                            <td class="col_2" style="text-align: left;  font-weight: bold; padding-left: 3px;">Previous Employement </td>
+                            <td class="col_3"></td>
+                            <td class="col_4"></td>
+                        </tr>
+
+                        <tr class="tr_3">
+                            <tr>
+                                <td rowspan="4" style="text-align: left; padding-left: 3px;">5a.</td>
+                                <td style="text-align: left; padding-left: 3px;">Salary as per provisions u/s 17(1)</td>
+                                <td style="text-align: left; padding-left: 3px;">{{saved_previous_emp.salary_previousemp}}</td>
+                                <td rowspan="4" style="text-align: left; padding-left: 3px;">{% if saved_previous_emp.salary_previousemp %} As attached {% else %} - {% endif %}</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left; padding-left: 3px;">Professional Tax</td>
+                                <td style="text-align: left; padding-left: 3px;">{{saved_previous_emp.provident_fund}}</td>                        
+                            </tr>
+                            <tr>
+                                <td style="text-align: left; padding-left: 3px;">Provident Fund</td>
+                                <td style="text-align: left; padding-left: 3px;">{{saved_previous_emp.professional_tax}}</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left; padding-left: 3px;">Income tax deducted</td>
+                                <td style="text-align: left; padding-left: 3px;">{{saved_previous_emp.income_tax}}
+                                </td>
+                            </tr>        
+                        </tr>   
+                    
+                    </table>
+                {% endif %}
+                
+                <p style="font-size: 14px;" align="left">Documents was digitally signed by Employee</p>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

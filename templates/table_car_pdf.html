@@ -1,0 +1,125 @@
+<html>
+
+<head>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            padding-top: 3px;
+            padding-left: 2px;
+            text-align: left;
+            font-size: 16px;
+        }
+
+        #headertbl {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        #headertbl tr th{
+            background-color: #9abbe7;
+        }
+
+        #valuetbl td {
+            width: 50%;
+        }
+
+        p {
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <p>Dear {{ empname }} ({{ empid }}),</p>
+    <p>Thanks for submitting the Car Declaration.</p>
+    <p>Below are the details of your submission of Income Tax Declaration.</p>
+
+    <table id="valuetbl">
+        <tr>
+            <td>Employee Name: {{ empname }}</td>
+            <td>Employee ID: {{ empid }}</td>
+        </tr>
+
+
+    </table>
+
+    <table id="headertbl">
+
+        <tr>
+            <th>Car Declaration Section</th>
+        </tr>
+
+
+    </table>
+
+    <table id="valuetbl">
+
+        <tr>
+            <td>Do you have a CLC/Personal Car</td>
+            <td>{{havecar}}</td>
+        </tr>
+
+
+
+        {% if havecar == 'Personal' %}
+        <tr>
+            <td>Do you have own car</td>
+            <td>{{owncar}}</td>
+        </tr>
+
+        {% if owncar == 'Yes' %}
+
+        <tr>
+            <td>Car Engine Capacity</td>
+            <td>{{enginecp}}</td>
+        </tr>
+        <tr>
+            <td>Car Registration Date</td>
+            <td>{{carregdate|date:"d-m-Y"}}</td>
+        </tr>
+        <tr>
+            <td>Car Registration Number</td>
+            <td>{{carregnum}}</td>
+        </tr>
+        {% if band in bandlist2%}
+        <tr>
+            <td>Do you have Driver</td>
+            <td>{{havedriver}}</td>
+        </tr>
+        {% endif %}
+        {% endif %}
+
+        {% else %}
+        <tr>
+            <td>Car Engine Capacity</td>
+            <td>{{enginecp}}</td>
+        </tr>
+        <tr>
+            <td>Car Registration Date</td>
+            <td>{{carregdate|date:"d-m-Y"}}</td>
+        </tr>
+        <tr>
+            <td>Car Registration Number</td>
+            <td>{{carregnum}}</td>
+        </tr>
+        {% if band in bandlist2%}
+        <tr>
+            <td>Do you have Driver</td>
+            <td>{{havedriver}}</td>
+        </tr>
+        {% endif %}
+
+        {% endif %}
+
+    </table>
+</body>
+
+</html>

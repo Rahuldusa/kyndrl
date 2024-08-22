@@ -1,0 +1,126 @@
+body {
+    background-color: #e7e9ed;
+    min-height: 100vh;
+}
+.container-fluid {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+}
+.form-container {
+    width: 50%;
+    padding: 5px;
+}
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    width: 50%;
+}
+.table-container {
+    transition: all 0.5s ease;
+    width: 50%;
+    padding: 10px;
+    display: none;
+}
+.card {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #008080;
+    color: white;
+}
+.card-body{
+    padding: 10px;
+}
+.form-label {
+    font-size: 14px;
+    font-weight: bold;
+}
+.form-control {
+    font-size: 12px;
+}
+.form-container .btn {
+    font-size: 10px;
+    color: Black;
+    background: White;
+}
+.btn-primary{
+    size: 10px;
+}
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.input-group input[type="text"],
+.input-group input[type="date"] {
+    flex-grow: 1;
+    margin-right: 5px;
+}
+.input-group-text {
+    background-color: #ffffff;
+    border-color: #008080;
+    color: #008080;
+    cursor: pointer;
+}
+.table-responsive {
+    overflow-x: auto;
+}
+.table {
+    width: 100%;
+    background-color: #fff;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+.table th, .table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+    word-wrap: break-word;
+    white-space: normal;
+    font-size: 12px;
+    font-weight: normal;
+}
+.table th {
+    background-color: #07aeae;
+    color: #333;
+    font-weight: bold;
+}
+.table th.sl-no, .table td.sl-no {
+    width: 10%;
+}
+.table th.cnum, .table td.cnum {
+    width: 15%;
+}
+.table th.date-of-submission, .table td.date-of-submission {
+    width: 15%;
+}
+.table th.claim-no, .table td.claim-no {
+    width: 30%;
+}
+.table th.sla1, .table td.sla1 {
+    width: 10%;
+}
+.table th.user, .table td.user {
+    width: 15%;
+}
+
+.simple-table-container {
+    margin-top: 10px;
+}
+.record-count {
+    color: red;
+    font-size:14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,1859 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+</head>
+
+<style>
+    .value_tr td p {
+        border: 1px solid black;
+        border-radius: 5px;
+        padding:  4px 2px 2px 2px;
+    }
+
+    .table{
+        border: 1px solid black;
+    }
+    table tr td,
+    table tr th{
+        text-align: center;
+        padding: 5px 0px;        
+    }
+    table tr th{
+        font-size: 13px;
+        background-color: #9abbe7;
+    }
+    table tr td{
+        font-size: 12px;
+    }
+
+    table tr .hra_th{
+        background-color: #f8e9c6;
+        font-weight: bold;
+    }
+
+    .section_id{
+        background-color: #71a3e4;
+        font-size: 16px;
+        padding-top: 10px;
+        padding-left: 10px;
+    }
+     
+
+    
+    .table_basic tr td:nth-child(2)  {        
+        width: 40%;
+    }
+
+    .table_basic tr th:first-child,
+    .table_basic tr th:nth-child(3),
+    .table_basic tr td:nth-child(4) {        
+        width: 20%;
+    }
+
+    
+    .hra_table_1 tr td{
+        padding:  4px 4px 4px 4px;
+        width: 16%;        
+    }
+
+
+    .hra_table_2 tr th:first-child,
+    .hra_table_2 tr th:nth-child(4)  {        
+        width: 30%;
+        padding:  4px 4px 4px 4px;  
+    }
+
+    
+    .basic p {
+        font-size: 14px;
+    }
+    
+    .hra_table_2 tr th:nth-child(2),
+    .hra_table_2 tr th:nth-child(3) {        
+        width: 20%;
+        padding:  4px 4px 4px 4px;  
+    }
+
+    .hra_table_2 tr td:first-child,
+    .hra_table_2 tr td:nth-child(4)  {     
+        width: 30%;
+        padding:  4px 4px 4px 4px;  
+    }
+
+    
+    .hra_table_2 tr td:nth-child(2),
+    .hra_table_2 tr td:nth-child(3) {        
+        width: 20%;
+        padding:  4px 4px 4px 4px;  
+    }
+
+    
+
+    .table-striped td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px; /* Adjust the width as needed */
+    }
+
+</style>
+
+
+<body>
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-md-12 basic" >
+                <p>Dear {{saved_basic.empname|title}} ({{saved_basic.empid}})</p>
+                <p>Your Income Tax proof are Verified.</p>
+                <p>Below is status of your verification details/</p>
+            </div>
+        </div>
+    
+        <div class="row r4">
+            <div id="tab6" class="mt-3">
+                <h5 class="section_id">Final Remark</h5>
+
+                <table class="table table-striped hra_table_2">
+                    <td>
+                       {% if saved_basic.custom_remark %}{{saved_basic.custom_remark}}{% else %}{% endif %}
+                    </td>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="row r2">
+            <div class="col-md-12">
+                {% if saved_hra %}
+                <div id="tab1">
+                    <h5 class="section_id">House Rent</h5>
+                    <table class="table table-striped hra_table_1 "> 
+
+                        {% if total_rent %}
+                            <tr>
+                                <td colspan="7" style="text-align: left; padding:5px; border: 1px solid black;"><b>Total Allowed Rent for Financial Year : {{total_rent}}</b></td>                                                                                                            
+                            </tr>
+                            <tr>
+                                <td colspan="7" style="background-color: transparent;"></td>                                                                                                  
+                            </tr>
+                        {% endif %}
+
+                        <tr class="hra_th">
+                            <td>Sl.No</td>                            
+                            <td>Start Date (dd/mm/yyyy)</td>
+                            <td>End Date (dd/mm/yyyy)</td>
+                            <td>Rent per Month</td>
+                            <td>Allowed Amount</td>
+                            <td>1st Resub Verified Amount</td>
+                            <td>Total Allowed Amount</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Rent-1</td>                            
+                            <td>
+                                {{saved_hra.ita1stdt|date:'Y-m-d'}}  <br>
+                                {{saved_hra.itd1stdt|date:'Y-m-d'}}
+                            </td>
+                            <td>
+                                {{saved_hra.ita1enddt|date:'Y-m-d'}}<br>
+                                {{saved_hra.itd1enddt|date:'Y-m-d'}}
+                            </td>
+                            <td>
+                                {{saved_hra.itd1}}
+                            </td>
+                            <td>
+                                {{saved_hra.ita1}}
+                            </td>
+                            <td>
+                                {% if saved_hra.ita1_2 %}{{saved_hra.ita1_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>{{total_rent_1}}</td>
+                        </tr>
+                        <tr>
+                            <td>City Type</td>
+                            <td>Landlord Name</td>
+                            <td>Landlord PAN</td> 
+                            <td></td>                           
+                            <td>Remark</td>   
+                            <td>Remark</td>     
+                            <td></td>                       
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                {{saved_hra.a_city1}} <br>
+                                {{saved_hra.city1}}
+                            </td>
+                            <td>
+                                {{saved_hra.landlordName}}
+                            </td>
+                            <td>
+                                {{saved_hra.LandLordPan}}
+                            </td>                         
+                            <td></td>   
+                            <td>
+                               {% if saved_hra.hra_remark_1 %}{{saved_hra.hra_remark_1}}{% else %}{% endif %}
+                            </td> 
+                            <td>
+                                {% if saved_hra.hra_remark_1_2 %}{{saved_hra.hra_remark_1_2}}{% else %}{% endif %}
+                             </td>   
+                            <td></td>                        
+                            
+                        </tr>
+                    </table>
+
+                    {% if saved_hra.itd2stdt %}
+                    <table class="table table-striped hra_table_1 ">
+                        <tr class="hra_th">
+                            <td>Sl.No</td>                            
+                            <td>Start Date (dd/mm/yyyy)</td>
+                            <td>End Date (dd/mm/yyyy)</td>
+                            <td>Rent per Month</td>
+                            <td>Allowed Amount</td>
+                            <td>1st Resub Verified Amount</td>
+                            <td>Total Allowed Amount</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Rent-2</td>
+                            
+                            <td>
+                                {{saved_hra.ita2stdt|date:'Y-m-d'}} <br>
+                                {{saved_hra.itd2stdt|date:'Y-m-d'}}
+                            </td>
+                            <td>
+                                {{saved_hra.ita2enddt|date:'Y-m-d'}} <br>
+                                {{saved_hra.itd2enddt|date:'Y-m-d'}}
+                            </td>
+                            <td>{{saved_hra.itd2}}</td>
+                            <td>
+                                {{saved_hra.ita2}}
+                            </td>
+                            <td>
+                                {% if saved_hra.ita2_2 %}{{saved_hra.ita2_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>{{total_rent_2}}</td>
+                        </tr>
+                        <tr>
+                            <td>City Type</td>
+                            <td>Landlord Name</td>
+                            <td>Landlord PAN</td>  
+                            <td></td>                          
+                            <td>Remark</td>  
+                            <td>Remark</td>   
+                            <td></td>                                                   
+                        </tr>
+                        <tr>
+                            <td>
+                                {{saved_hra.a_city2}} <br>
+                                {{saved_hra.city2}}
+                            </td>
+                            <td>{{saved_hra.LandlordName2}}</td>
+                            <td>{{saved_hra.LandlordPan2}}</td>
+                            <td></td>                            
+                            <td>
+                                {% if saved_hra.hra_remark_2 %}{{saved_hra.hra_remark_2}}{% else %}{% endif %}
+                            </td>
+                            <td>
+                                {% if saved_hra.hra_remark_2_2 %}{{saved_hra.hra_remark_2_2}}{% else %}{% endif %}
+                            </td>                            
+                            <td></td>
+                            
+                        </tr>
+                    </table>
+                    {% endif %}
+
+                    {% if saved_hra.itd3stdt %}
+                    <table class="table table-striped hra_table_1 ">
+                        <tr class="hra_th">
+                            <td>Sl.No</td>                            
+                            <td>Start Date (dd/mm/yyyy)</td>
+                            <td>End Date (dd/mm/yyyy)</td>
+                            <td>Rent per Month</td>
+                            <td>Allowed Amount</td>
+                            <td>1st Resub Verified Amount</td>
+                            <td>Total Allowed Amount</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Rent-3</td>
+                            
+                            <td>
+                                {{saved_hra.ita3stdt|date:'Y-m-d'}} <br>
+                                {{saved_hra.itd3stdt|date:'Y-m-d'}}
+                            </td>
+                            <td>
+                                {{saved_hra.ita3enddt|date:'Y-m-d'}} <br>
+                                {{saved_hra.itd3enddt|date:'Y-m-d'}}
+                            </td>
+                            <td>{{saved_hra.itd3}}</td>
+                            <td>
+                                {{saved_hra.ita3}}
+                            </td>
+                            <td>
+                                {% if saved_hra.ita3_2 %}{{saved_hra.ita3_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>{{total_rent_3}}</td>
+
+                        </tr>
+                        <tr>
+                            <td>City Type</td>
+                            <td>Landlord Name</td>
+                            <td>Landlord PAN</td> 
+                            <td></td>                           
+                            <td>Remark</td>
+                            <td>Remark</td>
+                            <td></td>                            
+                        </tr>
+                        <tr>
+                            <td>
+                                {{saved_hra.a_city3}} <br>
+                                {{saved_hra.city3}}
+                            </td>
+                            <td>{{saved_hra.LandlordName3}}</td>
+                            <td>{{saved_hra.LandlordPan3}}</td>   
+                            <td></td>                         
+                            <td>
+                                {% if saved_hra.hra_remark_3 %}{{saved_hra.hra_remark_3}}{% else %}{% endif %}
+                            </td>
+                            <td>
+                                {% if saved_hra.hra_remark_3_2 %}{{saved_hra.hra_remark_3_2}}{% else %}{% endif %}
+                            </td>                            
+                            <td></td>                            
+                        </tr>
+                    </table>
+                    {% endif %}
+
+                    {% if saved_hra.itd4stdt %}
+                    <table class="table table-striped hra_table_1 ">
+                        <tr class="hra_th">
+                            <td>Sl.No</td>                            
+                            <td>Start Date (dd/mm/yyyy)</td>
+                            <td>End Date (dd/mm/yyyy)</td>
+                            <td>Rent per Month</td>
+                            <td>Allowed Amount</td>
+                            <td>1st Resub Verified Amount</td>
+                            <td>Total Allowed Amount</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Rent-4</td>
+                            
+                            <td>
+                                {{saved_hra.ita4stdt|date:'Y-m-d'}} <br>
+                                {{saved_hra.itd4stdt|date:'Y-m-d'}}
+                            </td>
+                            <td>
+                                {{saved_hra.ita4enddt|date:'Y-m-d' }} <br>
+                                {{saved_hra.itd4enddt|date:'Y-m-d'}}
+                            </td>
+                            <td>{{saved_hra.itd4}}</td>
+                            <td>
+                                {{saved_hra.ita4}}
+                            </td>
+                            <td>
+                                {% if saved_hra.ita4_2 %}{{saved_hra.ita4_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>{{total_rent_4}}</td>
+                        </tr>
+                        <tr>
+                            <td>City Type</td>
+                            <td>Landlord Name</td>
+                            <td>Landlord PAN</td>  
+                            <td></td>                             
+                            <td>Remark</td> 
+                            <td>Remark</td>    
+                            <td></td>                       
+                                                     
+                        </tr>
+                        <tr>
+                            <td>
+                                {{saved_hra.a_city4}} <br>
+                                {{saved_hra.city4}}
+                            </td>
+                            <td>{{saved_hra.LandlordName4}}</td>
+                            <td>{{saved_hra.LandlordPan4}}</td>
+                            <td></td>
+                            <td>
+                                {% if saved_hra.hra_remark_4 %}{{saved_hra.hra_remark_4}}{% else %}{% endif %}
+                            </td> 
+                            <td>
+                                {% if saved_hra.hra_remark_4_2 %}{{saved_hra.hra_remark_4_2}}{% else %}{% endif %}
+                            </td>                          
+                            <td></td>                               
+                        </tr>
+                    </table>
+                    {% endif %}
+
+                    {% if saved_hra.itd5stdt %}
+                    <table class="table table-striped hra_table_1 ">
+                        <tr class="hra_th">
+                            <td>Sl.No</td>                            
+                            <td>Start Date (dd/mm/yyyy)</td>
+                            <td>End Date (dd/mm/yyyy)</td>
+                            <td>Rent per Month</td>
+                            <td>Allowed Amount</td>
+                            <td>1st Resub Verified Amount</td>
+                            <td>Total Allowed Amount</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold;">Rent-5</td>
+                            
+                            <td>
+                                {{saved_hra.ita5stdt|date:'Y-m-d'}} <br>
+                                {{saved_hra.itd5stdt|date:'Y-m-d'}}
+                            </td>
+                            <td>
+                                {{saved_hra.ita5enddt|date:'Y-m-d'}} <br>
+                                {{saved_hra.itd5enddt|date:'Y-m-d'}}
+                            </td>
+                            <td>{{saved_hra.itd5}}</td>
+                            <td>
+                                {{saved_hra.ita5}}
+                            </td>
+                            <td>
+                                {% if saved_hra.ita5_2 %}{{saved_hra.ita5_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>{{total_rent_5}}</td>
+                        </tr>
+                        <tr>
+                            <td>City Type</td>
+                            <td>Landlord Name</td>
+                            <td>Landlord PAN</td> 
+                            <td></td>                           
+                            <td>Remark</td>
+                            <td>Remark</td>     
+                            <td></td>                       
+                            
+                        </tr>
+                        <tr>
+                            <td>
+                                {{saved_hra.a_city5}} <br>
+                                {{saved_hra.city5}}
+                            </td>
+                            <td>{{saved_hra.LandlordName5}}</td>
+                            <td>{{saved_hra.LandlordPan5}}></td>    
+                            <td></td>                        
+                            <td>
+                                {% if saved_hra.hra_remark_5 %}{{saved_hra.hra_remark_5}}{% else %}{% endif %}
+                            </td>
+                            <td>
+                                {% if saved_hra.hra_remark_5_2 %}{{saved_hra.hra_remark_5_2}}{% else %}{% endif %}
+                            </td>                   
+                            <td></td>                                     
+                        </tr>
+                    </table>
+                    {% endif %}
+
+                </div>
+                {% endif %}
+
+                {% if saved_Ilhp %}
+                <div id="tab2" class="mt-3">
+                    <h5 class="section_id">Income/Loss from Self-Occupied/Let Out House Property</h5>
+
+                    {% if saved_Ilhp.selfOccupiedHouseProperty %}
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>HOUSING LOAN INTEREST SELF OCCUPIED</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+                        <tr>
+                            <td>Interest for Self Occupied Property</td>
+                            <td>
+                                {{saved_Ilhp.selfOccupiedHouseProperty}}
+                            </td>
+                            <td>                                
+                                {% if saved_Ilhp.allowed_self %}{{saved_Ilhp.allowed_self}}{% else %}0{% endif %}                                
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_self_2 %}{{saved_Ilhp.allowed_self_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_self}}
+                            </td>
+                        </tr>
+
+                        {% if saved_Ilhp.self_remark or saved_Ilhp.self_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_Ilhp.self_remark %}{{saved_Ilhp.self_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_Ilhp.self_remark_2 %}{{saved_Ilhp.self_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+
+                        <tr>
+                            <td>Loan Lender Name</td>
+                            <td>
+
+                                {% if saved_Ilhp.selfHomeLoanLenderName == 'other' %}
+                                {{saved_Ilhp.otherselfHomeLoanLenderName|upper}}
+
+                                {% else %}
+                                {{saved_Ilhp.selfHomeLoanLenderName}}
+
+                                {% endif %}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Loan Lender PAN</td>
+                            <td>
+                                {% if saved_Ilhp.selfHomeLoanLenderName == 'other' %}
+                                {{saved_Ilhp.otherselfHomeLoanLenderPAN}}
+
+                                {% else %}
+                                {{saved_Ilhp.selfHomeLoanLenderPAN}}
+
+                                {% endif %}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    {% endif %}
+
+                    
+
+                    {% if saved_Ilhp.annualLettableValue %}
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>HOUSING LOAN INTEREST LET OUT</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+                        <tr>
+                            <td>Annual Lettable Value (Rent Received for the Full Financial Year)</td>
+                            <td>
+                                {{saved_Ilhp.annualLettableValue}}
+
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_annualLettableValue %}{{saved_Ilhp.allowed_annualLettableValue}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_annualLettableValue_2 %}{{saved_Ilhp.allowed_annualLettableValue_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_letout}}
+                            </td>
+                        </tr>
+
+                        {% if saved_Ilhp.allowed_annualLettableValue_remark or saved_Ilhp.allowed_annualLettableValue_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_Ilhp.allowed_annualLettableValue_remark %}{{saved_Ilhp.allowed_annualLettableValue_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_Ilhp.allowed_annualLettableValue_remark_2 %}{{saved_Ilhp.allowed_annualLettableValue_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+
+                        <tr>
+                            <td>Municipal Property Tax</td>
+                            <td>
+                                {{saved_Ilhp.municipalPropertyTax}}
+
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_municipalPropertyTax %}{{saved_Ilhp.allowed_municipalPropertyTax}}{% else %}0{% endif %} 
+                                
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_municipalPropertyTax_2 %}{{saved_Ilhp.allowed_municipalPropertyTax_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_municipal}}
+                            </td>
+                        </tr>
+                        {% if saved_Ilhp.allowed_municipalPropertyTax_remark or saved_Ilhp.allowed_municipalPropertyTax_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_Ilhp.allowed_municipalPropertyTax_remark %}{{saved_Ilhp.allowed_municipalPropertyTax_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_Ilhp.allowed_municipalPropertyTax_remark_2 %}{{saved_Ilhp.allowed_municipalPropertyTax_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Home Loan Interest</td>
+                            <td>
+                                {{saved_Ilhp.homeLoanInterest}}
+
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_homeLoanInterest %}{{saved_Ilhp.allowed_homeLoanInterest}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_homeLoanInterest_2 %}{{saved_Ilhp.allowed_homeLoanInterest_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_let_int}}
+                            </td>
+                        </tr>
+                        {% if saved_Ilhp.allowed_homeLoanInterest_remark or saved_Ilhp.allowed_homeLoanInterest_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_Ilhp.allowed_homeLoanInterest_remark %}{{saved_Ilhp.allowed_homeLoanInterest_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_Ilhp.allowed_homeLoanInterest_remark_2 %}{{saved_Ilhp.allowed_homeLoanInterest_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Income/Loss on House Property</td>
+                            <td>
+                                {{saved_Ilhp.incomeLossOnHouseProperty}}
+
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_incomeLossOnHouseProperty %}{{saved_Ilhp.allowed_incomeLossOnHouseProperty}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_incomeLossOnHouseProperty_2 %}{{saved_Ilhp.allowed_incomeLossOnHouseProperty_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_let_income}}
+                            </td>
+                        </tr>
+                        {% if saved_Ilhp.allowed_incomeLossOnHouseProperty_remark or saved_Ilhp.allowed_incomeLossOnHouseProperty_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_Ilhp.allowed_incomeLossOnHouseProperty_remark %}{{saved_Ilhp.allowed_incomeLossOnHouseProperty_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_Ilhp.allowed_incomeLossOnHouseProperty_remark_2 %}{{saved_Ilhp.allowed_incomeLossOnHouseProperty_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Standard Deduction (30%)</td>
+                            <td>
+                                {{saved_Ilhp.standardDeduction}}
+
+                            </td>
+                            <td>
+                               {% if saved_Ilhp.allowed_standardDeduction %}{{saved_Ilhp.allowed_standardDeduction}}{% else %}0{% endif %}                                
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_standardDeduction_2 %}{{saved_Ilhp.allowed_standardDeduction_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_let_stand}}
+                            </td>
+                        </tr>
+                        {% if saved_Ilhp.allowed_standardDeduction_remark or saved_Ilhp.allowed_standardDeduction_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_Ilhp.allowed_standardDeduction_remark %}{{saved_Ilhp.allowed_standardDeduction_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_Ilhp.allowed_standardDeduction_remark_2 %}{{saved_Ilhp.allowed_standardDeduction_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Loan Lender Name</td>
+                            <td>
+                                {% if saved_Ilhp.loanLenderName == 'other' %}
+                                {{saved_Ilhp.otherloanLenderName|upper}}
+
+                                {% else %}
+                                {{saved_Ilhp.loanLenderName}}
+
+                                {% endif %}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Loan Lender PAN</td>
+                            <td>
+                                {% if saved_Ilhp.loanLenderName == 'other' %}
+                                {{saved_Ilhp.otherloanLenderPAN}}
+
+                                {% else %}
+                                {{saved_Ilhp.loanLenderPAN}}
+
+                                {% endif %}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    {% endif %}
+
+                    {% if saved_Ilhp.loan_sanctioned_date %}
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>80EE</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+                        <tr>
+                            <td>Loan sanctioned date</td>
+                            <td>
+                                {{saved_Ilhp.loan_sanctioned_date|date:'Y-m-d'}}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Loan amount</td>
+                            <td>
+                                {{saved_Ilhp.loan_amount}}
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_loan_amount %}{{saved_Ilhp.allowed_loan_amount}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_loan_amount_2 %}{{saved_Ilhp.allowed_loan_amount_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_80ee_1}}
+                            </td>
+                        </tr>
+                        {% if saved_Ilhp.loan_amount_remark or saved_Ilhp.loan_amount_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_Ilhp.loan_amount_remark %}{{saved_Ilhp.loan_amount_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_Ilhp.loan_amount_remark_2 %}{{saved_Ilhp.loan_amount_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Property Value</td>
+                            <td>
+                                {{saved_Ilhp.property_value}}
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_property_value %}{{saved_Ilhp.allowed_property_value}}{% else %}0{% endif %}                                                          
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_property_value_2 %}{{saved_Ilhp.allowed_property_value_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_80ee_2}}
+                            </td>
+                        </tr>
+                        {% if saved_Ilhp.property_value_remark or saved_Ilhp.property_value_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_Ilhp.property_value_remark %}{{saved_Ilhp.property_value_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_Ilhp.property_value_remark_2 %}{{saved_Ilhp.property_value_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Home Loan Interest</td>
+                            <td>
+                                {{saved_Ilhp.home_loan}}
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_home_loan %}{{saved_Ilhp.allowed_home_loan}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_home_loan_2 %}{{saved_Ilhp.allowed_home_loan_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_80ee_3}}
+                            </td>
+                        </tr>
+                        {% if saved_Ilhp.home_loan_remark or saved_Ilhp.home_loan_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_Ilhp.home_loan_remark %}{{saved_Ilhp.home_loan_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_Ilhp.home_loan_remark_2 %}{{saved_Ilhp.home_loan_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Loan Lender Name</td>
+                            <td>
+                                {% if saved_Ilhp.loan_lender == 'other' %}
+                                {{saved_Ilhp.otherloan_lender|upper}}
+                                {% else %}
+                                {{saved_Ilhp.loan_lender}}
+                                {% endif %}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Loan Lender PAN</td>
+                            <td>
+                                {% if saved_Ilhp.loan_lender == 'other' %}
+                                {{saved_Ilhp.otherlender_pan}}
+
+                                {% else %}
+                                {{saved_Ilhp.lender_pan}}
+
+                                {% endif %}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    {% endif %}
+
+                    {% if saved_Ilhp.loan_sanctioned_date_ee %}
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>80EEA</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+                        <tr>
+                            <td>Loan sanctioned date</td>
+                            <td>
+                                {{saved_Ilhp.loan_sanctioned_date_ee|date:'Y-m-d'}}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Do you own another property other than this</td>
+                            <td>                                
+                                No
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Property Value</td>
+                            <td>
+                                {{saved_Ilhp.property_value_other}}
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_property_value_other %}{{saved_Ilhp.allowed_property_value_other}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_property_value_other_2 %}{{saved_Ilhp.allowed_property_value_other_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_80eea_1}}
+                            </td>
+                        </tr>
+                        {% if saved_Ilhp.property_value_other_remark or saved_Ilhp.property_value_other_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_Ilhp.property_value_other_remark %}{{saved_Ilhp.property_value_other_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_Ilhp.property_value_other_remark_2 %}{{saved_Ilhp.property_value_other_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Eligibility</td>
+                            <td>
+                                Yes
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                    </table>
+                    {% endif %}
+
+                    {% if saved_Ilhp.other_income_oi %}
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>OTHER INCOME UNSPECIFIED</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+                        <tr>
+                            <td>Other Income (Unspecified)</td>
+                            <td>
+                                {{saved_Ilhp.other_income_oi}}
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_other_income_oi %}{{saved_Ilhp.allowed_other_income_oi}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_other_income_oi_2 %}{{saved_Ilhp.allowed_other_income_oi_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_other}}
+                            </td>
+                        </tr>
+                        {% if saved_Ilhp.other_income_oi_remark or saved_Ilhp.other_income_oi_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_Ilhp.other_income_oi_remark %}{{saved_Ilhp.other_income_oi_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_Ilhp.other_income_oi_remark_2 %}{{saved_Ilhp.other_income_oi_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                    {% endif %}
+
+                    {% if saved_Ilhp.interest_80tta %}
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>DEDUCTIONS UNDER SECTION 80TTA</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+                        <tr>
+                            <td>Interest Income from Savings account </td>
+                            <td>
+                                {{saved_Ilhp.interest_80tta}}
+                            <td>
+                                {% if saved_Ilhp.allowed_interest_80tta %}{{saved_Ilhp.allowed_interest_80tta}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_Ilhp.allowed_interest_80tta_2 %}{{saved_Ilhp.allowed_interest_80tta_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_80tta}}
+                            </td>
+                        </tr>
+                        {% if saved_Ilhp.interest_80tta_remark or saved_Ilhp.interest_80tta_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_Ilhp.interest_80tta_remark %}{{saved_Ilhp.interest_80tta_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_Ilhp.interest_80tta_remark_2 %}{{saved_Ilhp.interest_80tta_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                    {% endif %}
+
+                </div>
+                {% endif %}
+
+                {% if saved_other80 %}
+                <div id="tab3" class="mt-3">
+                    <h5 class="section_id">80 Other Deductions</h5>
+                    {% if saved_other80.medical_insurance_self_mip or saved_other80.medical_insurance_parents_mip or saved_other80.medical_insurance_Senior_Citizen or saved_other80.preventive_health_checkup_mip %}
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>Deduction under Section 80 D - Medical Insurance Premium</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+                        {% if saved_other80.medical_insurance_self_mip %}
+                        <tr>
+                            <td>Mediclaim Insurance for Self/Spouse and Children</td>
+                            <td>
+                                {{saved_other80.medical_insurance_self_mip}}
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_medical_insurance %}{{saved_other80.allowed_medical_insurance}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_medical_insurance_2 %}{{saved_other80.allowed_medical_insurance_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_80other_1}}
+                            </td>
+                        </tr>
+                        {% if saved_other80.medical_insurance_remark or saved_other80.medical_insurance_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_other80.medical_insurance_remark %}{{saved_other80.medical_insurance_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_other80.medical_insurance_remark_2 %}{{saved_other80.medical_insurance_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if saved_other80.medical_insurance_parents_mip %}
+                        <tr>
+                            <td>Mediclaim Insurance for Parents - Non Senior Citizen</td>
+                            <td>
+                                {{saved_other80.medical_insurance_parents_mip}}
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_parents_mip_nsn %}{{saved_other80.allowed_parents_mip_nsn}}{% else %}0{% endif %} 
+                                
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_parents_mip_nsn_2 %}{{saved_other80.allowed_parents_mip_nsn_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_80other_2}}
+                            </td>
+                        </tr>
+                        {% if saved_other80.parents_mip_nsn_remark or saved_other80.parents_mip_nsn_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_other80.parents_mip_nsn_remark %}{{saved_other80.parents_mip_nsn_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_other80.parents_mip_nsn_remark_2 %}{{saved_other80.parents_mip_nsn_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if saved_other80.medical_insurance_Senior_Citizen %}
+                        <tr>
+                            <td>Mediclaim Insurance for Parents - Senior Citizen</td>
+                            <td>
+                                {{saved_other80.medical_insurance_Senior_Citizen}}
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_parents_mip_sn %}{{saved_other80.allowed_parents_mip_sn}}{% else %}0{% endif %}                             
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_parents_mip_sn_2 %}{{saved_other80.allowed_parents_mip_sn_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_80other_3}}
+                            </td>
+                        </tr>
+                        {% if saved_other80.parents_mip_sn_remark or saved_other80.parents_mip_sn_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_other80.parents_mip_sn_remark %}{{saved_other80.parents_mip_sn_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_other80.parents_mip_sn_remark_2 %}{{saved_other80.parents_mip_sn_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if saved_other80.preventive_health_checkup_mip %}
+                        <tr>
+                            <td>Preventive Health Checkup</td>
+                            <td>
+                                {{saved_other80.preventive_health_checkup_mip}}
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_health_checkup %}{{saved_other80.allowed_health_checkup}}{% else %}0{% endif %}                                                                 
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_health_checkup_2 %}{{saved_other80.allowed_health_checkup_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_80other_4}}
+                            </td>
+                        </tr>
+                        {% if saved_other80.health_checkup_remark or saved_other80.health_checkup_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_other80.health_checkup_remark %}{{saved_other80.health_checkup_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_other80.health_checkup_remark_2 %}{{saved_other80.health_checkup_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+                    </table>
+                    {% endif %}
+
+                    {% if saved_other80.selected_illness %}
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>Deduction under Section 80 DDB- Medical Treatment for Critical Illness</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+                        <tr>
+                            <td>Critical Illness</td>
+                            <td>
+                                {{saved_other80.selected_illness}}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Medical Treatment for Critical Illness For</td>
+                            <td>
+                                {{saved_other80.citizenship_status|upper}}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Treatment Value</td>
+                            <td>
+                                {{saved_other80.treatment_value}}
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_treatment_value %}{{saved_other80.allowed_treatment_value}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_treatment_value_2 %}{{saved_other80.allowed_treatment_value_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_illness}}
+                            </td>
+                        </tr>
+                        {% if saved_other80.treatment_value_remark or saved_other80.treatment_value_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_other80.treatment_value_remark %}{{saved_other80.treatment_value_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_other80.treatment_value_remark_2 %}{{saved_other80.treatment_value_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                    {% endif %}
+
+                    {% if saved_other80.interest_education %}
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>Deduction under Section 80 E- Interest on Education Loan</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+                        <tr>
+                            <td>Interest on Education Loan for Higher Studies </td>
+                            <td>
+                                {{saved_other80.interest_education}}
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_interest_education %}{{saved_other80.allowed_interest_education}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_interest_education_2 %}{{saved_other80.allowed_interest_education_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_education}}
+                            </td>
+                        </tr>
+                        {% if saved_other80.interest_education_remark or saved_other80.interest_education_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_other80.interest_education_remark %}{{saved_other80.interest_education_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_other80.interest_education_remark_2 %}{{saved_other80.interest_education_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                    {% endif %}
+
+                    {% if saved_other80.paymentDependentDisability or saved_other80.paymentSelfDisability %}
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>Deduction under Section 80U /80DD Disability</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+
+                        {% if saved_other80.paymentDependentDisability %}
+                        <tr>
+                            <td>Deduction for dependent Handicapped</td>
+                            <td>
+                                {{saved_other80.paymentDependentDisability}}
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_Dependent_dis %}{{saved_other80.allowed_Dependent_dis}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_Dependent_dis_2 %}{{saved_other80.allowed_Dependent_dis_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_dep_dis}}
+                            </td>
+                        </tr>
+                        {% if saved_other80.allowed_Dependent_remark or saved_other80.allowed_Dependent_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_other80.allowed_Dependent_remark %}{{saved_other80.allowed_Dependent_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_other80.allowed_Dependent_remark_2 %}{{saved_other80.allowed_Dependent_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if saved_other80.paymentSelfDisability %}
+                        <tr>
+                            <td>Deduction for Self Handicapped</td>
+                            <td>
+                                {{saved_other80.paymentSelfDisability}}
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_self_dis %}{{saved_other80.allowed_self_dis}}{% else %}0{% endif %} 
+                                
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_self_dis_2 %}{{saved_other80.allowed_self_dis_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_self_dis}}
+                            </td>
+                        </tr>
+                        {% if saved_other80.allowed_self_remark or saved_other80.allowed_self_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_other80.allowed_self_remark %}{{saved_other80.allowed_self_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_other80.allowed_self_remark_2 %}{{saved_other80.allowed_self_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+                    </table>
+                    {% endif %}
+
+                    {% if saved_other80.loan_sanctioned_date_80eeb %}
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>Deduction in respect to Loan taken for Electric vehicle-80EEB</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+                        <tr>
+                            <td>Loan Sanction Date</td>
+                            <td>
+                                {{saved_other80.loan_sanctioned_date_80eeb|date:'Y-m-d'}}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Interest on vehicle loan</td>
+                            <td>
+                                {{saved_other80.vehicle_loan_80eeb}}
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_vehicle_value %}{{saved_other80.allowed_vehicle_value}}{% else %}0{% endif %} 
+                                
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_vehicle_value_2 %}{{saved_other80.allowed_vehicle_value_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_vehicle}}
+                            </td>
+                        </tr>
+                        {% if saved_other80.vehicle_value_remark or saved_other80.vehicle_value_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_other80.vehicle_value_remark %}{{saved_other80.vehicle_value_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_other80.vehicle_value_remark_2 %}{{saved_other80.vehicle_value_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+
+                        <tr>
+                            <td>Loan Lender Name</td>
+                            <td>
+                                {% if saved_other80.loan_lender_80eeb == 'other' %}
+                                {{saved_other80.other80eebLender|upper}}
+
+                                {% else %}
+                                {{saved_other80.loan_lender_80eeb}}
+
+                                {% endif %}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Loan Lender PAN</td>
+                            <td>
+                                {% if saved_other80.loan_lender_80eeb == 'other' %}
+                                {{saved_other80.other80eebPAN}}
+
+                                {% else %}
+                                {{saved_other80.lender_pan_80eeb}}
+
+                                {% endif %}
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    {% endif %}
+
+                    {% if saved_other80.nps_80ccd1b %}
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>Deduction for Self-contribution to Pension Account (NPS)</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+                        <tr>
+                            <td>Deduction for Self-contribution to Pension Account (NPS)</td>
+                            <td>
+                                {{saved_other80.nps_80ccd1b}}
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_nps_80ccd1b %}{{saved_other80.allowed_nps_80ccd1b}}{% else %}0{% endif %} 
+                                
+                            </td>
+                            <td>
+                                {% if saved_other80.allowed_nps_80ccd1b_2 %}{{saved_other80.allowed_nps_80ccd1b_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_80ccd1b}}
+                            </td>
+                            {% if saved_other80.nps_80ccd1b_remark or saved_other80.nps_80ccd1b_remark_2 %}
+                            <tr>
+                                <td style="font-weight: bold;">Remarks</td>
+                                <td></td>
+                                <td>{% if saved_other80.nps_80ccd1b_remark %}{{saved_other80.nps_80ccd1b_remark}}{% else %}{% endif %}</td>
+                                <td>{% if saved_other80.nps_80ccd1b_remark_2 %}{{saved_other80.nps_80ccd1b_remark_2}}{% else %}{% endif %}</td>                            
+                                <td></td>
+                            </tr>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <td>PRAN Number</td>
+                            <td>
+                                {{saved_other80.prannumber}}
+
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    {% endif %}
+
+                </div>
+                {% endif %}
+
+                {% if saved_80C_deduction %}
+                <div id="tab4" class="mt-3">
+                    <h5 class="section_id">80C Contributions</h5>
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>80C CONTRIBUTIONS</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+                        {% if saved_80C_deduction.paymentLifeInsurance %}
+                        <tr>
+                            <td>Payment towards Life Insurance Policy</td>
+                            <td>
+                                {{saved_80C_deduction.paymentLifeInsurance}}
+
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_paymentLifeInsurance %}{{saved_80C_deduction.allowed_paymentLifeInsurance}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_paymentLifeInsurance_2 %}{{saved_80C_deduction.allowed_paymentLifeInsurance_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_c80_1}}
+                            </td>
+                        </tr>
+                        {% if saved_80C_deduction.paymentLifeInsurance_remark or saved_80C_deduction.paymentLifeInsurance_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_80C_deduction.paymentLifeInsurance_remark %}{{saved_80C_deduction.paymentLifeInsurance_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_80C_deduction.paymentLifeInsurance_remark_2 %}{{saved_80C_deduction.paymentLifeInsurance_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if saved_80C_deduction.timeDeposit %}
+                        <tr>
+                            <td>5 year time deposit under the Post Office Time Deposit Rules 1981</td>
+                            <td>
+                                {{saved_80C_deduction.timeDeposit}}
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_timeDeposit %}{{saved_80C_deduction.allowed_timeDeposit}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_timeDeposit_2 %}{{saved_80C_deduction.allowed_timeDeposit_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_c80_2}}
+                            </td>
+                        </tr>
+                        {% if saved_80C_deduction.timeDeposit_remark or saved_80C_deduction.timeDeposit_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_80C_deduction.timeDeposit_remark %}{{saved_80C_deduction.timeDeposit_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_80C_deduction.timeDeposit_remark_2 %}{{saved_80C_deduction.timeDeposit_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if saved_80C_deduction.ulipContribution %}
+                        <tr>
+                            <td>Contribution to ULIP</td>
+                            <td>
+                                {{saved_80C_deduction.ulipContribution}}
+
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_ulipContribution %}{{saved_80C_deduction.allowed_ulipContribution}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_ulipContribution_2 %}{{saved_80C_deduction.allowed_ulipContribution_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>                                
+                                {{total_c80_3}}
+                            </td>
+                        </tr>
+                        {% if saved_80C_deduction.ulipContribution_remark or saved_80C_deduction.ulipContribution_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_80C_deduction.ulipContribution_remark %}{{saved_80C_deduction.ulipContribution_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_80C_deduction.ulipContribution_remark_2 %}{{saved_80C_deduction.ulipContribution_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if saved_80C_deduction.nscSubscription %}
+                        <tr>
+                            <td>Subscription to notified Central Govt Savings certificate (NSC VIII issue)</td>
+                            <td>
+                                {{saved_80C_deduction.nscSubscription}}
+
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_nscSubscription %}{{saved_80C_deduction.allowed_nscSubscription}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_nscSubscription_2 %}{{saved_80C_deduction.allowed_nscSubscription_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_c80_4}}
+                            </td>
+                        </tr>
+                        {% if saved_80C_deduction.nscSubscription_remark or saved_80C_deduction.nscSubscription_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_80C_deduction.nscSubscription_remark %}{{saved_80C_deduction.nscSubscription_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_80C_deduction.nscSubscription_remark_2 %}{{saved_80C_deduction.nscSubscription_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if saved_80C_deduction.nscInterest %}
+                        <tr>
+                            <td>Interest on NSC</td>
+                            <td>
+                                {{saved_80C_deduction.nscInterest}}
+
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_nscInterest %}{{saved_80C_deduction.allowed_nscInterest}}{% else %}0{% endif %}                                 
+                                
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_nscInterest_2 %}{{saved_80C_deduction.allowed_nscInterest_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_c80_5}}
+                            </td>
+                        </tr>
+                        {% if saved_80C_deduction.nscInterest_remark or saved_80C_deduction.nscInterest_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_80C_deduction.nscInterest_remark %}{{saved_80C_deduction.nscInterest_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_80C_deduction.nscInterest_remark_2 %}{{saved_80C_deduction.nscInterest_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if saved_80C_deduction.ppfContribution %}
+                        <tr>
+                            <td>Contribution to Public Provident Fund</td>
+                            <td>
+                                {{saved_80C_deduction.ppfContribution}}
+
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_ppfContribution %}{{saved_80C_deduction.allowed_ppfContribution}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_ppfContribution_2 %}{{saved_80C_deduction.allowed_ppfContribution_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_c80_6}}
+
+                            </td>
+                        </tr>
+                        {% if saved_80C_deduction.ppfContribution_remark or saved_80C_deduction.ppfContribution_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_80C_deduction.ppfContribution_remark %}{{saved_80C_deduction.ppfContribution_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_80C_deduction.ppfContribution_remark_2 %}{{saved_80C_deduction.ppfContribution_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if saved_80C_deduction.houseLoan %}
+                        <tr>
+                            <td>House loan principal Only / Stamp Duty & Registration fees</td>
+                            <td>
+                                {{saved_80C_deduction.houseLoan}}
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_houseLoan %}{{saved_80C_deduction.allowed_houseLoan}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_houseLoan_2 %}{{saved_80C_deduction.allowed_houseLoan_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_c80_7}}
+
+                            </td>
+                        </tr>
+                        {% if saved_80C_deduction.houseLoan_remark or saved_80C_deduction.houseLoan_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_80C_deduction.houseLoan_remark %}{{saved_80C_deduction.houseLoan_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_80C_deduction.houseLoan_remark_2 %}{{saved_80C_deduction.houseLoan_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if saved_80C_deduction.tuitionFee %}
+                        <tr>
+                            <td>Tuition fee - Children(Max two children)</td>
+                            <td>
+                                {{saved_80C_deduction.tuitionFee}}
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_tuitionFee %}{{saved_80C_deduction.allowed_tuitionFee}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_tuitionFee_2 %}{{saved_80C_deduction.allowed_tuitionFee_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_c80_8}}
+                            </td>
+                        </tr>
+                        {% if saved_80C_deduction.ppfContribution_remark or saved_80C_deduction.ppfContribution_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_80C_deduction.ppfContribution_remark %}{{saved_80C_deduction.ppfContribution_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_80C_deduction.ppfContribution_remark_2 %}{{saved_80C_deduction.ppfContribution_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if saved_80C_deduction.mutualFundSubscription %}
+                        <tr>
+                            <td>Subscription to notified Mutual Fund</td>
+                            <td>
+                                {{saved_80C_deduction.mutualFundSubscription}}
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_mutualFundSubscription %}{{saved_80C_deduction.allowed_mutualFundSubscription}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_mutualFundSubscription_2 %}{{saved_80C_deduction.allowed_mutualFundSubscription_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>                                
+                                {{total_c80_9}}
+                            </td>
+                        </tr>
+                        {% if saved_80C_deduction.mutualFundSubscription_remark or saved_80C_deduction.mutualFundSubscription_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_80C_deduction.mutualFundSubscription_remark %}{{saved_80C_deduction.mutualFundSubscription_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_80C_deduction.mutualFundSubscription_remark_2 %}{{saved_80C_deduction.mutualFundSubscription_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+
+                        {% if saved_80C_deduction.termDeposits %}
+                        <tr>
+                            <td>5 Year Term Deposit(Tax Saver Fixed Deposit)</td>
+                            <td>
+                                {{saved_80C_deduction.termDeposits}}
+
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_termDeposits %}{{saved_80C_deduction.allowed_termDeposits}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_termDeposits_2 %}{{saved_80C_deduction.allowed_termDeposits_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_c80_10}}
+                            </td>
+                        </tr>
+                        {% if saved_80C_deduction.termDeposits_remark or saved_80C_deduction.termDeposits_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_80C_deduction.termDeposits_remark %}{{saved_80C_deduction.termDeposits_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_80C_deduction.termDeposits_remark_2 %}{{saved_80C_deduction.termDeposits_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+
+                        {% if saved_80C_deduction.pensionContribution %}
+                        <tr>
+                            <td>Contribution to certain Pension Funds(80CCC)</td>
+                            <td>
+                                {{saved_80C_deduction.pensionContribution}}
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_pensionContribution %}{{saved_80C_deduction.allowed_pensionContribution}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_pensionContribution_2 %}{{saved_80C_deduction.allowed_pensionContribution_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_c80_11}}
+                            </td>
+                        </tr>
+                        {% if saved_80C_deduction.pensionContribution_remark or saved_80C_deduction.pensionContribution_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_80C_deduction.pensionContribution_remark %}{{saved_80C_deduction.pensionContribution_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_80C_deduction.pensionContribution_remark_2 %}{{saved_80C_deduction.pensionContribution_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if saved_80C_deduction.sukanyaSamriddhi %}
+                        <tr>
+                            <td>Sukanya Samriddhi</td>
+                            <td>
+                                {{saved_80C_deduction.sukanyaSamriddhi}}
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_sukanyaSamriddhi %}{{saved_80C_deduction.allowed_sukanyaSamriddhi}}{% else %}0{% endif %} 
+                                
+                            </td>
+                            <td>
+                                {% if saved_80C_deduction.allowed_sukanyaSamriddhi_2 %}{{saved_80C_deduction.allowed_sukanyaSamriddhi_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {{total_c80_12}}
+                            </td>
+                        </tr>
+                        {% if saved_80C_deduction.sukanyaSamriddhi_remark or saved_80C_deduction.sukanyaSamriddhi_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_80C_deduction.sukanyaSamriddhi_remark %}{{saved_80C_deduction.sukanyaSamriddhi_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_80C_deduction.sukanyaSamriddhi_remark_2 %}{{saved_80C_deduction.sukanyaSamriddhi_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        {% endif %}
+                    </table>
+                </div>
+                {% endif %}
+
+                {% if saved_previous_emp %}
+                <div id="tab5" class="mt-3">
+                    <h5 class="section_id">Previous Employment</h5>
+                    <table class="table table-striped hra_table_2">
+                        <tr>
+                            <th>PREVIOUS EMPLOYMENT</th>
+                            <th>Declared Amount</th>
+                            <th>Allowed Amount</th>
+                            <th>1st Resub Verified Amount</th>
+                            <th>Total Allowed Amount</th>
+                        </tr>
+                        <tr>
+                            <td>Salary as per provisions u/s 17(1)
+                                [Please include salary after section 10 exemptions only]
+                            </td>
+                            <td>
+                                {{saved_previous_emp.salary_previousemp}}
+                            </td>
+                            <td>
+                                {% if saved_previous_emp.allowed_salary_previousemp %}{{saved_previous_emp.allowed_salary_previousemp}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_previous_emp.allowed_salary_previousemp_2 %}{{saved_previous_emp.allowed_salary_previousemp_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {% if saved_previous_emp.allowed_salary_previousemp_2 %}{{saved_previous_emp.allowed_salary_previousemp_2}}{% else %}0{% endif %}
+                            </td>
+                        </tr>
+                        {% if saved_previous_emp.salary_previousemp_remark or saved_previous_emp.salary_previousemp_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_previous_emp.salary_previousemp_remark %}{{saved_previous_emp.salary_previousemp_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_previous_emp.salary_previousemp_remark_2 %}{{saved_previous_emp.salary_previousemp_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+
+                        <tr>
+                            <td>Provident Fund [Include voluntary provident fund(VPF) also deducted through salary]</td>
+                            <td>
+                                {{saved_previous_emp.provident_fund}}
+                            </td>
+                            <td>
+                                {% if saved_previous_emp.allowed_provident_fund %}{{saved_previous_emp.allowed_provident_fund}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_previous_emp.allowed_provident_fund_2 %}{{saved_previous_emp.allowed_provident_fund_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {% if saved_previous_emp.allowed_provident_fund_2 %}{{saved_previous_emp.allowed_provident_fund_2}}{% else %}0{% endif %}
+                            </td>
+                        </tr>
+                        {% if saved_previous_emp.provident_fund_remark or saved_previous_emp.provident_fund_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_previous_emp.provident_fund_remark %}{{saved_previous_emp.provident_fund_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_previous_emp.provident_fund_remark_2 %}{{saved_previous_emp.provident_fund_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Professional Tax</td>
+                            <td>
+                                {{saved_previous_emp.professional_tax}}
+
+                            </td>
+                            <td>
+                                {% if saved_previous_emp.allowed_professional_tax %}{{saved_previous_emp.allowed_professional_tax}}{% else %}0{% endif %}                                 
+                            </td>
+                            <td>
+                                {% if saved_previous_emp.allowed_professional_tax_2 %}{{saved_previous_emp.allowed_professional_tax_2}}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {% if saved_previous_emp.allowed_professional_tax_2 %}{{saved_previous_emp.allowed_professional_tax_2}}}{% else %}0{% endif %}
+                            </td>
+                        </tr>
+                        {% if saved_previous_emp.professional_tax_remark or saved_previous_emp.professional_tax_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_previous_emp.professional_tax_remark %}{{saved_previous_emp.professional_tax_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_previous_emp.professional_tax_remark_2 %}{{saved_previous_emp.professional_tax_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td>Income tax deducted[Declare total tax deducted inclusive of education cess and
+                                Surcharge]</td>
+                            <td>
+                                {{saved_previous_emp.income_tax}}
+                            </td>
+                            <td>
+                                {% if saved_previous_emp.allowed_income_tax %}{{saved_previous_emp.allowed_income_tax}}{% else %}0{% endif %}                                
+                            </td>
+                            <td>
+                                {% if saved_previous_emp.allowed_income_tax_2 %}{{saved_previous_emp.allowed_income_tax_2}}{% else %}0{% endif %}
+                            </td>
+                            <td>
+                                {% if saved_previous_emp.allowed_income_tax_2 %}{{saved_previous_emp.allowed_income_tax_2}}{% else %}0{% endif %}
+                            </td>
+                        </tr>
+                        {% if saved_previous_emp.income_tax_remark or saved_previous_emp.income_tax_remark_2 %}
+                        <tr>
+                            <td style="font-weight: bold;">Remarks</td>
+                            <td></td>
+                            <td>{% if saved_previous_emp.income_tax_remark %}{{saved_previous_emp.income_tax_remark}}{% else %}{% endif %}</td>
+                            <td>{% if saved_previous_emp.income_tax_remark_2 %}{{saved_previous_emp.income_tax_remark_2}}{% else %}{% endif %}</td>                            
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 basic">
+                <p>Thanks & Regards,</p>
+                <p>{{saved_basic.CompanyName}} Income Tax Proof Verification Team</p>                
+            </div>
+        </div>
+
+        
+
+    </div>    
+</body>
+
+</html>

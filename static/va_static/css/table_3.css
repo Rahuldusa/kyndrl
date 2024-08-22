@@ -1,0 +1,44 @@
+
+
+
+
+.hra_table_1 {
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+
+.hra_table_1 tr td {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    width: 18% !important; 
+}
+
+.hra_table_1 input,
+.hra_table_1 select{
+    width: 160px;
+}
+
+.hra_table_2, #custom {
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+.hra_table_2 tr td:first-child {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    width: 40%;
+}
+
+.hra_table_2 tr td:nth-child(2),
+.hra_table_2 tr td:nth-child(3),
+.hra_table_2 tr td:nth-child(4) {
+    padding-top: 20px;
+    padding-bottom: 10px;
+    width: 20%;
+}
+
+.hra_table_2 input,
+.hra_table_2 select{
+    width: 160px;
+}

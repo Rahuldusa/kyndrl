@@ -1,0 +1,45 @@
+
+
+.c2 {
+    margin-top: 20px;
+}
+
+.r2{
+    margin-left: 45px;    
+}
+
+.fbph1{
+    color: #4793af;
+    border-bottom: 1px dashed #4793af; 
+    margin-top: 5px; 
+}
+
+.sidebar {
+    transition: all 0.3s ease;
+}
+
+
+
+
+.container-fluid {
+    transition: margin-left 0.3s ease;
+}
+
+.r2{
+    transition: margin-left 0.3s ease;
+}
+
+
+body.sidebar-open .r2{
+    margin-left: 240px;
+    transition: margin-left 0.3s ease;
+}
+
+
+@media (max-width: 768px) {
+
+    body.sidebar-open .r2{
+        margin-left: 45px;
+        transition: margin-left 0.3s ease;
+    }
+}

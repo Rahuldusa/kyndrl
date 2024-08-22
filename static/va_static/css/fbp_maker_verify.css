@@ -1,0 +1,141 @@
+.verification-container {
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px 50px 20px 50px;
+}
+.verification-header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.verification-form {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.form-check-label {
+    margin-right: 20px;
+    font-weight: bold;
+}
+.form-control[readonly] {
+    background-color: #e9ecef;
+}
+.nav-tabs .nav-link {
+    background-color: #f8f9fa;
+    color: #007bff;
+    font-weight: bold;
+}
+.nav-tabs .nav-link.active {
+    background-color: #007bff;
+    color: white;
+}
+.form-label {
+    font-weight: bold;
+}
+.card-header {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+.table-header {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+.balance-amount {
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 0;
+}
+.table th, .table td {
+    vertical-align: middle;
+}
+.card-body {
+    border-color: #007bff;
+}
+#customRemarks{
+    width:40%;
+}
+#status{
+    width:20%;
+}
+.btn-primary {
+    width: 10%;
+    margin: 20px;
+    
+}
+.subbtn{
+    text-align: center;
+}
+
+table tbody td a{
+    text-decoration: none;   
+    font-size: 15px; 
+}
+
+.claim_table thead th,
+.claim_table_2 thead th{
+    background-color: #9bc8f8;
+}
+
+.claim_table,
+.claim_table_2{
+    border: 1px solid black;
+}
+
+.claim_table input{
+    width: 150px;
+}
+.claim_table_2 input{
+    width: 110px;
+}
+
+.claim_table tr td:nth-child(1){
+    width: 30px;
+}
+
+.claim_table tr td:nth-child(2),
+.claim_table tr td:nth-child(3),
+.claim_table tr td:nth-child(4),
+.claim_table tr td:nth-child(5),
+.claim_table tr td:nth-child(6){
+    width: 150px;
+}
+
+.claim_table tr td:nth-child(7){
+    width: 180px;
+}
+
+.claim_table_2,
+.claim_table_2 a{
+    font-size: 14px;
+}
+
+.claim_table_2 tr td:nth-child(1){
+    width: 20px;
+}
+
+.claim_table_2 tr td:nth-child(2),
+.claim_table_2 tr td:nth-child(3),
+.claim_table_2 tr td:nth-child(4),
+.claim_table_2 tr td:nth-child(5),
+.claim_table_2 tr td:nth-child(6),
+.claim_table_2 tr td:nth-child(7),
+.claim_table_2 tr td:nth-child(9),
+.claim_table_2 tr td:nth-child(10),
+.claim_table_2 tr td:nth-child(11),
+.claim_table_2 tr td:nth-child(12){
+    width: 90px;
+}
+
+
+.claim_table_2 tr td:nth-child(8),
+.claim_table_2 tr td:nth-child(13){
+    width: 105px;
+}

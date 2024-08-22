@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;    
+    height: 50px;
+    background-color: #008080; 
+    padding: 15px;
+}
+
+.nav_brand {
+    color: #ffffff;    
+    font-weight: bold;    
+}
+
+.nav-link {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 0 5px;
+    font-size: 16px;
+}
+
+.nav_list{
+    color: #ffffff;
+}
+
+.nav-link:hover {
+    color: black;
+    text-decoration: underline;
+}

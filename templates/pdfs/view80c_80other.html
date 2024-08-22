@@ -1,0 +1,130 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>80C</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        #_80c_contributions_table1 {
+            margin-top: 25px;
+            width: 80%;
+            border-collapse: collapse;
+            border: 1px solid #000;
+
+        }
+        #_80c_contributions_table1 td{                        
+            padding-left: 5px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            width: 25%;
+            font-size: 14px;        
+        }
+
+        p, h6{
+            font-size: 13px;
+        }
+
+        h4{
+            background-color: #B4D4FF;
+            padding-top: 10px;
+        }
+
+        #_80c_contributions_table1 #heading{
+            background-color: #cde1fc;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h4 style="font-size:16px;text-align:center;margin-top:25px;margin-bottom:20px;">80C DECLARATION</h4>
+
+    <p style="text-align:justify;">I Mr/Ms. <strong> {{data.empname|title}} ({{data.empid}}) </strong> declare that, I have made the following investment in the name of my dependent as given below
+        and the Income Tax exemption on the same is claimed only by me and not by my dependent.</p>
+    
+
+    <table class="table table-bordered" id="_80c_contributions_table1" align="center">
+        <h5 style="text-align: center;">Details of Investment
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(FINANCIAL YEAR 2024-25)</h5>
+        <tbody>
+            <tr id="heading">
+                <td style="font-weight: bold;">Sl.No</td>
+                <td style="font-weight: bold;">Type</td>
+                <td style="font-weight: bold;">Relationship</td>
+                <td style="font-weight: bold;">Amount(In Rs.)</td>
+            </tr>
+            <tr>
+                <td >1</td>
+                <td>LIC Premium</td>
+                <td>{% if saved_80C_deduction.lic_for %}{{saved_80C_deduction.lic_for}}{% else %}{% endif %}</td>
+                <td>{% if saved_80C_deduction.paymentLifeInsurance %}{{saved_80C_deduction.paymentLifeInsurance}}{% else %}0{% endif %}</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Public Provident Fund(PPF)</td>
+                <td>{% if saved_80C_deduction.ppf_for %}{{saved_80C_deduction.ppf_for}}{% else %}{% endif %}</td>
+                <td>{% if saved_80C_deduction.ppfContribution %}{{saved_80C_deduction.ppfContribution}}{% else %}0{% endif %}</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Tution Fee</td>
+                <td></td>
+                <td>{% if saved_80C_deduction.tuitionFee %}{{saved_80C_deduction.tuitionFee}}{% else %}0{% endif %}</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Sukanya Samriddhi</td>
+                <td></td>
+                <td>{% if saved_80C_deduction.sukanyaSamriddhi %}{{saved_80C_deduction.sukanyaSamriddhi}}{% else %}0{% endif %}</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align:center">Total</td>
+                <td>{{total_80c}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h6 style="text-transform:uppercase;text-align:center;">Declaration</h6>
+
+
+    <p style="text-align:justify;margin-top:15px;color: rgb(0, 81, 255);">I acknowledge
+        and understand that, in light of the overall pandemic situation, only for Financial
+        Year 2024-25,{{data.Company_Name}} has permitted me to temporarily submit a soft copy declaration, stating that
+        the details submitted by me are true and correct. I undertake to submit the original/ signed
+        hard copy documents, duly signed by me and/or my landlord, on demand from {{data.Company_Name}}. Notwithstanding
+        the above, I agree and acknowledge that {{data.Company_Name}} may reject my claims if it is not satisfied with the
+        documents, or may require further documents from me, including original/ signed hard copy
+        documents. . I further acknowledge that {{data.Company_Name}} may require me to submit such documents even after I
+        separate from {{data.Company_Name}}. If {{data.Company_Name}} is not satisfied with my documents, {{data.Company_Name}} may, at its option, reject my
+        claims for tax benefits, recover taxes due from me, or notify the tax authorities. {{data.Company_Name}}'s
+        discretion in this respect shall be final.
+
+    </p>
+    <p style="text-align:justify;">For claiming income tax benefits and/ or exemptions
+        under House Rent Allowance (HRA), Leave
+        Travel Allowance ( LTA), Medical allowance, Housing Loan, and any other permitted category, I
+        shall only submit valid proofs and information, in accordance with the requirements of the
+        Income Tax Act and other laws and regulations. If any incorrect, false or forged receipts/
+        declaration/ information is detected at any time, including during {{data.Company_Name}} regular audits, it would
+        warrant stern disciplinary action including separation from services, as per Business Conduct
+        Guidelines. In addition, any tax benefits may be withdrawn/ reversed. I am also liable to
+        directly handle any investigation or action taken by the Income Tax Department. By signing the
+        declaration/ disclaimer, I acknowledge and agree to the above
+    </p>
+    <p style="text-align:left">        
+        Date: {{current_date|date:"d-m-Y" }} <br> 
+        Place: {{saved_80C_deduction.c80_place}} 
+    </p>
+    <p style="text-align:right">Signed by Employee</p>
+
+</body>
+
+</html>

@@ -1,0 +1,404 @@
+
+
+.r1{
+    margin-top: 100px;
+}
+
+
+.block {
+    border: 1px solid blue;        
+}
+
+.r2{
+    margin-top: 50px;
+}
+
+.heading {
+    background-color: #d68b7a;        
+    margin: 0; 
+    padding-top: 10px;
+    padding-bottom: 40px;
+    height: 40px;
+    color: white;
+}
+
+
+.modal-title_2{
+    background-color: #d68b7a;  
+    height: 40px;
+    color: #ffffff;
+    padding-top: 5px;
+}
+
+.dt_1{
+    background-color: #F8EDE3;        
+    margin: 15px 0px; 
+    padding: 10px;
+}
+
+.lable{
+    margin-left: 5px;
+    width: 100px;
+}
+.value{
+    margin-left: 80px;
+    width: 250px;
+    background-color: rgb(228, 228, 228) !important;; 
+}
+
+.h1_{
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+.statement{
+    color: red;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+a{
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.extra{
+    height: 100px;
+}
+
+
+.modal-title {
+    background-color: #dfcd9c;
+}
+
+.btn-close {
+    background-color: transparent !important;
+    width: 9px;
+    height: 9px;   
+    position: absolute;   
+    right: 29px; 
+    top: 29px;   
+    border: none;
+    outline: none;
+    z-index: 1;
+    opacity: 1 !important;
+    border-radius: 0px;
+}
+
+.btn-close:hover{
+    background-color: rgb(255, 255, 255) !important;
+    color: red !important;
+    transition: 0.2s;          
+}
+
+.modal-dialog {
+    max-width: 700px;
+}
+
+.modal {
+    overflow-x: auto;
+}
+
+.modal_new_1{
+    border-color: black;
+    border-radius: 0;
+    box-shadow: 2px 2px;
+    width: 100%; 
+}
+
+
+.modal_new_2{
+    border-color: black;
+    border-radius: 0;
+    box-shadow:0px 0px 7px black;
+    width: 100%; 
+}
+
+
+/* Custom CSS to remove the backdrop effect */
+.modal-backdrop {
+    display: none;
+}
+
+/* Optional: Prevent the modal from affecting the background */
+.modal {
+    background: transparent;
+}
+
+.d-flex{
+    border: none;
+}
+
+.form_input{
+    width: 200px;
+    height: 30px;
+    margin-left: 30px;
+}
+
+
+p{
+    color: red;
+    font-size: 12px;
+}
+
+#p_s_form p{
+    color: black;
+    font-size: 16px;
+}
+
+#fuel_amount{
+    font-size: 14px;
+    margin-left: 60px;
+}
+
+.f_r label{
+    width: 150px;
+}
+
+.f_r input{
+    width: 200px;
+    height: 30px;
+}
+
+
+
+#driver_form label{
+    width: 150px;
+}
+
+#driver_form input,
+#driver_form select{
+    width: 200px;
+    height: 35px;
+}
+
+
+#lta_form label{
+    width: 130px;
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+#lta_form input,
+#lta_form select{
+    width: 130px;
+    height: 30px; 
+    font-size: 13px;   
+}
+
+
+#lta_form_edit label{
+    width: 130px;
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+#lta_form_edit input,
+#lta_form_edit select{
+    width: 130px;
+    height: 30px; 
+    font-size: 13px;   
+}
+
+.lta_2{
+    margin-left: 50px;
+}
+
+#fuel_save{    
+    font-weight: 500;
+    border-radius: 0px;    
+    border: 1px solid black;
+}
+
+#road_save{
+    font-weight: 500;
+    border-radius: 0px;    
+    border: 1px solid black;
+}
+
+#lta_save{
+    font-weight: 500;
+    border-radius: 0px;    
+    border: 1px solid black;
+}
+
+#driver_save{
+    font-weight: 500;
+    border-radius: 0px;    
+    border: 1px solid black;
+}
+
+.table-responsive .dec_files .A3 th {
+    background-color: rgb(169, 169, 241);
+}
+
+
+.fbp_file_table {
+    width: 70%;  
+    border: 1px solid rgb(155, 155, 155);  
+}
+
+.fbp_file_table thead tr th{
+    font-size: 14px;    
+}
+
+
+.fbp_file_table tbody tr td{
+    font-size: 11px;
+}
+
+.family_label {
+    font-size: 12px;   
+    margin: 5px 5px 0px 2px;
+}
+
+
+
+.P_table_1 thead tr th,
+.P_table_1 tbody tr td{
+    width: 25%;
+}
+
+
+.P_table_1 thead tr th,
+.P_table_2 thead tr th,
+.fbp_file_table thead tr th,
+.lta_dec_table thead tr th,
+.lta_dec_table .th_1,
+.driver_dec_tbl thead tr th{
+    background-color: #F8EDE3;
+}
+
+.P_table_2 thead tr th,
+.P_table_1 thead tr th{
+    font-size: 14px;
+}
+
+.P_table_2 tbody tr td,
+.P_table_1 tbody tr td{
+    font-size: 12px;
+}
+
+.P_table_1, .P_table_2{
+    border: 1px solid black;  
+}
+.dec_file,
+.dec_file:hover{
+    color: white;   
+    background-color: #405D72; 
+}
+
+#save_fbp_btn{    
+    border-radius: 0px;
+    border: 1px solid black;
+    font-weight: bold;
+    width: 100px;
+    margin-top: 10px;    
+}
+
+.total{
+    font-weight: bold;
+}
+
+.table-title {
+    font-size: 1rem;       /* Adjust the font size */
+    font-weight: bold;     /* Make the text bold */
+    color: #ffffff;        /* Set the text color to white */
+    background-color: #df9e90; /* Set the background color */
+    padding: 0.5rem;       /* Add some padding */
+    margin-top: 1rem;      /* Add some margin at the top */
+    margin-bottom: 1rem;   /* Add some margin at the bottom */
+    text-align: center;    /* Center the text */
+    border-radius: 0.25rem; /* Add rounded corners */
+}
+
+#road_dec p,
+#lta_dec p,
+#lta_dec .fam_dec_ul{
+    color: black;
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: 150px;
+    margin-right: 150px; 
+    margin-top: 20px;
+}
+
+#driver_dec p,
+#driver_dec table {
+    color: black;
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: 210px;
+    margin-right: 210px; 
+    margin-top: 20px;
+}
+
+#Revenue{
+    width: 110px;
+    height: 115px;
+}
+
+
+#road_dec .modal-body{
+    padding-top: 50px;
+}
+
+#road_dec input{
+    margin-left: 170px;
+    margin-right: 15px;
+    margin-top: 10px;
+}
+
+.lta_dec_table{
+    width: 72%;    
+    border: 1px solid black;
+    margin-left: 150px;
+    margin-right: 150px; 
+    margin-top: 10px;    
+}
+
+
+.lta_dec_table th,
+.lta_dec_table td{
+    width: 18%;
+}
+
+#lta_dec input,
+#lta_dec select,
+#driver_dec input,
+#driver_dec select{
+    width: 150px;
+}
+
+.hidden{
+    border:1px solid transparent !important;
+}
+
+#driver_dec table{
+    width: 400px;    
+}
+
+
+#driver_dec table td,
+#driver_dec table th{        
+    border: 1px solid black;
+}
+
+
+.th_1, .th_2{
+    font-weight: bold;
+}
+
+
+#sal_1,
+#name_dr {
+    border: none;
+    border-bottom: 1px dotted black; /* Change the color as needed */
+    background: none;    
+    font-size: 16px; /* Adjust font size as needed */
+    padding: 5px; /* Optional padding for better appearance */
+}
+#sal_1:focus,
+#name_dr:focus {
+    outline: none;
+}

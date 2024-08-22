@@ -1,0 +1,411 @@
+<html>
+<head>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+        table, th, td{
+            border: 1px solid black;
+            padding-top: 3px;
+            padding-left: 2px;
+            text-align: left;
+            font-size: 16px;           
+        }
+        #headertbl{
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        #headertbl tr th{
+            background-color: #9abbe7;
+        }
+
+        #valuetbl td{
+            width: 50%;
+        } 
+       
+        p{
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+<body>
+    <p>Dear {{ empname }} ({{ empid }}),</p>
+    <p>Thanks for submitting the Declaration.</p>
+    <p>Below are the details of your submission of Income Tax Declaration.</p>
+    
+    <table id="valuetbl">
+        <tr>
+            <td>Employee Name: {{ empname }}</td>
+            <td>Employee ID: {{ empid }}</td>     
+        </tr>
+        
+      
+    </table>
+
+    <table id="headertbl">
+        <tr>
+            <th>House Rent Allowances Section</th>
+        </tr>
+    </table>
+    
+    <table id="valuetbl">
+    
+        <tr>
+            <td>Landlord's Name</td>
+            <td>{{name}}</td>
+        </tr>
+        <tr>
+            <td>Landlord's PAN number</td>
+            <td>{{pannum_upper}}</td>
+        </tr>
+        <tr>
+            <td>Rent Staring Date</td>
+            <td>{{startdate|date:"d-m-Y"}}</td>
+        </tr>
+        <tr>
+            <td>Rent Ammount</td>
+            <td>{{rent}}</td>
+        </tr>
+        <tr>
+            <td>Landlord's Contact</td>
+            <td>{{contact}}</td>
+        </tr>
+        <tr>
+            <td>City Type</td>
+            <td>{{citytype}}</td>
+        </tr>
+        <tr>
+            <td>Landlord's Address</td>
+            <td>{{Paddress}}</td>
+        </tr>
+        <tr>
+            <td>Rent Address</td>
+            <td>{{Taddress}}</td>
+        </tr>
+        <tr>
+            <td>Pincode</td>
+            <td>{{pincode}}</td>
+        </tr>
+      
+    </table>
+
+    <table id="headertbl">
+       
+        <tr>
+            <th>Income/Loss From House Property Section</th>
+        </tr>
+        
+      
+    </table>
+    
+    <table id="valuetbl">
+    
+        <tr>
+            <td>Self Occupied loan interest</td>
+            <td>{{selfloan}}</td>
+        </tr>
+        <tr>
+            <td>Self Lender Name</td>
+            <td>{{lendername1}}</td>
+        </tr>
+
+        {% if lendername1 != 'other' %}
+        <tr>
+            <td>Self Lender PAN number</td>
+            <td>{{lenderpan1_upper}}</td>
+        </tr>
+        {% endif %}
+
+        {% if lendername1 == 'other' %}
+        <tr>
+            <td>Self Other Lender Name</td>
+            <td>{{otherlendername1}}</td>
+        </tr>
+        <tr>
+            <td>Self Other Lender PAN number</td>
+            <td>{{otherlenderpan1_upper}}</td>
+        </tr>
+        {% endif %}
+
+
+        
+        <tr>
+            <td>Annual letable Value</td>
+            <td>{{annualvalue}}</td>
+        </tr>
+        <tr>
+            <td>Municipal Tax</td>
+            <td>{{municipaltax}}</td>
+        </tr>
+        <tr>
+            <td>Home Loan Interest</td>
+            <td>{{Homeinterest}}</td>
+        </tr>
+        <tr>
+            <td>Income/Loss on House Property</td>
+            <td>{{incomeloss}}</td>
+        </tr>
+        <tr>
+            <td>Standered Deductions</td>
+            <td>{{standerdded}}</td>
+        </tr>
+        <tr>
+            <td>Let Lender Name</td>
+            <td>{{lendername2}}</td>
+        </tr>
+
+        {% if lendername2 != 'other' %}
+        <tr>
+            <td>Let Lender PAN Number</td>
+            <td>{{lenderpan2_upper}}</td>
+        </tr>
+        {% endif %}
+
+        {% if lendername2 == 'other' %}
+        <tr>
+            <td>Let Other Lender Name</td>
+            <td>{{otherlendername2}}</td>
+        </tr>
+        <tr>
+            <td>Let Other Lender PAN Number</td>
+            <td>{{otherlenderpan2_upper}}</td>
+        </tr>
+        {% endif %}
+
+
+
+        <tr>
+            <td>80EE Loan Sanctioned Date</td>
+            <td>{{sanctiondate3|date:"d-m-Y"}}</td>
+        </tr>
+        <tr>
+            <td>80EE Loan Ammount</td>
+            <td>{{loanammount}}</td>
+        </tr>
+        <tr>
+            <td>80EE Property Value</td>
+            <td>{{propertyvalue3}}</td>
+        </tr>
+        <tr>
+            <td>80EE Home Loan Interest</td>
+            <td>{{hlinterest}}</td>
+        </tr>
+        <tr>
+            <td>80EE Loan Lender Name</td>
+            <td>{{lendername3}}</td>
+        </tr>
+        {% if lendername3 != 'other' %}
+        <tr>
+            <td>80EE Lender PAN Number</td>
+            <td>{{lenderpan3_upper}}</td>
+        </tr>
+        {% endif %}
+
+        {% if lendername3 == 'other' %}
+        <tr>
+            <td>80EE Other Lender Name</td>
+            <td>{{otherlendername3}}</td>
+        </tr>
+        <tr>
+            <td>80EE Other Lender PAN Number</td>
+            <td>{{otherlenderpan3_upper}}</td>
+        </tr>
+        {% endif %}
+
+
+        
+        <tr>
+            <td>80EEA Loan Sanctioned Date</td>
+            <td>{{sanctiondate4|date:"d-m-Y"}}</td>
+        </tr>
+        <tr>
+            <td>80EEA Do you own another property other than this</td>
+            <td>{{havehouseproperty}}</td>
+        </tr>
+        <tr>
+            <td>80EEA House Property Value</td>
+            <td>{{propertyvalue4}}</td>
+        </tr>
+        <tr>
+            <td>80EEA Eligibility</td>
+            <td>{{Eligibility}}</td>
+        </tr>
+        <tr>
+            <td>80TTA Other Unspecified Income</td>
+            <td>{{otherincome}}</td>
+        </tr>
+        <tr>
+            <td>80TTA Interest Income from Savings account</td>
+            <td>{{savinginterest}}</td>
+        </tr>
+
+    </table>
+
+
+    <table id="headertbl">
+       
+        <tr>
+            <th>80 Other Deduction Section</th>
+        </tr>
+        
+      
+    </table>
+    
+    <table id="valuetbl">
+    
+        <tr>
+            <td>Mediclaim Insurance for Self/Spouse and Children</td>
+            <td>{{selfinsurance}}</td>
+        </tr>
+        <tr>
+            <td>Mediclaim Insurance for Parents - Non Senior Citizen</td>
+            <td>{{parantinsurance1}}</td>
+        </tr>
+        <tr>
+            <td>Mediclaim Insurance for Parents - Senior Citizen</td>
+            <td>{{parantinsurance2}}</td>
+        </tr>
+        <tr>
+            <td>Preventive Health Checkup</td>
+            <td>{{checkup}}</td>
+        </tr>
+
+        <tr>
+            <td>80 DDB-Medical Treatment for illness</td>
+            <td>{{illnesstype}}</td>
+        </tr>
+        <tr>
+            <td>80 DDB-Medical Treatment for Critical Illness for</td>
+            <td>{{medicaltreatment}}</td>
+        </tr>
+        <tr>
+            <td>80 DDB-Medical Treatment for Critical Illness</td>
+            <td>{{medicaltreatmentinput}}</td>
+        </tr>
+        <tr>
+            <td>Interest on education loan</td>
+            <td>{{educationinterest}}</td>
+        </tr>
+        <tr>
+            <td>Deduction under Section 80U-Self Disability</td>
+            <td>{{handicaped}}</td>
+        </tr>
+        <tr>
+            <td>Deduction under Section 80DD-Dependent Disability</td>
+            <td>{{dependhandicape}}</td>
+        </tr>
+        <tr>
+            <td>80EEB Vehicle Type</td>
+            <td>{{vehicletype}}</td>
+        </tr>
+        <tr>
+            <td>80EEB Loan sanction date</td>
+            <td>{{loansanctiondate|date:"d-m-Y"}}</td>
+        </tr>
+        <tr>
+            <td>Interest on Car Loan</td>
+            <td>{{carinterest}}</td>
+        </tr>
+        <tr>
+            <td>80 CCD (1B) - Deduction for Self-contribution to Pension Account (NPS)</td>
+            <td>{{ccd80}}</td>
+        </tr>
+        <tr>
+            <td>PRAN number</td>
+            <td>{{prannumb}}</td>
+        </tr>
+      
+    </table>
+
+
+    <table id="headertbl">
+       
+        <tr>
+            <th>80C Deduction Section</th>
+        </tr>
+        
+      
+    </table>
+    
+    <table id="valuetbl">
+    
+        <tr>
+            <td>Payment towards Life Insurance Policy</td>
+            <td>{{lifeInsurance}}</td>
+        </tr>
+        <tr>
+            <td>5 year time deposit under the Post Office Time Deposit Rules 1981</td>
+            <td>{{timeDeposit}}</td>
+        </tr>
+        <tr>
+            <td>Contribution to ULIP</td>
+            <td>{{ulip}}</td>
+        </tr>
+        <tr>
+            <td>Subscription to notified Central Govmt Savings certificate (NSC VIII issue)</td>
+            <td>{{savingsCertificate}}</td>
+        </tr>
+        <tr>
+            <td>Interest on NSC</td>
+            <td>{{interestNSC}}</td>
+        </tr>
+        <tr>
+            <td>Contribution to Public Provident Fund</td>
+            <td>{{ppf}}</td>
+        </tr>
+        <tr>
+            <td>House loan principal Only / Stamp Duty & Registration fees</td>
+            <td>{{houseLoan}}</td>
+        </tr>
+        <tr>
+            <td>Tuition fee - Children</td>
+            <td>{{tuitionFee}}</td>
+        </tr>
+        <tr>
+            <td>Subscription to notified Mutual Fund</td>
+            <td>{{mutualFund}}</td>
+        </tr>
+        <tr>
+            <td>5 Year Term Deposit</td>
+            <td>{{termDeposit}}</td>
+        </tr>
+        <tr>
+            <td>Sukanya Samriddhi</td>
+            <td>{{sukanyaSamriddhi}}</td>
+        </tr>
+
+    </table>
+
+    {% if joindate >= financial_year_start and financial_year_end >= joindate %}
+    <table id="headertbl">
+        <tr>
+            <th>Previous Employeement</th>
+        </tr>
+    </table>
+    <table id="valuetbl">
+    
+        <tr>
+            <td>Salary</td>
+            <td>{{empsalary}}</td>
+        </tr>
+        <tr>
+            <td>Professional Tax</td>
+            <td>{{professionaltax}}</td>
+        </tr>
+        <tr>
+            <td>Provident Fund</td>
+            <td>{{providentfund}}</td>
+        </tr>
+        <tr>
+            <td>Income Tax</td>
+            <td>{{incometax6}}</td>
+        </tr>
+      
+    </table>
+    {% endif %}
+</body>
+</html>

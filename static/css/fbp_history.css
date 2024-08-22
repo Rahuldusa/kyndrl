@@ -1,0 +1,168 @@
+.cartbr1 {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.cartbr2{
+    margin-left: 60px;
+    padding-top: 20px;
+}
+
+.c2 {
+    margin-top: 20px;
+}
+
+
+
+.sidebar {
+    transition: all 0.3s ease;
+}
+
+
+.container-fluid {
+    transition: margin-left 0.3s ease;
+}
+
+.cartbr1, .cartbr2{
+    transition: margin-left 0.3s ease;
+}
+
+
+
+body.sidebar-open .cartbr2 {
+    margin-left: 260px;
+    transition: margin-left 0.3s ease;
+}
+
+
+.table thead>tr.A2.A2>th {
+    background-color: #4c98ca;    
+    font-weight: bold;
+}
+
+
+
+
+.P_table_1 thead tr th,
+.P_table_1 tbody tr td{
+    width: 12%;    
+}
+.P_table_1 thead tr th{
+    font-size: 15px;
+}
+.P_table_1 tbody tr td{
+    font-size: 13px;
+}
+
+P_table_1,
+.P_table_2{
+    border: 1px solid black;
+}
+
+.P_table_2 thead tr th,
+.P_table_2 tbody tr td{
+    width: 7%;
+}
+
+.P_table_2 thead tr th{
+    font-size: 14px;
+}
+
+.P_table_2 tbody tr td{
+    font-size: 12px;
+}
+
+.final_re{
+    border: 1px solid black;
+    border-radius: 5px;    
+}
+
+.final_re p{
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.file_section p{
+    font-size: 8px;
+    color: red;
+}
+
+.approved_a{
+    color: green !important; 
+    font-weight: bold;
+}
+
+
+table tbody td a{
+    text-decoration: none;   
+}
+
+
+.total{
+    font-weight: bold;
+}
+
+.card-header {
+    background-color: #dba273;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.card-header_1 {
+    background-color: #dba273;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-top-left-radius: 5px;   
+    border-top-right-radius: 5px;
+    padding: 5px;
+}
+
+.emp_data{
+    overflow-y: auto;
+    height: 450px;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+td{
+    width: 50%;
+}
+
+table thead {
+    position: sticky;
+    top: 0;
+
+}
+
+
+@media (max-width: 768px) {
+
+    body.sidebar-open .cartbr2{
+        margin-left: 45px;
+        transition: margin-left 0.3s ease;
+    }
+}

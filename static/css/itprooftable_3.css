@@ -1,0 +1,36 @@
+
+.hra_table{
+    width: 100%;
+}
+
+.hra_table thead tr th,
+.hra_table tbody tr td{
+    width: 14%;
+    font-size: 15px;
+}
+
+
+.hra_table .form-control{
+    width: 90%;
+    font-size: 15px;
+}
+
+.ilhp_table{
+    width: 100%;
+}
+
+.ilhp_table thead tr th,
+.ilhp_table tbody tr td{
+    width: 25%; 
+    font-size: 15px;   
+}
+
+.ilhp_table .form-control{
+    width: 50%;
+    font-size: 15px;    
+}
+
+
+.heading{    
+    font-weight: bold;
+}

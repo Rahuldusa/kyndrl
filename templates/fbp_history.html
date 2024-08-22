@@ -1,0 +1,397 @@
+{% load static %}
+
+<html>
+
+<head>
+    <title>Tax Declaration</title>
+    {% include 'cdnlines.html' %}
+    {% include 'header.html' %}
+    {% include 'menubar.html' %}
+
+    <link rel="stylesheet" href="{% static 'css/fbp_history.css' %}">
+</head>
+
+<body>
+    <div class="container-fluid c2">
+        <div class="row cartbr1">
+
+            <div class="col-md-12">
+                <h4>Your FBP Claim here</h4>
+            </div>
+        </div>
+        <div class="row cartbr2">
+            <div class="col-md-11">
+                <a href="{% url 'workhistory' %}" class="btn btn-sm btn-secondary mb-3">Back</a>
+                
+                <div class="emp_data">
+
+                    {% if fbp_claim.Remarks %}
+                    <div class="final_re">
+                        <div class="card-header_1">Final Remarks</div>
+                        <p>{% if fbp_claim.Remarks %}{{fbp_claim.Remarks}}{% else %}{% endif %}</p>
+                    </div>  
+                    {% endif %}
+
+                    <form action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                                                
+                        <!-- Fuel & Maintenance Table -->                            
+                        {% if fuel_tb %}
+                        <div class="card mt-3">
+                            <div class="card-header table-header">Fuel & Maintenance</div>
+                            <div class="card-body">
+
+                                <div class="file_section">
+                                    <input type="file" name="f_upload_file" id="f_upload_file" accept=".pdf, .jpg, .gif" style="width: 250px;" > <br>                                            
+                                    <p>Maximum File upload size: 4 MB. Only .pdf, .gif and .jpg files are allowed.</p>
+                                </div>                
+
+                                <table class="table table-bordered P_table_1">
+                                    <thead>
+                                        <tr class="A2">
+                                            <th>Sl.no</th>
+                                            <th>Expense Date</th>
+                                            <th>Receipt Number</th>
+                                            <th>Vehicle Number</th>
+                                            <th>Amount Claimed</th>
+                                            <th>FBP Approver Amt.</th>
+                                            <th>Remarks</th>
+                                            <th>View File</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for index, i in fuel_tb_1 %}
+                                        <tr>
+                                            <td>{{index}}</td>
+                                            <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                            <td>{{i.RecNumber}}</td>
+                                            <td>{{i.VehNumber}}</td>
+                                            <td>{{i.AmtClaimed}}</td>
+                                            <td class="approved_a">{% if i.AppAmt %}{{i.AppAmt}}{% else %}0{% endif %}</td>
+                                            <td>{% if i.remarks %}{{i.remarks}}{% else %}{% endif %}</td>
+                                            <td>
+                                                {% for j in fbp_files %}
+                                                    {% if i.RecNumber == j.reciept_no %}
+                                                    <a href="{% static 'media/' %}{{ j.empid }}/{{ j.file_path|cut:'~'|slice:'12:' }}"
+                                                                target="_blank">{{j.filename}}</a>                                                                             
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                        </tr>    
+                                        {% endfor %}  
+                                        <tr>       
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>                                     
+                                            <td class="total">Total</td>
+                                            <td class="total">{{total_fuel}}</td>
+                                            <td class="approved_a">{{total_app_fuel}}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        
+                                        {% if fbp_files_rs %}
+                                        {% for i in fbp_files_rs %}
+                                        {% if i.section == 'Fuel_Resub' %}
+                                        <tr>
+                                            <td colspan="7" class="text-center">Resubmission File</td>
+                                            <td>
+                                                <a href="{% static 'media/' %}{{ i.empid }}/{{ i.file_path|cut:'~'|slice:'12:' }}"
+                                                                target="_blank">{{i.filename}}</a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endif %}
+
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                        </div>
+                        {% endif %}           
+
+                        <!-- Road & Accessories Table -->
+                        {% if road_tb %}
+                        <div class="card mt-3">
+                            <div class="card-header table-header">Road & Accessories</div>
+                            <div class="card-body">
+
+                                <div class="file_section">
+                                    <input type="file" name="r_upload_file" id="r_upload_file" accept=".pdf, .jpg, .gif" style="width: 250px;" > <br>                                            
+                                    <p>Maximum File upload size: 4 MB. Only .pdf, .gif and .jpg files are allowed.</p>
+                                </div>
+
+                                <table class="table table-bordered P_table_1">
+                                    <thead>
+                                        <tr class="A2">
+                                            <th>Sl.no</th>
+                                            <th>Expense Date</th>
+                                            <th>Receipt Number</th>
+                                            <th>Vehicle Number</th>
+                                            <th>Amount Claimed</th>
+                                            <th>FBP Approver Amt.</th>
+                                            <th>Remarks</th>
+                                            <th>View File</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for index, i in road_tb_1 %}
+                                        <tr>
+                                            <td>{{index}}</td>                            
+                                            <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>                            
+                                            <td>{{i.RecNumber}}</td>
+                                            <td>{{i.VehNumber}}</td>
+                                            <td>{{i.AmtClaimed}}</td>
+                                            <td class="approved_a">{% if i.AppAmt %}{{i.AppAmt}}{% else %}0{% endif %}</td>
+                                            <td>{% if i.remarks %}{{i.remarks}}{% else %}{% endif %}</td>
+                                            <td>
+                                                {% for j in fbp_files %}
+                                                {% if i.RecNumber == j.reciept_no %}
+                                                <a href="{% static 'media/' %}{{ j.empid }}/{{ j.file_path|cut:'~'|slice:'12:' }}"
+                                                                target="_blank">{{j.filename}}</a>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                        </tr>    
+                                        {% endfor %}  
+                                        
+                                        <tr>       
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>                                     
+                                            <td class="total">Total</td>
+                                            <td class="total">{{total_road}}</td>
+                                            <td class="approved_a">{{total_app_road}}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        
+                                        {% if fbp_files_rs %}
+                                        {% for i in fbp_files_rs %}
+                                        {% if i.section == 'Road_Resub' %}
+                                        <tr>
+                                            <td colspan="7" class="text-center">Resubmission File</td>
+                                            <td>
+                                                <a href="{% static 'media/' %}{{ i.empid }}/{{ i.file_path|cut:'~'|slice:'12:' }}"
+                                                                target="_blank">{{i.filename}}</a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <!-- LTA Table -->
+                        {% if lta_tb %}
+                        <div class="card mt-3">
+                            <div class="card-header table-header">LTA</div>
+                            <div class="card-body">
+
+                                <div class="file_section">
+                                    <input type="file" name="lta_upload_file" id="lta_upload_file" accept=".pdf, .jpg, .gif" style="width: 250px;" multiple > <br>                                            
+                                    <p>Maximum File upload size: 4 MB. Only .pdf, .gif and .jpg files are allowed.</p>
+                                </div>
+
+                                <table class="table table-bordered P_table_2">
+                                    <thead>
+                                        <tr class="A2">
+                                            <th>Sl.no</th>
+                                            <th>Exp. date</th>
+                                            <th>Start date</th>
+                                            <th>End date</th>
+                                            <th>Rec.No.</th>
+                                            <th>Place of Origin</th>
+                                            <th>Place of Travel</th>
+                                            <th>Family Declaration</th>
+                                            <th>Last Year of Claim</th>
+                                            <th>Amount Claimed</th>
+                                            <th>FBP Approver Amt.</th>
+                                            <th>Remarks</th>
+                                            <th>View File</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for index, i in lta_tb_1 %}
+                                        <tr>
+                                            <td>{{index}}</td>
+                                            <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                            <td>{{i.StDt|date:'d/m/Y'}}</td>
+                                            <td>{{i.EndDt|date:'d/m/Y'}}</td>
+                                            <td>{{i.RecNumber}}</td>
+                                            <td>{{i.Origin}}</td>
+                                            <td>{{i.PlaceTravel}}</td>
+                                            <td>{{i.FamDec}}</td>
+                                            <td>{{i.LastClaim}}</td>
+                                            <td>{{i.AmtClaimed}}</td>
+                                            <td class="approved_a">{% if i.AppAmt %}{{i.AppAmt}}{% else %}0{% endif %}</td>
+                                            <td>{% if i.remarks %}{{i.remarks}}{% else %}{% endif %}</td>
+                                            <td>
+                                                {% for j in fbp_files %}
+                                                {% if i.RecNumber == j.reciept_no %}
+                                                <a href="{% static 'media/' %}{{ j.empid }}/{{ j.file_path|cut:'~'|slice:'12:' }}"
+                                                                target="_blank">{{j.filename}}</a>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                        <tr>       
+                                            <td></td>
+                                            <td></td>
+                                            <td></td> 
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>                                                                                
+                                            <td class="total">Total</td>
+                                            <td class="total">{{total_lta}}</td>
+                                            <td class="approved_a">{{total_app_lta}}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+
+                                        {% if fbp_files_rs %}                                                        
+                                        <tr>
+                                            <td colspan="12" class="text-center">Resubmission File</td>
+                                            <td>
+                                                {% for i in fbp_files_rs %}
+                                                {% if i.section == 'LTA_Resub' %}
+                                                <a href="{% static 'media/' %}{{ i.empid }}/{{ i.file_path|cut:'~'|slice:'12:' }}"
+                                                                target="_blank">{{i.filename}}</a> <br>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                        </tr>                            
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <!-- Driver Salary Table -->
+                        {% if driver_tb %}
+                        <div class="card mt-3">
+                            <div class="card-header table-header">Driver Salary</div>
+                            <div class="card-body">
+
+                                <div class="file_section">
+                                    <input type="file" name="driver_file" id="driver_file" accept=".pdf, .jpg, .gif" style="width: 250px;" > <br>                                            
+                                    <p>Maximum File upload size: 4 MB. Only .pdf, .gif and .jpg files are allowed.</p>
+                                </div>
+
+
+                                <table class="table table-bordered P_table_1">
+                                    <thead>
+                                        <tr class="A2">
+                                            <th>Sl.no</th>
+                                            <th>Expense Date</th>
+                                            <th>Receipt Number</th>
+                                            <th>Salary Month</th>    
+                                            <th>Driver Salary</th>                                                    
+                                            <th>FBP Approver Amt.</th>
+                                            <th>Remarks</th>
+                                            <th>View File</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for index, i in driver_tb_1 %}
+                                        <tr>
+                                            <td>{{index}}</td>
+                                            <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                            <td>{{i.RecNumber}}</td>
+                                            <td>{{i.SalaryMonth}}</td>  
+                                            <td>{{i.DriveSal}}</td>                                                      
+                                            <td class="approved_a">{% if i.AppAmt %}{{i.AppAmt}}{% else %}0{% endif %}</td>
+                                            <td>{% if i.remarks %}{{i.remarks}}{% else %}{% endif %}</td>
+                                            <td>
+                                                {% for j in fbp_files %}
+                                                {% if i.RecNumber == j.reciept_no %}
+                                                <a href="{% static 'media/' %}{{ j.empid }}/{{ j.file_path|cut:'~'|slice:'12:' }}"
+                                                                target="_blank">{{j.filename}}</a>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                        <tr>       
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>                                     
+                                            <td class="total">Total</td>
+                                            <td class="total">{{total_driver}}</td>
+                                            <td class="approved_a">{{total_app_driver}}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+
+                                        {% if fbp_files_rs %}
+                                        {% for i in fbp_files_rs %}
+                                        {% if i.section == 'Driver_Resub' %}
+                                        <tr>
+                                            <td colspan="7" class="text-center">Resubmission File</td>
+                                            <td>
+                                                <a href="{% static 'media/' %}{{ i.empid }}/{{ i.file_path|cut:'~'|slice:'12:' }}"
+                                                                target="_blank">{{i.filename}}</a>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endif %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <center  class="file_section mt-3">
+                            <button type="submit">Submit</button>
+                        </center>                        
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2"></div>
+    </div>
+
+    {% if message %}
+    <script>     
+        window.onload = function () {
+            alert("{{ message|safe }}");                
+            window.location.href = "{% url 'fbp_history' fbp_claim.ClaimNo %}";
+        };
+    </script>
+    {% endif %}
+
+    <script>
+        var claim_status = "{{fbp_claim.Status}}"             
+    </script>
+
+
+
+    {% if fbp_claim.Sub2date %}
+    <script>var Sub2dt = "{{fbp_claim.Sub2date}}";</script>
+    {% else %}
+    <script>var Sub2dt = null;</script>
+    {% endif %}
+
+    {% if fbp_claim.verL2Date %}
+    <script>var verL2Dt = "{{fbp_claim.verL2Date}}";</script>
+    {% else %}
+    <script>var verL2Dt = null;</script>
+    {% endif %}
+
+    <script src="{% static 'js/fbp_history.js' %}"></script>
+
+</body>
+
+</html>

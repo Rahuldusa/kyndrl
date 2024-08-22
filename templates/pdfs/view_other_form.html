@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        Declaration OtherIncome Unspecified
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+
+    p{
+        font-size: 13px;
+    }
+
+    h4{
+        background-color: #B4D4FF;
+        padding-top: 10px;
+    }
+</style>
+
+<body>
+    <h4 style="font-size:16px;text-align:center;margin-top:25px;margin-bottom:20px;">OTHER INCOME DECLARATION</h4>
+    <p style="text-align:justify;">
+        Other Income (Unspecified) : Rs. <strong><u></u>{{saved_Ilhp.other_income_oi}}</u></strong> <br>
+        I Mr/Ms. {{data.empname|title}} ({{data.empid}}) do declare that Other Income (Unspecified) as stated above is true to
+        the best of my information and knowledge (For the financial year 2024-25). <b>I also understand
+        that the Other Income would be taxed at the Highest tax rate.</b> <br><br>
+        I also undertake to reimburse the Income-tax department/Company, any liability/action arising
+        out of the disallowance of any of the above exemptions by the Income-tax authorities on account
+        of error in the claim.
+    </p>
+    <p style="text-align:justify;margin-top:15px;color: rgb(0, 81, 255);">
+        I acknowledge and understand that, in light of the overall Remote Working, only for Financial
+        Year 2024-25, {{data.Company_Name}} has permitted me to temporarily submit a soft copy declaration, stating that
+        the details submitted by me are true and correct. I undertake to submit the original/ signed
+        hard copy documents, duly signed by me and/or my landlord, on-demand from {{data.Company_Name}}. Notwithstanding
+        the above, I agree and acknowledge that {{data.Company_Name}} may reject my claims if it is not satisfied with the
+        documents, or may require further documents from me, including original/ signed hard copy
+        documents. I further acknowledge that {{data.Company_Name}} may require me to submit such documents even after I
+        separate from {{data.Company_Name}}. If {{data.Company_Name}} is not satisfied with my documents, {{data.Company_Name}} may, at its option, reject my
+        claims for tax benefits, recover taxes due from me, or notify the tax authorities. {{data.Company_Name}}'s
+        discretion in this respect shall be final.
+    </p>
+    <p style="text-align:justify;margin-top:20px;">
+        For claiming income tax benefits and/ or exemptions under House Rent Allowance (HRA), Leave
+        Travel Allowance ( LTA), Medical allowance, Housing Loan, and any other permitted category, I
+        shall only submit valid proofs and information, in accordance with the requirements of the
+        Income Tax Act and other laws and regulations. If any incorrect, false or forged receipts/
+        declaration/ information is detected at any time, including during {{data.Company_Name}} regular audits, it would
+        warrant stern disciplinary action including separation from services, as per Business Conduct
+        Guidelines. In addition, any tax benefits may be withdrawn/ reversed. I am also liable to
+        directly handle any investigation or action taken by the Income Tax Department. By signing the
+        declaration/ disclaimer, I acknowledge and agree to the above
+    </p>
+    <p style="text-align:left">        
+        Date: {{current_date|date:"d-m-Y" }} <br>
+        Place: {{other_place}} 
+    </p>
+    <p style="text-align:right">(SIGNATURE OF THE EMPLOYEE)</p>
+</body>
+
+</html>

@@ -1,0 +1,218 @@
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">        
+    </head>
+
+    <style>
+
+        table{
+            margin-top: 20px;        
+        }
+        
+        table, th, td{
+            border: 1px solid black;
+            padding: 3px;           
+            text-align: left;
+            font-size: 16px;           
+        }
+        .table_1 thead th,
+        .table_1 tbody td{
+            width: 20%;
+        }  
+        
+        .table_1 thead th{
+           background-color: #F8EDE3;
+        }
+        p{
+            font-size: 16px;
+        }
+
+        .total{
+            font-weight: bold;
+        }
+        .heading{
+            text-align: center;
+            background-color: #df9e90 ;
+        }
+        h4{
+            font-size: 18px;
+        }
+    </style>
+
+
+    <body>
+        
+        {% if mail_master_tb %}
+        <p>Dear {{mail_master_tb.emp_name}} ({{mail_master_tb.empid}}),</p>
+        <p>Thanks for submitting Claim details.</p>
+        <p>Below is the details of your Claims.</p>
+
+
+        
+        <h4>Status: {{manual_status}}</h4>
+        
+        {% endif %}
+
+        {% if mail_master_tb.Remarks %} 
+        <table>
+            <thead>
+                <tr>
+                    <th>Custom Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        {{mail_master_tb.Remarks}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {% endif %}
+        
+        {% if mail_fuel_tb %}          
+        <table class="table_1">
+            <tr>
+                <td colspan="5" class="heading"> <h6>Fuel, Insurance & Maintenance</h6></td>
+            </tr>
+            <thead>
+                <tr>
+                    <th>Expense Date</th>
+                    <th>Receipt Number</th>
+                    <th>Claimed Amount</th>                                        
+                    <th>Approved Amount</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>            
+
+            {% for i in mail_fuel_tb %}
+            <tr>                                                 
+                <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                <td>{{i.RecNumber}}</td>
+                <td>{{i.AmtClaimed}}</td>                
+                <td>{% if i.AppAmt %}{{i.AppAmt}}{% else %}0{% endif %}</td>                                        
+                <td>{% if i.remarks %}{{i.remarks}}{% else %}{% endif %}</td>                                        
+            </tr>
+            {% endfor %}
+            <tr>                                            
+                <td colspan="3">Total Approved</td>
+                <td class="total">{{total_fuel}}</td>
+                <td></td>                
+            </tr>
+
+        </table>
+
+        {% endif %}
+
+        {% if mail_road_tb %}          
+        <table class="table_1">
+            <tr>
+                <td colspan="5" class="heading"> <h6>Road Tax/Vehicle Accessories</h6></td>
+            </tr>
+            <thead>
+                <tr>
+                    <th>Expense Date</th>
+                    <th>Receipt Number</th>
+                    <th>Claimed Amount</th>                                        
+                    <th>Approved Amount</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            {% for i in mail_road_tb %}
+            <tr>                                                 
+                <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                <td>{{i.RecNumber}}</td>
+                <td>{{i.AmtClaimed}}</td>                
+                <td>{% if i.AppAmt %}{{i.AppAmt}}{% else %}0{% endif %}</td>
+                <td>{% if i.remarks %}{{i.remarks}}{% else %}{% endif %}</td>                                         
+            </tr>
+            {% endfor %}
+            <tr>                                            
+                <td colspan="3">Total Approved</td>
+                <td class="total">{{total_road}}</td>
+                <td></td>             
+            </tr>
+
+        </table>
+
+        {% endif %}
+
+        {% if mail_lta_tb %}          
+        <table class="table_1">
+            <tr>
+                <td colspan="5" class="heading"> <h6>LTA</h6></td>
+            </tr>
+            <thead>
+                <tr>
+                    <th>Expense Date</th>                    
+                    <th>Receipt Number</th>   
+                    <th>Claimed Amount</th>                                                                             
+                    <th>Approved Amount</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            {% for i in mail_lta_tb %}
+            <tr>                                                 
+                <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>                
+                <td>{{i.RecNumber}}</td>     
+                <td>{{i.AmtClaimed}}</td>
+                <td>{% if i.AppAmt %}{{i.AppAmt}}{% else %}0{% endif %}</td>
+                <td>{% if i.remarks %}{{i.remarks}}{% else %}{% endif %}</td>                                                        
+            </tr>
+            {% endfor %}
+            <tr>                                            
+                <td colspan="3">Total Approved</td>
+                <td class="total">{{total_lta}}</td>
+                <td></td>                
+            </tr>
+
+        </table>
+
+        {% endif %}
+
+        {% if mail_driver_tb %}          
+        <table class="table_1">
+            <tr>
+                <td colspan="5" class="heading"> <h6>Driver</h6></td>
+            </tr>
+            <thead>
+                <tr>
+                    <th>Expense Date</th>
+                    <th>Receipt Number</th>
+                    <th>Driver Salary</th>                                    
+                    <th>Approved Amount</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            {% for i in mail_driver_tb %}
+            <tr>                                                 
+                <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                <td>{{i.RecNumber}}</td>  
+                <td>{{i.DriveSal}}</td>
+                <td>{% if i.AppAmt %}{{i.AppAmt}}{% else %}0{% endif %}</td>
+                <td>{% if i.remarks %}{{i.remarks}}{% else %}{% endif %}</td>                                                          
+            </tr>
+            {% endfor %}
+            <tr>                                            
+                <td colspan="3">Total Approved</td>
+                <td class="total">{{total_driver}}</td>
+                <td></td>                
+            </tr>
+
+        </table>
+
+        {% endif %}
+
+        <p>
+            Thanks & Regards, <br>
+            FBP Team
+        </p>
+
+    </body>
+</html>

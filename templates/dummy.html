@@ -1,0 +1,341 @@
+{% if saved_Ilhp.selfOccupiedHouseProperty and saved_Ilhp.annualLettableValue  %}
+                        <!-- modal-2 -->
+                            <div class="container mt-3 mb-3" align="center" >
+                                <div>
+                                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#dec_ilhp">
+                                    ILHP Declaration
+                                </button>
+                                </div>
+                            
+                        
+                            <!-- The Modal -->
+                            <div class="modal" id="dec_ilhp">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">                            
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" style="text-transform:uppercase;font-size:15px;">DECLARATION TO CLAIM
+                                                INCOME/LOSS FROM
+                                                HOUSE PROPERTY</h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>                            
+                                        <!-- Modal body -->
+                                        <div class="modal-body" style="text-align: left;">    
+                                            <form action="" method="post" id="ilh_dec_form_both">
+                                                {% csrf_token %}
+                                                                    
+                                                <table class="table table-bordered" id="dec_ilhp_table1" align="center">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>Employee Number</th>
+                                                            <td>{{data.empid}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Employee Name</th>
+                                                            <td>{{data.empname|title}}</td>                            
+                                                        </tr>
+                                                        <tr>
+                                                            <th>PAN</th>
+                                                            <td>{{data.emppan}}</td>                            
+                                                        </tr>                            
+                                                    </tbody>
+                                                </table>                            
+                                                <table class="table table-bordered" id="dec_ilhp_table2" align="center">
+                                                    <h6 style="text-align: center;">Declaration regarding House Property:</h6>
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Self Occupied</th>
+                                                            <th>Let Out</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>                                                        
+                                                        <tr>
+                                                            <th>
+                                                                "Whether the Property is Solely owned or Jointly Owned
+                                                                if the loan is taken along with a Co-borrower"
+                                                            </th>
+                                                            <td>
+                                                                <select name="sole_join_owner_self" id="sole_join_owner_self" onchange="validateSole_join_owner_self()">
+                                                                    <option {% if saved_basic.sole_join_owner_self %}value="{{saved_basic.sole_join_owner_self}}" {% endif %}>{% if saved_basic.sole_join_owner_self %}{{saved_basic.sole_join_owner_self}}{% endif %}</option>
+                                                                    <option value="solely">Solely</option>
+                                                                    <option value="jointly">Jointly</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <select name="sole_join_owner_let" id="sole_join_owner_let" onchange="validateSole_join_owner_let()">
+                                                                    <option {% if saved_basic.sole_join_owner_let %}value="{{saved_basic.sole_join_owner_let}}" {% endif %}>{% if saved_basic.sole_join_owner_let %}{{saved_basic.sole_join_owner_let}}{% endif %}</option>
+                                                                    <option value="solely">Solely</option>
+                                                                    <option value="jointly">Jointly</option>
+                                                                </select>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Name of Joint Owner (if applicable)</th>
+                                                            <td>
+                                                                <input type="text" name="name_joint_owner_slef" id="name_joint_owner_slef" {% if saved_basic.name_joint_owner_slef %} value="{{saved_basic.name_joint_owner_slef}}" {% endif %} disabled>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="name_joint_owner_let" id="name_joint_owner_let" {% if saved_basic.name_joint_owner_let %} value="{{saved_basic.name_joint_owner_let}}" {% endif %} disabled>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Joint Owner relationship with employee</th>
+                                                            <td>
+                                                                <input type="text" name="relationship_self" id="relationship_self" {% if saved_basic.relationship_self %} value="{{saved_basic.relationship_self}}" {% endif %} disabled>
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="relationship_let" id="relationship_let" {% if saved_basic.relationship_let %} value="{{saved_basic.relationship_let}}" {% endif %} disabled>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Income Tax exemption claimed to the extent of (%)</th>
+                                                            <td>
+                                                                <input type="number" name="extent_income_tax_self" id="extent_income_tax_self" oninput="validateextent_income_tax_self()" {% if saved_basic.extent_income_tax_self %} value="{{saved_basic.extent_income_tax_self}}" {% endif %}>
+                                                                <span id="extent_income_tax_selfError" class="error text-danger"></span>
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" name="extent_income_tax_let" id="extent_income_tax_let" oninput="validateextent_income_tax_let()"  {% if saved_basic.extent_income_tax_let %} value="{{saved_basic.extent_income_tax_let}}" {% endif %}>
+                                                                <span id="extent_income_tax_letError" class="error text-danger"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Housing Loan - Principal paid/payable during FY 2024-25
+                                                            </th>
+                                                            <td>
+                                                                <input type="number" name="principal_loan_tax_self" id="principal_loan_tax_self" oninput="validatePrincipal_loan_tax_self()" {% if saved_basic.principal_loan_tax_self %} value="{{saved_basic.principal_loan_tax_self}}" {% endif %}>
+                                                                <span id="principal_loan_tax_selfError" class="error text-danger"></span>
+                                                            </td>
+                                                            <td>
+                                                                <input type="number" name="principal_loan_tax_let" id="principal_loan_tax_let" oninput="validatePrincipal_loan_tax_let()" {% if saved_basic.principal_loan_tax_let %} value="{{saved_basic.principal_loan_tax_let}}" {% endif %}>
+                                                                <span id="principal_loan_tax_letError" class="error text-danger"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Housing Loan - Interest paid/payable during FY 2024-25
+                                                            </th>
+                                                            <td>
+                                                                {% if saved_Ilhp.selfOccupiedHouseProperty %}{{saved_Ilhp.selfOccupiedHouseProperty}}{% else %}0{%endif%}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2" style="border-left: 1px solid #fff;border-right: 1px solid #fff;"></td>
+                                                        </tr>                                                        
+                                                        <tr>
+                                                            <th>Is the House property Self Occupied/Let Out
+                                                            </th>                            
+                                                            <td colspan="2">
+                                                                <input type="text" name="is_house_self" id="is_house_self" value="Both" readonly>                                                                
+                                                            </td>                            
+                                                        </tr>                                                        
+                                                    </tbody>
+                                                </table>
+                                                <p style="color:rgb(0, 81, 255);">[Employees having both Self Occupied & Let Out
+                                                    properties are hereby requested to submit separate declarations respectively]
+                                                </p>                            
+                                                <table class="table table-bordered" id="dec_ilhp_table3" align="center">                            
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Self Occupied</th>
+                                                            <th>Let Out</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th>
+                                                                Address of the Property                            
+                                                            </th>
+                                                            <td>
+                                                                <textarea name="property_address_self" id="property_address_self" cols="30" rows="3">{% if saved_basic.property_address_self %}{{saved_basic.property_address_self}}{% endif %}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="property_address_let" id="property_address_let" cols="30" rows="3">{% if saved_basic.property_address_let %}{{saved_basic.property_address_let}}{% endif %}</textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Name of the Lender (Banks/Financial Institutions/Others)
+                                                            </th>
+                                                            <td>
+                                                                {% if saved_Ilhp.selfOccupiedHouseProperty %}{% if saved_Ilhp.selfHomeLoanLenderName == 'other' %} {{saved_Ilhp.otherselfHomeLoanLenderName}} {% else %}{{saved_Ilhp.selfHomeLoanLenderName}} {% endif %}{% endif %}                                                                                                                            
+                                                            </td>
+                                                            <td>                                                                
+                                                                {% if saved_Ilhp.annualLettableValue %}{% if saved_Ilhp.loanLenderName == 'other' %} {{saved_Ilhp.otherloanLenderName}} {% else %}{{saved_Ilhp.loanLenderName}} {% endif %} {% endif %}                                                                
+                                                            </td>
+                                                        </tr>                                                        
+                                                        <tr>
+                                                            <th>Permanent Account Number (PAN) of the Lender
+                                                            </th>
+                                                            <td>
+                                                                {% if saved_Ilhp.selfOccupiedHouseProperty %}{% if saved_Ilhp.selfHomeLoanLenderName == 'other' %} {{saved_Ilhp.otherselfHomeLoanLenderPAN}} {% else %}{{saved_Ilhp.selfHomeLoanLenderPAN}} {% endif %} {% endif %}                                                                  
+                                                            </td>
+                                                            <td>                                                                
+                                                                {% if saved_Ilhp.annualLettableValue %}{% if saved_Ilhp.loanLenderName == 'other' %} {{saved_Ilhp.otherloanLenderPAN}} {% else %}{{saved_Ilhp.loanLenderPAN}} {% endif %} {% endif %}     
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Date of borrowing loan
+                                                            </th>
+                                                            <td>
+                                                                <input type="date" name="barrow_date_self" id="barrow_date_self" {% if saved_basic.barrow_date_self %} value="{{saved_basic.barrow_date_self|date:'Y-m-d'}}" {% endif %} oninput="validateBarrowDate_self()"> <br>
+                                                                <span id="barrowdate_selfError" class="error text-danger"></span>
+                                                            </td>
+                                                            <td>
+                                                                <input type="date" name="barrow_date_let" id="barrow_date_let" {% if saved_basic.barrow_date_let %} value="{{saved_basic.barrow_date_let|date:'Y-m-d'}}" {% endif %} oninput="validateBarrowDate_let()"> <br>
+                                                                <span id="barrowdate_letError" class="error text-danger"></span>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>Date of Possession / Date of completion of construction
+                                                            </th>
+                                                            <td>
+                                                                <input type="date" name="possession_date_self" id="possession_date_self" {% if saved_basic.possession_date_self %} value="{{saved_basic.possession_date_self|date:'Y-m-d'}}" {% endif %} oninput="validatePossession_selfDate()"> <br>
+                                                                <span id="possessiondate_selfError" class="error text-danger"></span>
+                                                            </td>
+                                                            <td>
+                                                                <input type="date" name="possession_date_let" id="possession_date_let" {% if saved_basic.possession_date_let %} value="{{saved_basic.possession_date_let|date:'Y-m-d'}}" {% endif %} oninput="validatePossessionDate_let()"> <br>
+                                                                <span id="possession_date_letError" class="error text-danger"></span>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                    </tbody>
+                                                </table>                            
+                                                <p style="color: rgb(0, 81, 255);">IN CASE HOUSE PROPERTY IS SELF OCCUPIED:</p>                            
+                                                <ol>
+                                                    <li>The Gross Annual Value is 'NIL'.</li>
+                                                    <li> No deduction allowed towards Property Tax/Municipal Tax paid.</li>
+                                                    <li>No deduction except interest on borrowed capital is available.</li>
+                                                    <li>Maximum deduction of Rs. 200,000/- allowed towards interest on borrowed capital for self
+                                                        occupied property.</li>
+                                                </ol>                                                                                                       
+                                                <table class="table table-bordered" id="dec_ilhp_table4" align="center">                            
+                                                    <tbody>                                                            
+                                                        <tr>
+                                                            <th colspan="2" style="text-align: center;">
+                                                                Let Out COMPUTATION                                                    
+                                                            </th>                            
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                            </th>
+                                                            <th>Amount in Rs.
+                                                            </th>
+                                                        </tr>                                                        
+                                                        <tr>
+                                                            <th>1. GROSS ANNUAL VALUE :<br>
+                                                                In case of Let out, Actual rent received during the FY 2024-25.                            
+                                                            </th>
+                                                            <td>
+                                                                {{saved_Ilhp.annualLettableValue}}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>2. Less : Property Tax / Municipal Tax Paid for the LET OUT property only                            
+                                                            </th>
+                                                            <td>{{saved_Ilhp.municipalPropertyTax}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>3. Annual Value u/s 25 (a) =( 1 - 2)
+                                                            </th>
+                                                            <td>
+                                                                {% if Annual_Value %}{{Annual_Value}}{% else %}0{%endif%}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>4. Less: 30% of the Annual Value u/s 25(a)
+                                                            </th>
+                                                            <td>{{saved_Ilhp.standardDeduction}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>5. Less: Interest on borrowed capital
+                                                            </th>
+                                                            <td>{{saved_Ilhp.incomeLossOnHouseProperty}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>6. TOTAL DEDUCTIONS
+                                                            </th>
+                                                            <td>{% if totaldeduction %}{{totaldeduction}}{% else %}0{% endif %}</td>
+                                                        </tr>                                                           
+                                                        <tr>
+                                                            <th>7. INCOME / LOSS FROM HOUSE PROPERTY*
+                                                            </th>
+                                                            <td>{% if income_loss_new %}{{income_loss_new}}{% else %}0{% endif %}</td>
+                                                        </tr>
+
+                                                        
+                                                    </tbody>
+                                                </table>  
+                                                
+                                                <table class="table table-bordered" id="dec_ilhp_table4" align="center">                            
+                                                    <tbody> 
+                                                        <tr>
+                                                            <th colspan="2" style="text-align: center;">
+                                                                Self Occupied COMPUTATION                                                    
+                                                            </th>                            
+                                                        </tr>
+                                                        <tr>
+                                                            <th>
+                                                            </th>
+                                                            <th>Amount in Rs.
+                                                            </th>
+                                                        </tr>   
+                                                        <tr>
+                                                            <th>1. INCOME / LOSS FROM HOUSE PROPERTY*
+                                                            </th>
+                                                            <td>-{{saved_Ilhp.selfOccupiedHouseProperty}}</td>
+                                                        </tr>   
+                                                    </tbody>
+                                                </table>                                                             
+                                                <h6 style="text-transform:uppercase;text-align:center;">Declaration</h6>                            
+                                                <p style="text-align:justify;line-height:30px;margin-top:15px;color: rgb(0, 81, 255);">I acknowledge
+                                                    and understand that, in light of the overall pandemic situation, only for Financial
+                                                    Year 2024-25,IBM has permitted me to temporarily submit a soft copy declaration, stating that
+                                                    the details submitted by me are true and correct. I undertake to submit the original/ signed
+                                                    hard copy documents, duly signed by me and/or my landlord, on demand from IBM. Notwithstanding
+                                                    the above, I agree and acknowledge that IBM may reject my claims if it is not satisfied with the
+                                                    documents, or may require further documents from me, including original/ signed hard copy
+                                                    documents. . I further acknowledge that IBM may require me to submit such documents even after I
+                                                    separate from IBM. If IBM is not satisfied with my documents, IBM may, at its option, reject my
+                                                    claims for tax benefits, recover taxes due from me, or notify the tax authorities. IBM's
+                                                    discretion in this respect shall be final.
+                            
+                                                </p>
+                                                <p style="text-align:justify;line-height:30px;">For claiming income tax benefits and/ or exemptions
+                                                    under House Rent Allowance (HRA), Leave
+                                                    Travel Allowance ( LTA), Medical allowance, Housing Loan, and any other permitted category, I
+                                                    shall only submit valid proofs and information, in accordance with the requirements of the
+                                                    Income Tax Act and other laws and regulations. If any incorrect, false or forged receipts/
+                                                    declaration/ information is detected at any time, including during IBM regular audits, it would
+                                                    warrant stern disciplinary action including separation from services, as per Business Conduct
+                                                    Guidelines. In addition, any tax benefits may be withdrawn/ reversed. I am also liable to
+                                                    directly handle any investigation or action taken by the Income Tax Department. By signing the
+                                                    declaration/ disclaimer, I acknowledge and agree to the above
+                                                </p>
+                                                <p><b>The above said Amount is paid by my Taxable Income and the Tax exemption is claimed only by
+                                                        me</b></p>
+                                                    
+                                                <p style="text-align:justify;margin-top:15px;color: rgb(0, 81, 255);font-size:14px;">
+                                                <b>Note:</b><br>
+                                                * Income from House Property(Net amount) can be -ve or +ve basis which it will be considered as
+                                                Income or Loss from House property.<br>
+                                                * Positive value is added to the Salary Income and Negative value will be reduced from the Salary
+                                                Income.
+                            
+                                                </p>
+                                                <div class="form-check mb-3" style="text-align: left;">
+                                                    <input class="form-check-input" type="checkbox" onchange="SignedDigitallyStatus_ilhp_both()" id="digitally_signed_ilhp_both" name="digitally_signed_ilhp_both" disabled>
+                                                    <label class="form-check-label" for="digitally_signed_ilhp_both">Digitally Signed by Me</label>
+                                                </div>
+                                                <div class="mb-3 text-center">                                            
+                                                    <a class="btn btn-sm btn-primary" id="submit_ilhp_btn_both"  onclick="submit_ilhp_both()" disabled>Confirm</a>                                             
+                                                    <button type="button" class="btn btn-sm btn-danger ms-2" data-bs-dismiss="modal" onclick="cancelcheck2_both()">Cancel</button>
+                                                </div>                                            
+                                            </form>
+                                            </div>
+                        
+                                            </div>
+                                        </div>
+                            </div>
+                            </div>
+                    
+                        {% endif %}

@@ -1,0 +1,190 @@
+{% load static %}
+
+<html>
+
+<head>
+    <title>Tax Declaration</title>
+
+    {% include 'cdnlines.html' %}
+    {% include 'header.html' %}
+    {% include 'menubar.html' %}
+
+    <link rel="stylesheet" href="{% static 'css/workhistory.css' %}">
+
+</head>
+
+<body>
+
+    <div class="container-fluid c2">
+        <div class="row whr1">
+            <div class="col-md-12">
+                <h4 class="head_1">Work Item History</h4>
+            </div>
+        </div>
+        <div class="row whr2">   
+            <div class="col-md-6">
+                <h5>IT Declarations </h5> 
+                <div class="table-container">
+                    <table class="table table-bordered table-hover">
+                        <thead class="text-white">
+                            <tr class="A1">
+                                <th>CNUM</th>
+                                <th>Declaration No</th>
+                                <th>Time of Saving</th>
+                                <th>Time of Submission</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if itdec %}
+                            {% for i in itdec %}
+                            <tr>
+                                <td>{{i.empid}}</td>
+                                <td>{{i.Declaration_no}}</td>
+                                <td>{{i.saveddate|date:"d/m/Y"}}</td>
+                                <td>{{i.saveddate|date:"d/m/Y"}}</td>
+                                <td>
+                                    <a href="{% url 'iddeclaration_view' %}?Declaration_no={{ i.Declaration_no }}">View</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    <h5>No data available</h5>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+
+                {% if band in bandlist1 %}
+
+                <h5>Car Declarations</h5>
+                <div class="table-container">
+                <table class="table table-bordered table-hover">
+                    <thead class="text-white">
+                        <tr class="A1">
+                            <th>CNUM</th>
+                            <th>Declaration No</th>
+                            <th>Time of Saving</th>
+                            <th>Time of Submission</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <div class="scrollable-table1">
+                        <tbody>
+                            {% if cardec %}
+                            {% for i in cardec %}
+                            <tr>
+                                <td>{{i.empid}}</td>
+                                <td>{{i.DeclarationNo}}</td>
+                                <td>{{i.timestamp|date:"d/m/Y"}}</td>
+                                <td>{{i.timestamp|date:"d/m/Y"}}</td>
+                                <td>
+                                    <a href="{% url 'cardeclaration_view' %}?DeclarationNo={{ i.DeclarationNo }}">View</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    <h5>No data available</h5>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </div>
+                </table>
+                </div>
+
+                {% endif %}
+            </div>
+        </div>  
+
+        <div class="row whr2">   
+            <div class="col-md-6">
+                <h5>FBP Claims</h5> 
+                <div class="table-container">
+                    <table class="table table-bordered table-hover">
+                        <thead class="text-white">
+                            <tr class="A1">
+                                <th>CNUM</th>
+                                <th>Claim No</th>                                
+                                <th>Time of Submission</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if fbp_dec %}
+                            {% for i in fbp_dec %}
+                            <tr>
+                                <td>{{i.empid}}</td>
+                                <td>{{i.ClaimNo}}</td>
+                                <td>{{i.SubDate|date:"d/m/Y"}}</td> 
+                                <td>{% if i.verL2Date and i.Status %}{{i.Status}}{% else %}In Progress{% endif %}</td>                               
+                                <td>
+                                    <a href="{% url 'fbp_history' i.ClaimNo %}">View</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    <h5>No data available</h5>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h5>Employee Tax Regime</h5> 
+                <div class="table-container">
+                    <table class="table table-bordered table-hover">
+                        <thead class="text-white">
+                            <tr class="A1">
+                                <th>CNUM</th>
+                                <th>Claim No</th>          
+                                <th>Tax Regime Opted</th>                      
+                                <th>Time of Submission</th>                                                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if regime %}
+                            {% for i in regime %}
+                            <tr>
+                                <td>{{i.empid}}</td>
+                                <td>{{i.Claimno}}</td>
+                                <td style="font-weight: bold;">{{i.Regime}}</td>  
+                                <td>{{i.TSSubmit|date:"d/m/Y"}}</td>                                                                 
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    <h5>No data available</h5>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5"></div>
+    </div>
+
+
+    <script src="{% static 'js/workhistory.js' %}"></script>
+</body>
+
+</html>

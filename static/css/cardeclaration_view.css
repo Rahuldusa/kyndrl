@@ -1,0 +1,50 @@
+.cartbr1 {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.cartbr2{
+    margin-left: 60px;
+    padding-top: 20px;
+}
+
+.c2 {
+    margin-top: 20px;
+}
+
+
+
+.sidebar {
+    transition: all 0.3s ease;
+}
+
+
+.container-fluid {
+    transition: margin-left 0.3s ease;
+}
+
+.cartbr1, .cartbr2{
+    transition: margin-left 0.3s ease;
+}
+
+
+
+body.sidebar-open .cartbr2 {
+    margin-left: 260px;
+    transition: margin-left 0.3s ease;
+}
+
+
+.table thead>tr.A1.A1>th {
+    background-color: #4c98ca;    
+    font-weight: bold;
+}
+
+
+@media (max-width: 768px) {
+
+    body.sidebar-open .cartbr2{
+        margin-left: 45px;
+        transition: margin-left 0.3s ease;
+    }
+}

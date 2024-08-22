@@ -1,0 +1,30 @@
+{% load static %}
+
+<html>
+<title>Tax Declaration</title>
+
+<head>
+    {% include 'cdnlines.html' %}
+    {% include 'header.html' %}
+    {% include 'menubar.html' %}
+
+    <link rel="stylesheet" href="{% static 'css/formpage.css' %}">
+</head>
+
+<body>
+    <div class="container-fluid c2">
+        <div class="row r2">       
+            <div class="col-md-12">
+                <h4 class="formh1">Form16</h4>
+            </div>
+        </div>
+        <div class="row r3">       
+            <div class="col-md-12">
+                <a href="{% url 'form16_files' %}">Click here to download Form16 </a>
+            </div>
+        </div>        
+    </div>
+   
+</body>
+
+</html>

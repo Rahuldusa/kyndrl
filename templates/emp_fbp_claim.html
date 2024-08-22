@@ -1,0 +1,1501 @@
+
+{% load static %}
+<html>
+    <head>
+        <title>Tax Declaration</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        {% include 'cdnlines.html' %}
+        {% include 'header_2.html' %}
+        
+        <link rel="stylesheet" href="{% static 'css/emp_fbp_claim.css' %}">
+    </head>    
+    <body>
+ 
+        <div class="container">
+            <div class="row r1">
+                <h5 class="heading">Basic Details</h5> 
+                <div class="col-md-12 block">                                                           
+                    <div class="dt_1" style="display: flex;">
+                        <h6 class="lable">CNUM</h6>
+                        <input class="form-control value" type="text" value="{{data.empid}}" disabled>
+                    </div>
+                    <div class="dt_1" style="display: flex;">
+                        <h6 class="lable">Name</h6>
+                        <input class="form-control value" type="text" value="{{data.empname}}" disabled>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Fuel -->
+            {% if Car_dec_last %}
+            {% if band in bandlist1 %}
+            {% if Car_dec_last.clc or Car_dec_last.own_car %} 
+            <div class="row r2">
+                <div class="heading">
+                    <form action="" id="" method="post">
+                        {% csrf_token %}
+                        <div style="display: flex; align-items: center;">
+                            <h6>Fuel, Insurance & Maintenance</h6>                            
+                            <input type="radio" class="h1_" value="yes" name="f_M" id="f_M_yes" onclick="validate_f_M()">Yes
+                            <input type="radio" class="h1_" value="no" name="f_M" id="f_M_no" onclick="validate_f_M()" checked>No                                                            
+                        </div>                        
+                    </form>
+                </div>
+                <div class="col-md-12 block" id="f_M_block" style="display: none;">
+                    <p class="statement">Your eligibility for Fuel and Maintenance claim and Vehicle insurance claim together in a single year if Rs.{{remaining_fuel}}/year or Rs.{{rem_12_}}/month</p>                  
+                     
+                    <a href="#" data-bs-toggle="modal" id="openModalButton_1" data-bs-target="#f_M_form" >Add Claim</a>
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="f_M_form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content modal_new_1">
+                                <!-- Modal Header -->
+                                <div class="modal-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
+                                    <h4 class="modal-title" id="exampleModalLabel" style="flex: 1; text-align: center;">Add Fuel Claim</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    
+                                    <form action="{% url 'emp_fuel_submit' %}" method="post" enctype="multipart/form-data" id="fuel_form">
+                                        {% csrf_token %}
+
+                                        <div class="d-flex f_r">
+                                            <label for="expenseDate" class="d-flex f_r form-label">Expense Date:<p>*</p></label>
+                                            <input type="date" class="form-control" name="f_expenseDate" id="f_expenseDate" oninput="validateD_Fuel()" required>
+                                        </div>
+
+                                        <div class="d-flex f_r">
+
+                                            <label for="claimedAmount" class="d-flex f_r form-label">Claimed Amount:<p>*</p></label>
+                                            <input type="number" class="form-control" name="f_claimedAmount" id="f_claimedAmount" required oninput="validateFuel()">
+                                          
+                                                                                       
+                                            <h6 id="fuel_amount">Remaining Amount(Fuel): <span style="color: red;">{{remaining_fuel}}</span></h6>                                            
+                                          
+                                        </div>
+                                                                                                                                                      
+                                        <div class="d-flex f_r">
+                                          <label for="receiptNo" class="d-flex f_r form-label">Receipt No.:<p>*</p></label>
+                                          <input type="text" class="form-control" name="f_receiptNo" id="f_receiptNo" required>
+                                        </div>
+
+                                        <div class="d-flex f_r">
+                                          <label for="f_VehNumber" class="d-flex f_r form-label">Vehicle No.:<p>*</p></label>
+                                          <input type="text" class="form-control" name="f_VehNumber" id="f_VehNumber" {% if Car_dec_last %} value="{{Car_dec_last.registration}}"{% endif %} readonly>
+                                        </div>
+
+                                        <div class="d-flex f_r">
+                                          <label for="uploadClaims" class="d-flex f_r form-label">Upload Claims:<p>*</p></label>
+                                          
+                                          <div>
+                                            <input type="file" name="f_upload_file" id="f_upload_file" accept=".pdf, .jpg, .gif" style="width: 250px;" required> <br>                                            
+                                            <p>Maximum File upload size: 4 MB. Only .pdf, .gif and .jpg files are allowed.</p>
+                                          </div>
+                                        </div>
+
+                                        <button type="submit" id="fuel_save" class="btn btn-sm btn-primary">Save Fuel Claim</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if fuel_tb %}                
+                    <table class="table table-bordered mt-4 fbp_file_table text-center">
+                        <thead>
+                            <tr>
+                                <th>Sl.No</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                                <th>Expense Date</th>
+                                <th>Claimed Amount</th>
+                                <th>Receipt No.</th>
+                                <th>Vehicle No.</th>
+                                <th>File name</th> 
+                            </tr>                           
+                        </thead>
+                        <tbody>
+                            {% for index, i in fuel_tb_1 %}
+                            <tr>
+                                <td>{{index}}</td>
+                                <td>                                    
+                                    <a href="#" data-bs-toggle="modal" id="openModalButton_1_edit" data-bs-target="#f_M_form_edit" 
+                                    data-id-no = "{{i.id}}"
+                                    data-claimed-amount="{{ i.AmtClaimed }}"
+                                    data-expense-date="{{ i.ExpenseDt|date:"Y-m-d" }}"
+                                    data-receipt-no="{{ i.RecNumber }}"
+                                    data-vehicle-no="{{ i.VehNumber }}"
+                                    ><i class="fa fa-edit" style="font-size:15px"></i></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'delete_fbp_fuel' i.RecNumber %}" onclick="return confirm('Are you sure you want to delete this record?')"><i class="fa fa-trash-o" style="font-size:15px"></i></a>
+                                </td>
+                                <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                <td>{{i.AmtClaimed}}</td>
+                                <td>{{i.RecNumber}}</td>
+                                <td>{{i.VehNumber}}</td>
+                                <td>
+                                    {% for j in fbp_files %}
+                                    {% if i.RecNumber == j.reciept_no %}
+                                    <a href="{% static 'media/' %}{{ j.empid }}/{{ j.file_path|cut:'~'|slice:'12:' }}"
+                                                target="_blank">{{j.filename}}</a>                                                                             
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>                    
+                    {% endif %}
+
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="f_M_form_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content modal_new_1">
+                                <!-- Modal Header -->
+                                <div class="modal-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
+                                    <h4 class="modal-title" id="exampleModalLabel" style="flex: 1; text-align: center;">Update Fuel Claim</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    
+                                    <form action="{% url 'update_fuel' %}" method="post" enctype="multipart/form-data" id="fuel_form_edit">
+                                        {% csrf_token %}
+
+                                        <input type="text" name="fuel_id_no" id="fuel_id_no" hidden>
+
+                                        <div class="d-flex f_r">
+                                            <label for="expenseDate_edit" class="d-flex f_r form-label">Expense Date:<p>*</p></label>
+                                            <input type="date" class="form-control" name="f_expenseDate_edit" id="f_expenseDate_edit" oninput="validateD_Fuel_edit()" required>
+                                        </div>
+
+                                        <div class="d-flex f_r">
+
+                                            <label for="claimedAmount_edit" class="d-flex f_r form-label">Claimed Amount:<p>*</p></label>
+                                            <input type="number" class="form-control" name="f_claimedAmount_edit" id="f_claimedAmount_edit" required oninput="validateFuel_edit()">
+                                          
+                                            {% if Car_dec_last.clc %}                                            
+                                                <h6 id="fuel_amount">Remaining Amount(Fuel): <span style="color: red;">36000</span></h6>
+                                            {% else %}
+                                            {% if Car_dec_last.cc == 'More than 1600 CC' %}
+                                                <h6 id="fuel_amount">Remaining Amount(Fuel): <span style="color: red;">28800</span></h6>
+                                            {% else %}
+                                            {% if Car_dec_last.cc == 'Less than 1600 CC' %}
+                                                <h6 id="fuel_amount">Remaining Amount(Fuel): <span style="color: red;">21600</span></h6>
+                                            {% endif %}
+                                            {% endif %}
+                                            {% endif %}
+                                          
+                                        </div>
+                                                                                                                                                      
+                                        <div class="d-flex f_r">
+                                          <label for="receiptNo_edit" class="d-flex f_r form-label">Receipt No.:<p>*</p></label>
+                                          <input type="text" class="form-control" name="f_receiptNo_edit" id="f_receiptNo_edit" required>
+                                        </div>
+
+                                        <div class="d-flex f_r">
+                                          <label for="f_VehNumber_edit" class="d-flex f_r form-label">Vehicle No.:<p>*</p></label>
+                                          <input type="text" class="form-control" name="f_VehNumber_edit" id="f_VehNumber_edit" {% if Car_dec_last %} value="{{Car_dec_last.registration}}"{% endif %} readonly>
+                                        </div>
+
+                                        <div class="d-flex f_r">
+                                          <label for="uploadClaims_edit" class="d-flex f_r form-label">Upload Claims:<p>*</p></label>
+                                          
+                                          <div>
+                                            <input type="file" name="f_upload_file_edit" id="f_upload_file_edit" accept=".pdf, .jpg, .gif" style="width: 250px;" required> <br>                                            
+                                            <p>Maximum File upload size: 4 MB. Only .pdf, .gif and .jpg files are allowed.</p>
+                                          </div>
+                                        </div>
+
+                                        <button type="submit" id="fuel_save" class="btn btn-sm btn-primary">Update</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+
+            <!-- Road -->
+            {% if Car_dec_last %}
+            {% if band in bandlist1 %}
+            {% if Car_dec_last.clc %}
+            <div class="row r2">
+                <div class="heading">
+                    <form action="" id="" method="post">
+                        {% csrf_token %}
+                        <div style="display: flex; align-items: center;">
+                            <h6>Road Tax/Vehicle Accessories</h6>                            
+                            <input type="radio" class="h1_" value="yes" name="r_v" id="r_v_yes" onclick="validate_r_v()">Yes
+                            <input type="radio" class="h1_" value="no" name="r_v" id="r_v_no" onclick="validate_r_v()" checked>No                                                         
+                        </div>                        
+                    </form>
+                </div>
+                <div class="col-md-12 block" id="r_v_block" style="display: none;">
+                    <p class="statement">Your eligibility is to extend of Flat Allowance Paid </p> 
+                    
+                    
+                    <a href="#" data-bs-toggle="modal" id="openModalButton_2" data-bs-target="#r_v_form" >Add Claim</a>
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="r_v_form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content modal_new_1">
+                                <!-- Modal Header -->
+                                <div class="modal-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
+                                    <h4 class="modal-title" id="exampleModalLabel" style="flex: 1; text-align: center;">Add Road Claim</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <form action="{% url 'emp_road_submit' %}" method="post" enctype="multipart/form-data" id="road_form">
+                                        {% csrf_token %}
+
+                                        <div class="d-flex f_r">
+                                          <label for="expenseDate" class="d-flex f_r form-label">Expense Date:<p>*</p></label>
+                                          <input type="date" class="form-control" name="r_expenseDate" id="r_expenseDate" oninput="validateD_Road()" required>
+                                        </div>
+
+                                        <div class="d-flex f_r">
+                                          <label for="claimedAmount" class="d-flex f_r form-label">Claimed Amount:<p>*</p></label>
+                                          <input type="number" class="form-control" name="r_claimedAmount" id="r_claimedAmount" required>                                          
+                                        </div>
+                                                                                                                                                      
+                                        <div class="d-flex f_r">
+                                          <label for="receiptNo" class="d-flex f_r form-label">Receipt No.:<p>*</p></label>
+                                          <input type="text" class="form-control" name="r_receiptNo" id="r_receiptNo" required>
+                                        </div>
+
+                                        <div class="d-flex f_r">
+                                          <label for="r_VehNumber" class="d-flex f_r form-label">Vehicle No.:<p>*</p></label>
+                                          <input type="text" class="form-control" name="r_VehNumber" id="r_VehNumber" {% if Car_dec_last %} value="{{Car_dec_last.registration}}"{% endif %} readonly>
+                                        </div>
+
+                                        <div class="d-flex f_r">
+                                          <label for="uploadClaims" class="d-flex f_r form-label">Upload Claims:<p>*</p></label>
+                                          
+                                          <div>
+                                            <input type="file" name="r_upload_file" id="r_upload_file" accept=".pdf, .jpg, .gif"  style="width: 250px;" required> <br>                                            
+                                            <p>Maximum File upload size: 4 MB. Only .pdf, .gif and .jpg files are allowed.</p>
+                                          </div>
+                                        </div>
+
+                                        <button type="submit" id="road_save" class="btn btn-sm btn-primary">Save Road Claim</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if road_tb %}                
+                    <table class="table table-bordered mt-4 fbp_file_table text-center">
+                        <thead>
+                            <tr>
+                                <th>Sl.No</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                                <th>Expense Date</th>
+                                <th>Claimed Amount</th>
+                                <th>Receipt No.</th>
+                                <th>Vehicle No.</th>
+                                <th>File name</th> 
+                            </tr>                           
+                        </thead>
+                        <tbody>
+                            {% for index, i in road_tb_1 %}
+                            <tr>
+                                <td>{{index}}</td>
+                                <td>
+                                    <a href="#" data-bs-toggle="modal" id="openModalButton_2_edit" data-bs-target="#r_v_form_edit" 
+                                    data-id-no = "{{i.id}}"
+                                    data-claimed-amount="{{ i.AmtClaimed }}"
+                                    data-expense-date="{{ i.ExpenseDt|date:"Y-m-d" }}"
+                                    data-receipt-no="{{ i.RecNumber }}"
+                                    data-vehicle-no="{{ i.VehNumber }}"
+                                    ><i class="fa fa-edit" style="font-size:15px"></i></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'delete_fbp_road' i.RecNumber %}" onclick="return confirm('Are you sure you want to delete this record?')"><i class="fa fa-trash-o" style="font-size:15px"></i></a>
+                                </td>
+                                <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                <td>{{i.AmtClaimed}}</td>
+                                <td>{{i.RecNumber}}</td>
+                                <td>{{i.VehNumber}}</td>
+                                <td>
+                                    {% for j in fbp_files %}
+                                    {% if i.RecNumber == j.reciept_no %}
+                                    <a href="{% static 'media/' %}{{ j.empid }}/{{ j.file_path|cut:'~'|slice:'12:' }}"
+                                                target="_blank">{{j.filename}}</a>                                                                             
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>  
+                                        
+                    {% if save_number_new %} 
+                    <center class="mb-3">
+                        <a href="#" data-bs-toggle="modal" id="road_dec_btn" data-bs-target="#road_dec" class="btn  btn-sm dec_file" >Declaration</a>
+                    </center>                    
+                    {% endif %}
+                    {% endif %}
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="r_v_form_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content modal_new_1">
+                                <!-- Modal Header -->
+                                <div class="modal-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
+                                    <h4 class="modal-title" id="exampleModalLabel" style="flex: 1; text-align: center;">Update Road Claim</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <form action="{% url 'update_road' %}" method="post" enctype="multipart/form-data" id="road_form_edit">
+                                        {% csrf_token %}
+
+                                        <input type="text" name="road_id_no" id="road_id_no" hidden>
+
+                                        <div class="d-flex f_r">
+                                          <label for="expenseDate_edit" class="d-flex f_r form-label">Expense Date:<p>*</p></label>
+                                          <input type="date" class="form-control" name="r_expenseDate_edit" id="r_expenseDate_edit" oninput="validateD_Road_edit()" required>
+                                        </div>
+
+                                        <div class="d-flex f_r">
+                                          <label for="claimedAmount_edit" class="d-flex f_r form-label">Claimed Amount:<p>*</p></label>
+                                          <input type="number" class="form-control" name="r_claimedAmount_edit" id="r_claimedAmount_edit" required>                                          
+                                        </div>
+                                                                                                                                                      
+                                        <div class="d-flex f_r">
+                                          <label for="receiptNo_edit" class="d-flex f_r form-label">Receipt No.:<p>*</p></label>
+                                          <input type="text" class="form-control" name="r_receiptNo_edit" id="r_receiptNo_edit" required>
+                                        </div>
+
+                                        <div class="d-flex f_r">
+                                          <label for="r_VehNumber_edit" class="d-flex f_r form-label">Vehicle No.:<p>*</p></label>
+                                          <input type="text" class="form-control" name="r_VehNumber_edit" id="r_VehNumber_edit" {% if Car_dec_last %} value="{{Car_dec_last.registration}}"{% endif %} readonly>
+                                        </div>
+
+                                        <div class="d-flex f_r">
+                                          <label for="uploadClaims_edit" class="d-flex f_r form-label">Upload Claims:<p>*</p></label>
+                                          
+                                          <div>
+                                            <input type="file" name="r_upload_file_edit" id="r_upload_file_edit" accept=".pdf, .jpg, .gif"  style="width: 250px;" required> <br>                                            
+                                            <p>Maximum File upload size: 4 MB. Only .pdf, .gif and .jpg files are allowed.</p>
+                                          </div>
+                                        </div>
+
+                                        <button type="submit" id="road_save" class="btn btn-sm btn-primary">Update</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- The Modal -->
+                    <div class="modal fade" id="road_dec" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" style="max-width: 90%; margin-top: 1rem;">
+                            <div class="modal-content modal_new_2">
+                                <!-- Modal Header -->
+                                <div class="modal-header" style="display: flex; justify-content: center; align-items: center; position: relative;">                                    
+                                    <h4 class="modal-title_2 align-middle" id="exampleModalLabel" style="flex: 1; text-align: center;">Declaration for CLC</h4> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body" style="justify-content: center;"> 
+
+                                    <form action="#" method="post" id="road_dec_form">
+                                        {% csrf_token %}
+                                    
+                                        <p>
+                                            Please note that the personal car Accessory/Road tax are not reimbursable, Accessory/Road tax cost is reimbursable only towards CLC for Single Instance. 
+                                        </p> 
+                                        <p>
+                                            If you have claimed CLC Car Accessory /Road tax already then you will not be eligible to claim second time.
+                                        </p>   
+                                        
+                                        <p>
+                                            Hence we request you to kindly confirm the below:- 
+                                        </p>
+
+                                        <input type="checkbox" value="road_check_1" name="road_check_1" id="road_check_1" onchange="enable_sign_road()">Expenses claimed have not been funded by the leasing company during the purchase of the vehicle -  <br>
+                                        <input type="checkbox" value="road_check_2" name="road_check_2" id="road_check_2" onchange="enable_sign_road()">The Accessory bill submitted is towards CLC or Personal car - <br>
+                                        <input type="checkbox" value="road_check_3" name="road_check_3" id="road_check_3" onchange="enable_sign_road()">If CLC, please declare that you have not claimed this expenses before and claiming it for the 1st time -  <br>
+                                        
+
+                                        
+                                        <input type="checkbox" style="margin-top: 70px; margin-left: 152px; margin-right: 5px;" onchange="SignedDigitallyStatus_road()" id="digitally_signed_road" name="digitally_signed_road" disabled>Digitally Signed by Me                                        
+                                        <div class="mb-3 text-center">                                            
+                                            <a class="btn btn-sm btn-primary" id="submit_road_btn"  onclick="submit_road()" disabled>Confirm</a>                                             
+                                            <button type="button" class="btn btn-sm btn-danger ms-2" data-bs-dismiss="modal">Cancel</button>
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+
+            <!-- LTA -->
+            {% if regime.Regime == 'Old' %}
+            <div class="row r2">
+                <div class="heading">
+                    <form action="" id="" method="post">
+                        {% csrf_token %}
+                        <div style="display: flex; align-items: center;">
+                            <h6>LTA Claims</h6>                            
+                            <input type="radio" class="h1_" value="yes" name="lta" id="lta_yes" onclick="validate_lta()">Yes
+                            <input type="radio" class="h1_" value="no" name="lta" id="lta_no" onclick="validate_lta()" checked>No  
+                            
+                        </div>                        
+                    </form>
+                </div>
+                <div class="col-md-12 block" id="lta_block" style="display: none;">
+                    <p class="statement">Your eligibility is to extend of Flat Allowance Paid </p>
+                    <p class="statement">All Leaves to be applied and approved in Work day to claim LTA</p>                       
+                    
+                    <a href="#" data-bs-toggle="modal" id="openModalButton_3" data-bs-target="#lta_model" >Add Claim</a>
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="lta_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" style="max-width: 55%;">
+                            <div class="modal-content modal_new_1">
+                                <!-- Modal Header -->
+                                <div class="modal-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
+                                    <h4 class="modal-title" id="exampleModalLabel" style="flex: 1; text-align: center;">Add LTA Claim</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <form action="{% url 'emp_lta_submit' %}" method="post" enctype="multipart/form-data" id="lta_form">
+                                        {% csrf_token %}
+                                    
+                                        <div class="d-flex">
+                                            <label for="ExpenseDt" class="d-flex form-label">Expense Date:<p>*</p></label>
+                                            <input type="date" class="form-control" name="ExpenseDt" id="ExpenseDt" oninput="validateD_LTA()" required>
+                                    
+                                            <label for="Origin" class="d-flex form-label lta_2">Place of Origin:<p>*</p></label>
+                                            <input type="text" class="form-control" name="Origin" id="Origin" required>
+                                        </div>
+                                    
+                                        <div class="d-flex">
+                                            <label for="StDt" class="d-flex form-label">Leave Start Date:<p>*</p></label>
+                                            <input type="date" class="form-control" name="StDt" id="StDt" oninput="validateStartDt()" required>
+                                    
+                                            <label for="PlaceTravel" class="d-flex form-label lta_2">Place of Destination:<p>*</p></label>
+                                            <input type="text" class="form-control" name="PlaceTravel" id="PlaceTravel" required>
+                                        </div>
+                                    
+                                        <div class="d-flex">
+                                            <label for="EndDt" class="d-flex form-label">Leave End Date:<p>*</p></label>
+                                            <input type="date" class="form-control" name="EndDt" id="EndDt" oninput="validateEndDt()" disabled required>
+                                    
+                                            <label for="FamDec" class="d-flex form-label lta_2">Family Declaration<p>*</p></label>
+                                            <input class="lta_check" style="width: 1.5em; height: 1.5em;" type="checkbox" id="self" name="FamDec[]" value="Self" checked disabled> <span class="family_label">Self</span>
+                                            <input type="hidden" name="FamDec[]" value="Self"> <!-- Hidden input to ensure the value is submitted -->
+                                            <input class="lta_check" style="width: 1.5em; height: 1.5em;" type="checkbox" id="spouse" name="FamDec[]" value="Spouse"> <span class="family_label">Spouse</span>
+                                            <input class="lta_check" style="width: 1.5em; height: 1.5em;" type="checkbox" id="children" name="FamDec[]" value="Children"> <span class="family_label">Children</span>
+                                            <input class="lta_check" style="width: 1.5em; height: 1.5em;" type="checkbox" id="parents" name="FamDec[]" value="Parents"> <span class="family_label">Parents</span>
+                                        </div>
+                                    
+                                        <div class="d-flex">
+                                            <label for="AmtClaimed" class="d-flex form-label">Amount Claimed:<p>*</p></label>
+                                            <input type="number" class="form-control" name="AmtClaimed" id="AmtClaimed" oninput="validateA_LTA()" required>
+                                    
+                                            <label for="LastClaim" class="d-flex form-label lta_2">Last Claimed Year:<p>*</p></label>                                            
+
+                                            <select class="form-control" name="LastClaim" id="LastClaim" required>
+                                                <option value="">--select--</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                            </select>
+                                        </div>
+                                    
+                                        <div class="d-flex">
+                                            <label for="RecNumber" class="d-flex form-label">Receipt No.:<p>*</p></label>
+                                            <input type="text" class="form-control" name="RecNumber" id="RecNumber" required>
+                                    
+                                            <label for="uploadClaims" class="d-flex form-label lta_2">Upload Claims:<p>*</p></label>
+                                            <div>
+                                                <input type="file" name="lta_upload_file" id="lta_upload_file" style="width: 200px;" accept=".pdf, .jpg, .gif" required multiple> <br>
+                                                <p style="font-size: 11px; width: 200px;">Maximum File upload size: 4 MB. Only .pdf, .gif and .jpg files are allowed.</p>
+                                            </div>
+                                        </div>
+                                    
+                                        <button type="submit" id="lta_save" class="btn btn-sm btn-primary">Save LTA Claim</button>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>       
+                    
+                    {% if lta_tb %}                
+                    <table class="table table-bordered mt-4 fbp_file_table text-center">
+                        <thead>
+                            <tr>
+                                <th>Sl.No</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                                <th>Expense Date</th>
+                                <th>Claimed Amount</th>
+                                <th>Receipt No.</th>                                
+                                <th>File name</th> 
+                            </tr>                           
+                        </thead>
+                        <tbody>
+                            {% for index, i in lta_tb_1 %}
+                            <tr>
+                                <td>{{index}}</td>
+                                <td>
+                                    <a href="#" data-bs-toggle="modal" id="openModalButton_1_edit" data-bs-target="#lta_model_edit" 
+                                    data-id-no = "{{i.id}}"
+                                    data-expense-date="{{ i.ExpenseDt|date:"Y-m-d" }}"
+                                    data-claimed-amount="{{ i.AmtClaimed }}"                                    
+                                    data-receipt-no="{{ i.RecNumber }}"
+                                    data-StDt-date="{{ i.StDt|date:"Y-m-d" }}"
+                                    data-EndDt-date="{{ i.EndDt|date:"Y-m-d" }}"
+                                    data-origin-place="{{ i.Origin }}"
+                                    data-origin-place="{{ i.Origin }}"
+                                    data-PlaceTravel-place="{{ i.PlaceTravel }}"
+                                    data-FamDec-yr="{{ i.FamDec }}"
+                                    data-LastClaim-yr="{{ i.LastClaim }}"
+
+                                    ><i class="fa fa-edit" style="font-size:15px"></i></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'delete_fbp_lta' i.RecNumber %}" onclick="return confirm('Are you sure you want to delete this record?')"><i class="fa fa-trash-o" style="font-size:15px"></i></a>
+                                </td>
+                                <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                <td>{{i.AmtClaimed}}</td>
+                                <td>{{i.RecNumber}}</td>
+                                <td>
+                                    {% for j in fbp_files %}
+                                    {% if i.RecNumber == j.reciept_no %}
+                                    <a href="{% static 'media/' %}{{ j.empid }}/{{ j.file_path|cut:'~'|slice:'12:' }}"
+                                                target="_blank">{{j.filename}}</a>  <br>                                                                           
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>   
+
+                    {% if save_number_new %} 
+                    <center class="mb-3">                        
+                        <a href="#" data-bs-toggle="modal" id="lta_dec_btn" data-bs-target="#lta_dec"  class="btn  btn-sm dec_file">Declaration</a>                                                          
+                    </center>                                     
+                    {% endif %}
+                    {% endif %}
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="lta_model_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" style="max-width: 55%;">
+                            <div class="modal-content modal_new_1">
+                                <!-- Modal Header -->
+                                <div class="modal-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
+                                    <h4 class="modal-title" id="exampleModalLabel" style="flex: 1; text-align: center;">Add LTA Claim</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <form action="{% url 'update_lta' %}" method="post" enctype="multipart/form-data" id="lta_form_edit">
+                                        {% csrf_token %}
+
+                                        <input type="text" name="lta_id_no" id="lta_id_no" hidden>
+                                    
+                                        <div class="d-flex">
+                                            <label for="ExpenseDt_edit" class="d-flex form-label">Expense Date:<p>*</p></label>
+                                            <input type="date" class="form-control" name="ExpenseDt_edit" id="ExpenseDt_edit" oninput="validateD_LTA_edit()" required>
+                                    
+                                            <label for="Origin_edit" class="d-flex form-label lta_2">Place of Origin:<p>*</p></label>
+                                            <input type="text" class="form-control" name="Origin_edit" id="Origin_edit" required>
+                                        </div>
+                                    
+                                        <div class="d-flex">
+                                            <label for="StDt_edit" class="d-flex form-label">Leave Start Date:<p>*</p></label>
+                                            <input type="date" class="form-control" name="StDt_edit" id="StDt_edit" oninput="validateStartDt_edit()" required>
+                                    
+                                            <label for="PlaceTravel_edit" class="d-flex form-label lta_2">Place of Destination:<p>*</p></label>
+                                            <input type="text" class="form-control" name="PlaceTravel_edit" id="PlaceTravel_edit" required>
+                                        </div>
+                                    
+                                        <div class="d-flex">
+                                            <label for="EndDt_edit" class="d-flex form-label">Leave End Date:<p>*</p></label>
+                                            <input type="date" class="form-control" name="EndDt_edit" id="EndDt_edit" oninput="validateEndDt_edit()" required>
+                                    
+                                            <label for="FamDec_edit" class="d-flex form-label lta_2">Family Declaration<p>*</p></label>
+                                            <input class="lta_check" style="width: 1.5em; height: 1.5em;" type="checkbox" id="self" name="FamDec_edit[]" value="Self" checked disabled> <span class="family_label">Self</span>
+                                            <input type="hidden" name="FamDec_edit[]" value="Self"> <!-- Hidden input to ensure the value is submitted -->
+                                            <input class="lta_check" style="width: 1.5em; height: 1.5em;" type="checkbox" id="spouse_edit" name="FamDec_edit[]" value="Spouse"> <span class="family_label">Spouse</span>
+                                            <input class="lta_check" style="width: 1.5em; height: 1.5em;" type="checkbox" id="children_edit" name="FamDec_edit[]" value="Children"> <span class="family_label">Children</span>
+                                            <input class="lta_check" style="width: 1.5em; height: 1.5em;" type="checkbox" id="parents_edit" name="FamDec_edit[]" value="Parents"> <span class="family_label">Parents</span>
+                                        </div>
+                                    
+                                        <div class="d-flex">
+                                            <label for="AmtClaimed_edit" class="d-flex form-label">Amount Claimed:<p>*</p></label>
+                                            <input type="number" class="form-control" name="AmtClaimed_edit" id="AmtClaimed_edit" oninput="validateA_LTA_edit()" required>
+                                    
+                                            <label for="LastClaim_edit" class="d-flex form-label lta_2">Last Claimed Year:<p>*</p></label>                                            
+
+                                            <select class="form-control" name="LastClaim_edit" id="LastClaim_edit" required>
+                                                <option value="">--select--</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                            </select>
+                                        </div>
+                                    
+                                        <div class="d-flex">
+                                            <label for="RecNumber_edit" class="d-flex form-label">Receipt No.:<p>*</p></label>
+                                            <input type="text" class="form-control" name="RecNumber_edit" id="RecNumber_edit" required>
+                                    
+                                            <label for="uploadClaims_edit" class="d-flex form-label lta_2">Upload Claims:<p>*</p></label>
+                                            <div>
+                                                <input type="file" name="lta_upload_file_edit" id="lta_upload_file_edit" style="width: 200px;" accept=".pdf, .jpg, .gif" required multiple> <br>
+                                                <p style="font-size: 11px; width: 200px;">Maximum File upload size: 4 MB. Only .pdf, .gif and .jpg files are allowed.</p>
+                                            </div>
+                                        </div>
+                                    
+                                        <button type="submit" id="lta_save_edit" class="btn btn-sm btn-primary">Update</button>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="lta_dec" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" style="max-width: 90%; margin-top: 1rem;">
+                            <div class="modal-content modal_new_2">
+                                <!-- Modal Header -->
+                                <div class="modal-header" style="display: flex; justify-content: center; align-items: center; position: relative;">                                    
+                                    <h4 class="modal-title_2 align-middle" id="exampleModalLabel" style="flex: 1; text-align: center;">Leave Travel Allowance (LTA) DECLARATION - Financial Year -                     
+                                        Self Declaration by Employee
+                                        </h4> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body" style="justify-content: center;"> 
+
+                                    <form action="#" method="post" id="lta_dec_form">
+                                        {% csrf_token %}
+                                    
+                                        <p>
+                                            I <strong>{{data.empname}}</strong>, with employee id <strong>{{data.empid}}</strong>. do hereby confirm that: <br>
+                                            I am claiming expenses incurred for Economy Class Fare only. (Applicable if travelled in Air ways). <br>
+                                            I have travelled by the shortest route.
+                                        </p>
+                                        <table class="table table-bordered text-center lta_dec_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Start point (Place From)</th>
+                                                    <th>End point (Place To)</th>
+                                                    <th>Mode of Travel</th>
+                                                    <th>Total Fare Rs.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input type="text" name="st_point" id="st_point" value="{{first_record.Origin}}" oninput="enable_check_fm()"></td>
+                                                    <td><input type="text" name="end_point" id="end_point" value="{{last_record.PlaceTravel}}" oninput="enable_check_fm()"></td>
+                                                    <td>                                                        
+                                                        <select name="tra_mode" id="tra_mode" onchange="enable_check_fm()">
+                                                            <option {% if dec_data %}{% if dec_data.tra_mode %} value="{{dec_data.tra_mode}}" {% endif %}{% endif %}>{% if dec_data %}{% if dec_data.tra_mode %}{{dec_data.tra_mode}}{% endif %}{% endif %}</option>
+                                                            <option value="BUS">BUS</option>
+                                                            <option value="Train">Train</option>
+                                                            <option value="Flight">Flight</option>                                                            
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="number" name="tot_fare" value="{{total_lta}}" id="tot_fare" oninput="enable_check_fm()"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p style="color: red; font-size: 11px; margin-top: -15px;">(Please refer the illustrations provided in the policy FAQs)</p>
+                                        
+                                        <p>Following are the details of my approved leave:</p>
+                                        <table class="table table-bordered text-center lta_dec_table" style="margin-top: -10px;">                                            
+                                                <tr>
+                                                    <td rowspan="2" class="th_2 align-middle" >Leave Period</td>
+                                                    <td class="th_1">Start Date</td>
+                                                    <td class="th_1">End Date</td>
+                                                    <td class="hidden" ></td>
+                                                </tr>                                        
+                                                <tr>                                                    
+                                                    <td>
+                                                        <input type="date" name="st_dt" id="st_dt" value="{{first_record.StDt|date:'Y-m-d'}}" oninput="enable_check_fm()">                                                        
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" name="end_dt" id="end_dt" value="{{last_record.EndDt|date:'Y-m-d'}}" oninput="enable_check_fm()">
+                                                    </td>
+                                                    <td class="hidden" ></td>
+                                                </tr>                                                                                            
+                                        </table>
+
+                                        <p>Below are family member's details accompanied in my travel (Name and Relationship):</p>
+                                        <table class="table table-bordered text-center lta_dec_table" id="fam_dec_tbl"  style="margin-top: -10px;">
+                                            <thead>
+                                                <tr>
+                                                    <th>Family member name</th>
+                                                    <th>Relationship</th>
+                                                    <th>Family member name</th>
+                                                    <th>Relationship</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1. <input type="text" name="fm_1" id="fm_1" {% if dec_data %}{% if dec_data.fm_1 %} value="{{dec_data.fm_1}}" {% endif %}{% endif %} oninput="enable_check_fm()"></td>
+                                                    <td>
+                                                        <select name="rel_1" id="rel_1" onchange="enable_check_fm()">
+                                                            <option  {% if dec_data %}{% if dec_data.rel_1 %} value="{{dec_data.rel_1}}" {% endif %}{% endif %}> {% if dec_data %}{% if dec_data.rel_1 %}{{dec_data.rel_1}}{% endif %}{% endif %}</option>
+                                                            <option value="Self">Self</option>
+                                                            <option value="Spouse">Spouse</option>
+                                                            <option value="Children">Children</option>
+                                                            <option value="Parents">Parents</option>
+                                                            <option value="Dependent Child">Dependent Child</option>
+                                                            <option value="Dependent Parent">Dependent Parent</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>5. <input type="text" name="fm_5" id="fm_5" {% if dec_data %}{% if dec_data.fm_5 %} value="{{dec_data.fm_5}}" {% endif %}{% endif %} oninput="enable_check_fm()"></td>
+                                                    <td>
+                                                        <select name="rel_5" id="rel_5" onchange="enable_check_fm()">
+                                                            <option  {% if dec_data %}{% if dec_data.rel_5 %} value="{{dec_data.rel_5}}" {% endif %}{% endif %}> {% if dec_data %}{% if dec_data.rel_5 %}{{dec_data.rel_5}}{% endif %}{% endif %}</option>
+                                                            <option value="Self">Self</option>
+                                                            <option value="Spouse">Spouse</option>
+                                                            <option value="Children">Children</option>
+                                                            <option value="Parents">Parents</option>
+                                                            <option value="Dependent Child">Dependent Child</option>
+                                                            <option value="Dependent Parent">Dependent Parent</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2. <input type="text" name="fm_2" id="fm_2" {% if dec_data %}{% if dec_data.fm_2 %} value="{{dec_data.fm_2}}" {% endif %}{% endif %} oninput="enable_check_fm()"></td>
+                                                    <td>
+                                                        <select name="rel_2" id="rel_2" onchange="enable_check_fm()">
+                                                            <option  {% if dec_data %}{% if dec_data.rel_2 %} value="{{dec_data.rel_2}}" {% endif %}{% endif %}> {% if dec_data %}{% if dec_data.rel_2 %}{{dec_data.rel_2}}{% endif %}{% endif %}</option>
+                                                            <option value="Self">Self</option>
+                                                            <option value="Spouse">Spouse</option>
+                                                            <option value="Children">Children</option>
+                                                            <option value="Parents">Parents</option>
+                                                            <option value="Dependent Child">Dependent Child</option>
+                                                            <option value="Dependent Parent">Dependent Parent</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>6. <input type="text" name="fm_6" id="fm_6" {% if dec_data %}{% if dec_data.fm_6 %} value="{{dec_data.fm_6}}" {% endif %}{% endif %} oninput="enable_check_fm()"></td>
+                                                    <td>
+                                                        <select name="rel_6" id="rel_6" onchange="enable_check_fm()">
+                                                            <option  {% if dec_data %}{% if dec_data.rel_6 %} value="{{dec_data.rel_6}}" {% endif %}{% endif %}> {% if dec_data %}{% if dec_data.rel_6 %}{{dec_data.rel_6}}{% endif %}{% endif %}</option>
+                                                            <option value="Self">Self</option>
+                                                            <option value="Spouse">Spouse</option>
+                                                            <option value="Children">Children</option>
+                                                            <option value="Parents">Parents</option>
+                                                            <option value="Dependent Child">Dependent Child</option>
+                                                            <option value="Dependent Parent">Dependent Parent</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3. <input type="text" name="fm_3" id="fm_3" {% if dec_data %}{% if dec_data.fm_3 %} value="{{dec_data.fm_3}}" {% endif %}{% endif %} oninput="enable_check_fm()"></td>
+                                                    <td>
+                                                        <select name="rel_3" id="rel_3" onchange="enable_check_fm()">
+                                                            <option  {% if dec_data %}{% if dec_data.rel_3 %} value="{{dec_data.rel_3}}" {% endif %}{% endif %}> {% if dec_data %}{% if dec_data.rel_3 %}{{dec_data.rel_3}}{% endif %}{% endif %}</option>
+                                                            <option value="Self">Self</option>
+                                                            <option value="Spouse">Spouse</option>
+                                                            <option value="Children">Children</option>
+                                                            <option value="Parents">Parents</option>
+                                                            <option value="Dependent Child">Dependent Child</option>
+                                                            <option value="Dependent Parent">Dependent Parent</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>7. <input type="text" name="fm_7" id="fm_7" {% if dec_data %}{% if dec_data.fm_7 %} value="{{dec_data.fm_7}}" {% endif %}{% endif %} oninput="enable_check_fm()"></td>
+                                                    <td>
+                                                        <select name="rel_7" id="rel_7" onchange="enable_check_fm()">
+                                                            <option  {% if dec_data %}{% if dec_data.rel_7 %} value="{{dec_data.rel_7}}" {% endif %}{% endif %}> {% if dec_data %}{% if dec_data.rel_7 %}{{dec_data.rel_7}}{% endif %}{% endif %}</option>
+                                                            <option value="Self">Self</option>
+                                                            <option value="Spouse">Spouse</option>
+                                                            <option value="Children">Children</option>
+                                                            <option value="Parents">Parents</option>
+                                                            <option value="Dependent Child">Dependent Child</option>
+                                                            <option value="Dependent Parent">Dependent Parent</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4. <input type="text" name="fm_4" id="fm_4" {% if dec_data %}{% if dec_data.fm_4 %} value="{{dec_data.fm_4}}" {% endif %}{% endif %} oninput="enable_check_fm()"></td>
+                                                    <td>
+                                                        <select name="rel_4" id="rel_4" onchange="enable_check_fm()">
+                                                            <option  {% if dec_data %}{% if dec_data.rel_4 %} value="{{dec_data.rel_4}}" {% endif %}{% endif %}> {% if dec_data %}{% if dec_data.rel_4 %}{{dec_data.rel_4}}{% endif %}{% endif %}</option>
+                                                            <option value="Self">Self</option>
+                                                            <option value="Spouse">Spouse</option>
+                                                            <option value="Children">Children</option>
+                                                            <option value="Parents">Parents</option>
+                                                            <option value="Dependent Child">Dependent Child</option>
+                                                            <option value="Dependent Parent">Dependent Parent</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>8. <input type="text" name="fm_8" id="fm_8" {% if dec_data %}{% if dec_data.fm_8 %} value="{{dec_data.fm_8}}" {% endif %}{% endif %} oninput="enable_check_fm()"></td>
+                                                    <td>
+                                                        <select name="rel_8" id="rel_8" onchange="enable_check_fm()">
+                                                            <option  {% if dec_data %}{% if dec_data.rel_8 %} value="{{dec_data.rel_8}}" {% endif %}{% endif %}> {% if dec_data %}{% if dec_data.rel_8 %}{{dec_data.rel_8}}{% endif %}{% endif %}</option>
+                                                            <option value="Self">Self</option>
+                                                            <option value="Spouse">Spouse</option>
+                                                            <option value="Children">Children</option>
+                                                            <option value="Parents">Parents</option>
+                                                            <option value="Dependent Child">Dependent Child</option>
+                                                            <option value="Dependent Parent">Dependent Parent</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+
+                                                
+                                            </tbody>
+                                        </table>
+
+                                        <p>Further, I am aware that</p>
+                                        <ul class="fam_dec_ul">
+                                            <li>Journey through sea, hired taxis, mini-buses and personal cars cannot be claimed. Expenses incurred towards hotel charges (food, accommodation) toll charges, driver's bata local conveyance like taxi charges from residence to the airport are not be reimbursable.</li>
+                                            <li>In case of multiple destinations, the claim will be reimbursed to the extent of 1st a/c train fare by the shortest route from the start point to end point.</li>
+                                            <li>Travel should be a round trip and the start location should be my work location.</li>
+                                            <li>Exemption will be allowed on travel expenditure of self, parents, spouse, children (max 2) & fully dependent siblings.</li>
+                                        </ul>
+                                        <p>I confirm,</p>
+                                        <ul class="fam_dec_ul">
+                                            <li>that the exemption under section 10(5) of the Income-tax Act, 1961 (the Act) claimed by me is in accordance with the sub-rule (2) of Rule 2B of the Income-tax Rules, 1962 (the Rules) as per which the exemption  can  be  claimed  only  for  two  journeys  in  a  block  of  four  calendar  years  commencing  from  1986.</li>
+                                            <li>that I shall be fully responsible to the Company for any income-tax liability including interest, penalty etc. that may arise on account of non-fulfillment of this undertaking in-toto or in part by me.</li>
+                                        </ul>
+
+                                        <p>Date : {{current_date|date:"d-m-Y" }} </p> 
+                                        <p>Place : <input type="text" name="fm_place" id="fm_place" {% if dec_data %}{% if dec_data.fm_place %} value="{{dec_data.fm_place}}" {% endif %}{% endif %} oninput="enable_check_fm()"> </p> 
+                                        
+                                        <input type="checkbox" style="width: auto; margin-top: 70px; margin-left: 152px; margin-right: 5px;" onchange="SignedDigitallyStatus_lta()" id="digitally_signed_lta" name="digitally_signed_lta" disabled>Digitally Signed by Me                                        
+                                        <div class="mb-3 text-center">                                            
+                                            <a class="btn btn-sm btn-primary" id="submit_lta_btn"  onclick="submit_lta()" disabled>Confirm</a>                                             
+                                            <button type="button" class="btn btn-sm btn-danger ms-2" data-bs-dismiss="modal">Cancel</button>
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Driver -->
+            {% if Car_dec_last %}
+            {% if band in bandlist2 %}  
+            {% if Car_dec_last.no_driver == 'Yes' %} 
+            <div class="row r2">
+                <div class="heading">
+                    <form action="" id="" method="post">
+                        {% csrf_token %}
+                        <div style="display: flex; align-items: center;">
+                            <h6>Driver</h6>                            
+                            <input type="radio" class="h1_" value="yes" name="driver" id="driver_yes" onclick="validate_driver()">Yes
+                            <input type="radio" class="h1_" value="no" name="driver" id="driver_no" onclick="validate_driver()" checked>No                                                            
+                            
+                        </div>                        
+                    </form>
+                    
+                </div>
+                <div class="col-md-12 block" id="driver_block" style="display: none;">
+                    <p class="statement">Your eligibility for claim Driver salary</p>                  
+                     
+                    <a href="#" data-bs-toggle="modal" id="openModalButton_4" data-bs-target="#driver_model" >Add Claim</a>
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="driver_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content modal_new_1">
+                                <!-- Modal Header -->
+                                <div class="modal-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
+                                    <h4 class="modal-title" id="exampleModalLabel" style="flex: 1; text-align: center;">Add Driver Claim</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    
+                                    <form action="{% url 'emp_driver_submit' %}" method="post" enctype="multipart/form-data" id="driver_form">
+                                        {% csrf_token %}
+
+                                        <div class="d-flex">
+                                          <label for="d_ExpenseDt" class="d-flex form-label">Expense Date:<p>*</p></label>
+                                          <input type="date" class="form-control" name="d_ExpenseDt" id="d_ExpenseDt" oninput="validateD_driver()" required>
+                                        </div>                                     
+                                                                                                                                                      
+                                        <div class="d-flex ">
+                                          <label for="d_RecNumber" class="d-flex  form-label">Receipt No.:<p>*</p></label>
+                                          <input type="text" class="form-control" name="d_RecNumber" id="d_RecNumber" required>
+                                        </div>
+
+                                        <div class="d-flex ">
+                                          <label for="d_DriveSal" class="d-flex  form-label">Driver Salary:<p>*</p></label>
+                                          <input type="number" class="form-control" name="d_DriveSal" id="d_DriveSal" oninput="validateA_driver()" required>
+                                        </div>
+
+                                        <div class="d-flex ">
+                                            <label for="d_SalaryMonth" class="d-flex  form-label">Salary Month:<p>*</p></label>
+                                            <select name="d_SalaryMonth" id="d_SalaryMonth" class="form-control" required>
+                                                <option value="">--select--</option>
+                                                <option value="January">January</option>
+                                                <option value="February">February</option>
+                                                <option value="March">March</option>
+                                                <option value="April">April</option>
+                                                <option value="May">May</option>
+                                                <option value="June">June</option>
+                                                <option value="July">July</option>
+                                                <option value="August">August</option>
+                                                <option value="September">September</option>
+                                                <option value="October">October</option>
+                                                <option value="November">November</option>
+                                                <option value="December">December</option>
+                                            </select>
+                                          </div>
+
+                                        <div class="d-flex ">
+                                          <label for="driver_file" class="d-flex  form-label">Upload Claims:<p>*</p></label>
+                                          
+                                          <div>
+                                            <input type="file" name="driver_file" id="driver_file" accept=".pdf, .jpg, .gif" style="width: 250px;" required> <br>                                            
+                                            <p>Maximum File upload size: 4 MB. Only .pdf, .gif and .jpg files are allowed.</p>
+                                          </div>
+                                        </div>
+
+                                        <button type="submit" id="driver_save" class="btn btn-sm btn-primary">Save Driver Claim</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if driver_tb %}                
+                    <table class="table table-bordered mt-4 fbp_file_table text-center">
+                        <thead>
+                            <tr>
+                                <th>Sl.No</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                                <th>Expense Date</th>
+                                <th>Driver Salary</th>
+                                <th>Salary Month</th>
+                                <th>Receipt No.</th>                                
+                                <th>File name</th> 
+                            </tr>                           
+                        </thead>
+                        <tbody>
+                            {% for index, i in driver_tb_1 %}
+                            <tr>
+                                <td>{{index}}</td>
+                                <td>
+                                    <a href="#" data-bs-toggle="modal" id="openModalButton_4_edit" data-bs-target="#driver_model_edit" 
+                                    data-id-no = "{{i.id}}"
+                                    data-claimed-amount="{{ i.DriveSal }}"
+                                    data-expense-date="{{ i.ExpenseDt|date:"Y-m-d" }}"
+                                    data-receipt-no="{{ i.RecNumber }}"
+                                    data-salary-month="{{ i.SalaryMonth }}"
+                                    ><i class="fa fa-edit" style="font-size:15px"></i></a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'delete_fbp_driver' i.RecNumber %}" onclick="return confirm('Are you sure you want to delete this record?')"><i class="fa fa-trash-o" style="font-size:15px"></i></a>
+                                </td>
+                                <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                <td>{{i.DriveSal}}</td>
+                                <td>{{i.SalaryMonth}}</td>
+                                <td>{{i.RecNumber}}</td>
+                                <td>
+                                    {% for j in fbp_files %}
+                                    {% if i.RecNumber == j.reciept_no %}
+                                    <a href="{% static 'media/' %}{{ j.empid }}/{{ j.file_path|cut:'~'|slice:'12:' }}"
+                                                target="_blank">{{j.filename}}</a>                                                                             
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>   
+                    
+                    {% if save_number_new %} 
+                    <center class="mb-3">                                                                                                    
+                        <a href="#" data-bs-toggle="modal" id="driver_dec_btn" data-bs-target="#driver_dec"  class="btn  btn-sm dec_file">Declaration</a>
+                    </center>                    
+                    {% endif %}
+                    {% endif %}
+
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="driver_model_edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content modal_new_1">
+                                <!-- Modal Header -->
+                                <div class="modal-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
+                                    <h4 class="modal-title" id="exampleModalLabel" style="flex: 1; text-align: center;">Update Driver Claim</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    
+                                    <form action="{% url 'update_driver' %}" method="post" enctype="multipart/form-data" id="driver_form">
+                                        {% csrf_token %}
+
+                                        <input type="text" name="driver_id_no" id="driver_id_no" hidden>
+
+                                        <div class="d-flex">
+                                          <label for="d_ExpenseDt_edit" class="d-flex form-label">Expense Date:<p>*</p></label>
+                                          <input type="date" class="form-control" name="d_ExpenseDt_edit" id="d_ExpenseDt_edit" oninput="validateD_driver_edit()" required>
+                                        </div>                                     
+                                                                                                                                                      
+                                        <div class="d-flex ">
+                                          <label for="d_RecNumber_edit" class="d-flex  form-label">Receipt No.:<p>*</p></label>
+                                          <input type="text" class="form-control" name="d_RecNumber_edit" id="d_RecNumber_edit" required>
+                                        </div>
+
+                                        <div class="d-flex ">
+                                          <label for="d_DriveSal_edit" class="d-flex  form-label">Driver Salary:<p>*</p></label>
+                                          <input type="number" class="form-control" name="d_DriveSal_edit" id="d_DriveSal_edit" oninput="validateA_driver_edit()" required>
+                                        </div>
+
+                                        <div class="d-flex ">
+                                            <label for="d_SalaryMonth_edit" class="d-flex  form-label">Salary Month:<p>*</p></label>
+                                            <select name="d_SalaryMonth_edit" id="d_SalaryMonth_edit" class="form-control" required>
+                                                <option value="January">January</option>
+                                                <option value="February">February</option>
+                                                <option value="March">March</option>
+                                                <option value="April">April</option>
+                                                <option value="May">May</option>
+                                                <option value="June">June</option>
+                                                <option value="July">July</option>
+                                                <option value="August">August</option>
+                                                <option value="September">September</option>
+                                                <option value="October">October</option>
+                                                <option value="November">November</option>
+                                                <option value="December">December</option>
+                                            </select>
+                                          </div>
+
+                                        <div class="d-flex ">
+                                          <label for="driver_file_edit" class="d-flex  form-label">Upload Claims:<p>*</p></label>
+                                          
+                                          <div>
+                                            <input type="file" name="driver_file_edit" id="driver_file_edit" accept=".pdf, .jpg, .gif" style="width: 250px;" required> <br>                                            
+                                            <p>Maximum File upload size: 4 MB. Only .pdf, .gif and .jpg files are allowed.</p>
+                                          </div>
+                                        </div>
+
+                                        <button type="submit" id="driver_save" class="btn btn-sm btn-primary">Update</button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="driver_dec" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" style="max-width: 90%; margin-top: 1rem;">
+                            <div class="modal-content modal_new_2">
+                                <!-- Modal Header -->
+                                <div class="modal-header" style="display: flex; justify-content: center; align-items: center; position: relative;">                                    
+                                    <h4 class="modal-title_2 align-middle" id="exampleModalLabel" style="flex: 1; text-align: center;">Driver Salary Receipt</h4> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <!-- Modal body -->
+                                <div class="modal-body" style="justify-content: center;"> 
+
+                                    <form action="#" method="post" id="driver_dec_form">
+                                        {% csrf_token %}
+                                        
+                                        <p align="end">Date : {{current_date|date:"d-m-Y"}}</p> 
+
+                                        <strong>
+                                            <p>Employee Name : <strong>{{data.empname}}</strong></p>
+                                            <p>Employee ID : <strong>{{data.empid}}</strong></p> 
+                                            <p>Vehicle Number : <strong>{{Car_dec_last.registration}}</strong></p>
+                                            
+                                            <table class="table table-bordered text-center driver_dec_tbl">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Amount Paid</th>
+                                                        <th>Salary Month</th>
+                                                    </tr>
+                                                </thead>
+                                                
+                                                <tbody>
+                                                    {% for i in driver_tb %}
+                                                    <tr>
+                                                        <td style="font-weight: normal;">{{i.DriveSal}}</td>
+                                                        <td style="font-weight: normal;">{{i.SalaryMonth}}</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+
+                                        </strong>
+
+                                        <p style="font-size: 25px; font-weight: normal;">Received From</p>
+                                        <p>
+                                            Mr./Ms <strong>{{data.empname}}</strong> Rs. <strong>{{total_driver}}</strong> to Driver <input type="text" name="name_dr" id="name_dr" {% if dec_data %}{% if dec_data.name_dr %} value="{{dec_data.name_dr}}" {% endif %}{% endif %} >
+                                        </p>
+                                        <p> <strong>Driver Name : </strong> <input type="text" name="driv_name" id="driv_name" {% if dec_data %}{% if dec_data.driv_name %} value="{{dec_data.driv_name}}" {% endif %}{% endif %} oninput="enable_driv_check()"></p>                                        
+                                                                                
+                                        <input type="checkbox" style="width: auto; margin-top: 70px; margin-left: 212px; margin-right: 5px;" onchange="SignedDigitallyStatus_driver()" id="digitally_signed_driver" name="digitally_signed_driver" disabled>Digitally Signed by Me                                        
+                                        <div class="mb-3 text-center">                                            
+                                            <a class="btn btn-sm btn-primary" id="submit_driver_btn"  onclick="submit_driver()" disabled>Confirm</a>                                             
+                                            <button type="button" class="btn btn-sm btn-danger ms-2" data-bs-dismiss="modal">Cancel</button>
+                                        </div> 
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>            
+            {% endif %}
+            {% endif %}
+            {% endif %}      
+            
+            
+
+
+            {% if fuel_tb or road_tb or lta_tb or driver_tb %} 
+            {% if save_number_new %}
+
+            <a href="#" data-bs-toggle="modal" id="openModalButton_preview" class="btn btn-primary mt-5" data-bs-target="#preview_submit" >Preview & Submit</a>
+            
+
+            <!-- The Modal -->
+            <div class="modal fade" id="preview_submit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" style="max-width: 90%; margin-top: 1rem;">
+                    <div class="modal-content modal_new_2">
+                        <!-- Modal Header -->
+                        <div class="modal-header" style="display: flex; justify-content: center; align-items: center; position: relative;">
+                            <h4 class="modal-title_2" id="exampleModalLabel" style="flex: 1; text-align: center;">Preview of FBP Claims</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body" style="display: flex; justify-content: center;">                                                    
+                            <form action="{% url 'fbp_submit' %}" style="width: 80%;" id="p_s_form">
+                                {% csrf_token %}
+
+                                {% if fuel_tb %}       
+                                <h6 class="table-title">Fuel, Insurance & Maintenance</h6>         
+                                <table class="table table-bordered mt-4 P_table_1">
+                                    <thead>
+                                        <tr>                                                                                                               
+                                            <th>Expense Date</th>
+                                            <th>Claimed Amount</th>
+                                            <th>Receipt Number</th>
+                                            <th>Vehicle Number</th>                                        
+                                        </tr>                           
+                                    </thead>
+                                    <tbody>
+                                        {% for i in fuel_tb %}
+                                        <tr>                                                 
+                                            <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                            <td>{{i.AmtClaimed}}</td>
+                                            <td>{{i.RecNumber}}</td>
+                                            <td>{{i.VehNumber}}</td>                                        
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>                                            
+                                            <td>Total</td>
+                                            <td class="total">{{total_fuel}}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>                    
+                                {% endif %}
+
+                                {% if road_tb %}     
+                                <h6 class="table-title">Road Tax/Vehicle Accessories</h6>             
+                                <table class="table table-bordered mt-4 P_table_1">
+                                    <thead>
+                                        <tr>                                                                                                                    
+                                            <th>Expense Date</th>
+                                            <th>Claimed Amount</th>
+                                            <th>Receipt Number</th>
+                                            <th>Vehicle Number</th>                                        
+                                        </tr>                           
+                                    </thead>
+                                    <tbody>
+                                        {% for i in road_tb %}
+                                        <tr>                                                 
+                                            <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                            <td>{{i.AmtClaimed}}</td>
+                                            <td>{{i.RecNumber}}</td>
+                                            <td>{{i.VehNumber}}</td>                                        
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>                                            
+                                            <td>Total</td>
+                                            <td class="total">{{total_road}}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>                    
+                                {% endif %}
+
+                                {% if lta_tb %} 
+                                <h6 class="table-title">LTA</h6>                 
+                                <table class="table table-bordered mt-4 P_table_2">
+                                    <thead>
+                                        <tr>                                                                                                                   
+                                            <th>Expense Date</th>
+                                            <th>Leave Start Date</th>
+                                            <th>Leave End Date</th>
+                                            <th>Claimed Amount</th>                                        
+                                            <th>Receipt Number</th>
+                                            <th>Place of Origin</th>
+                                            <th>Place of Travel</th> 
+                                            <th>Family Declaration</th>                                                                               
+                                            <th>Last Year of Claim</th>
+                                        </tr>                           
+                                    </thead>
+                                    <tbody>
+                                        {% for i in lta_tb %}
+                                        <tr>                                                 
+                                            <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                            <td>{{i.StDt|date:'d/m/Y'}}</td>
+                                            <td>{{i.EndDt|date:'d/m/Y'}}</td>
+                                            <td>{{i.AmtClaimed}}</td>
+                                            <td>{{i.RecNumber}}</td>     
+                                            <td>{{i.Origin}}</td>
+                                            <td>{{i.PlaceTravel}}</td>
+                                            <td>{{i.FamDec}}</td>     
+                                            <td>{{i.LastClaim}}</td>                                                                                                                         
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>                                            
+                                            <td></td>
+                                            <td></td>                                            
+                                            <td>Total</td>
+                                            <td class="total">{{total_lta}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td> 
+                                        </tr>
+                                    </tbody>
+                                </table>                    
+                                {% endif %}
+
+                                {% if driver_tb %}    
+                                <h6 class="table-title">Driver</h6>              
+                                <table class="table table-bordered mt-4 P_table_1">
+                                    <thead>
+                                        <tr>                                                                                                            
+                                            <th>Expense Date</th>
+                                            <th>Driver Salary</th>
+                                            <th>Salary Month</th>
+                                            <th>Receipt Number</th>                                                                                
+                                        </tr>                           
+                                    </thead>
+                                    <tbody>
+                                        {% for i in driver_tb %}
+                                        <tr>                                                 
+                                            <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                            <td>{{i.DriveSal}}</td>
+                                            <td>{{i.SalaryMonth}}</td>
+                                            <td>{{i.RecNumber}}</td>                                                                                  
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>                                            
+                                            <td>Total</td>
+                                            <td class="total">{{total_driver}}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>                    
+                                {% endif %}
+
+                                <div>
+                                    <input type="checkbox" name="" id="" required>
+                                    <p>
+                                        <span style="color: red;">Disclaimer</span> : I hereby confirm that: The above contents updated by me are as per the company policy and guidelines
+                                        and are correct to the best of my knowledge. For claiming
+                                        income tax benefits and/ or exemptions under House Rent
+                                        Allowance (HRA), Leave Travel Allowance (LTA), Housing
+                                        Loan, and any road permitted category, I shall only submit
+                                        valid proofs and information, in accordance with the
+                                        requirements of the Income Tax Act and road laws and
+                                        regulations. If any incorrect, false or forged receipts/
+                                        declaration/ information is detected at any time, including
+                                        during {{data.Company_Name}} regular audits, it would warrant stern disciplinary action including separation from services, as per Business Conduct Guidelines. In addition, any tax benefits may be withdrawn/reversed. I am also liable to directly handle any investigation or action taken by the Income Tax Department. By signing the declaration/ disclaimer, I acknowledge and agree to the above.
+                                    </p>
+                                </div>
+
+                                                                
+                                <div style="display: flex;">
+                                    <button type="submit" id="p_sumbit" class="btn btn-sm btn-primary">Submit</button>
+                                    <button type="button" class="btn btn-sm btn-danger" style="margin-left: 10px;" data-bs-dismiss="modal" onclick="resetForm()">Cancel</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+            {% endif %}
+
+            {% if not save_number_new %}                            
+            <center>
+                <a href="{% url 'save_fbp_claims' %}" class="btn btn-sm btn-primary" id="save_fbp_btn" >Save</a>
+            </center>
+            {% endif %}
+
+            <div class="row extra"></div>
+
+            
+
+
+        </div>
+
+        
+
+        {% if message %}
+        <script>     
+            window.onload = function () {
+                alert("{{  message|safe }}");                
+                window.location.href = "{% url 'emp_fbp_claim' %}";
+            };
+        </script>
+        {% endif %}
+
+        {% if message_2 %}
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+        <script>     
+            window.onload = function() {
+                Swal.fire({
+                    title: "{{ message_2|safe }}",
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "{% url 'emp_fbp_claim' %}";
+                    }
+                });
+            };
+        </script>
+        {% endif %}
+        
+
+        {% if Car_dec_last %}
+            {% if Car_dec_last.clc %}
+            <script>var clc_new = true;</script>
+            {% else %}
+            <script>var clc_new = false;</script>
+            {% endif %}
+
+            {% if Car_dec_last.have_car %}
+            <script>var have_car_new = true;</script>
+            {% else %}
+            <script>var have_car_new = false;</script>
+            {% endif %}
+
+            {% if Car_dec_last.own_car %}
+            <script>var own_car_new = true;</script>
+            {% else %}
+            <script>var own_car_new = false;</script>
+            {% endif %}
+
+            {% if Car_dec_last.cc %}
+            <script>var cc_new = "{{Car_dec_last.cc}}";</script>
+            {% else %}
+            <script>var cc_new = null;</script>
+            {% endif %}
+        {% endif %}
+
+        {% if remaining_fuel %}
+        <script>var rem_fuel = "{{remaining_fuel}}";</script>
+        {% else %}
+        <script>var rem_fuel = null;</script>
+        {% endif %}
+        
+        <script>
+            var band = "{{data.Band}}"
+        </script>
+
+
+        {% if fuel_tb %}        
+        <script>var fuel_tb = true;</script>
+        {% else %}
+        <script>var fuel_tb = false;</script>
+        {% endif %}
+
+
+        {% if road_tb %}        
+        <script>var road_tb = true;</script>
+        {% else %}
+        <script>var road_tb = false;</script>
+        {% endif %}
+
+
+        {% if lta_tb %}        
+        <script>var lta_tb = true;</script>
+        {% else %}
+        <script>var lta_tb = false;</script>
+        {% endif %}
+
+
+        {% if driver_tb %}        
+        <script>var driver_tb = true;</script>
+        {% else %}
+        <script>var driver_tb = false;</script>
+        {% endif %}
+
+        {% if dec_data %}
+        <script>var dec_da = true;</script>
+        {% else %}
+        <script>var dec_da = false;</script>
+        {% endif %}
+        
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+
+        <script src="{% static 'js/emp_fbp_claim.js' %}"></script>
+
+        <script src="{% static 'js/fbp_claim_validations.js' %}"></script>
+
+        <script src="{% static 'js/fbp_claim_validations_update.js' %}"></script>
+
+        <script src="{% static 'js/fbp_claim_modal_validations.js' %}"></script>
+
+    </body>
+</html>

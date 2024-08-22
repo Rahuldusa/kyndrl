@@ -1,0 +1,370 @@
+<html>
+
+<head>
+    <title>Tax_Declaration</title>
+    {% include 'cdnlines.html' %}
+    
+    <style>
+        #menu__toggle_mobile {
+            opacity: 0;
+        }
+
+        #menu__toggle_mobile:checked+.menu__btn>span {
+            transform: rotate(45deg);
+        }
+
+        #menu__toggle_mobile:checked+.menu__btn>span::before {
+            top: 0;
+            transform: rotate(0deg);
+        }
+
+        #menu__toggle_mobile:checked+.menu__btn>span::after {
+            top: 0;
+            transform: rotate(90deg);
+        }
+
+        #menu__toggle_mobile:checked~.menu__box {
+            left: 0 !important;
+        }
+
+        .r1,
+        .r2 {
+            background-color: #703f16;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+        .mb,
+        .r2 {
+            display: none;
+        }
+
+        .r3 {
+            margin-top: 1px;
+            height: auto;
+        }
+
+
+        .sidebar {
+            height: 515px;
+            position: absolute;
+            background-color: #ead979;
+            width: 210px;
+            margin-left: -12px;
+            padding-top: 10px;
+            border: 1px solid #000000;
+        }
+
+        .sidebar li {
+            padding: 20px 0px 10px 20px;
+
+        }
+
+        .sidebar a h4{
+            font-size: 18px;
+            color: black;
+            font-weight: bold;
+        }
+
+
+        .sidebar li:hover {
+            background-color: #ffffff;
+            color: #000000;
+            width: 100%;
+        }
+
+
+        .hamburger-menu a h4 {
+            display: block;
+            padding-top: 5px;
+            color: black;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-right: 10px;
+            text-decoration: none;
+            transition-duration: .25s;
+        }
+
+
+
+        .hamburger-menu li:hover {
+            background-color: #ffffff;
+            color: #000000;
+            width: 100%;
+        }
+
+        .menu__btn {
+            position: absolute;
+            left: 10px;
+            width: 20px;
+            height: 17px;
+            cursor: pointer;
+            z-index: 999;            
+        }
+
+        .menu__btn>span,
+        .menu__btn>span::before,
+        .menu__btn>span::after {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background-color: #fcfcfc;
+            transition-duration: .25s;
+        }
+
+        .menu__btn>span::before {
+            content: '';
+            top: -5px;
+        }
+
+        .menu__btn>span::after {
+            content: '';
+            top: 5px;
+        }
+
+
+        .menu__box {
+            display: block;
+            position: absolute;
+            left: -100%;
+            width: 50%;
+            margin-left: -10px;
+            height: 100%;
+            margin-top: 138px;
+            list-style: none;
+            background-color: #ead979;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, .4);
+            transition-duration: .25s;
+            z-index: 2;
+        }
+
+
+        .ibm {
+
+            margin: 10px 0px;
+        }
+
+        .ibm1 {
+            padding-left: 40px;
+        }
+
+
+        .wel1,
+        .wel2,
+        .wel3 {
+            font-size: 18px;
+            margin: 10px 0px;
+        }
+
+        .logout {
+            padding-right: 40px;
+        }
+
+        .we1,
+        .we2,
+        .we3 {
+            font-size: 15px;
+            margin: -5px 0px 5px 0px;
+        }
+
+        .d2 {
+            background-color: #1f7eb6;
+            padding: 20px 0px;
+            margin-top: 1px;
+        }
+
+        #link1 {
+            background-color: #83a209;
+        }
+
+        #link2 {
+            background-color: #003e61;
+        }
+
+        #link1,
+        #link2 {
+            padding: 3px 10px;
+            box-shadow: -1px 0px white;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+
+            .mb,
+            .r2 {
+                display: block;
+            }
+
+            .sidebar,
+            .logout,
+            .wel1,
+            .wel2,
+            .wel3 {
+                display: none;
+            }
+
+            .ibm1 {
+                text-align: center;
+                padding-left: 0px;
+            }
+
+            .mb {
+                margin-top: 10px;
+            }
+
+            .ibm {
+                margin-top: 10px;
+                margin-bottom: 0px;
+            }
+        }
+
+        /* Media Query for iPad Pro, Surface Pro 7, and Nest Hub */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .sidebar {
+                width: 145px;
+            }
+
+            .sidebar a h4 {
+                font-size: 17px;
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid c1">
+        <div class="row r1">
+            <div class="col-md-0 col-1 mb">
+                <div class="hamburger-menu">
+                    <input type="checkbox" id="menu__toggle_mobile" name="" value="">
+                    <label for="menu__toggle_mobile" class="menu__btn"><span></span></label>
+                    <ul class="menu__box">
+                        <li>
+                            <a class="menu__item" href="{% url 'Emppage' %}">
+                                <h4>Basic Info</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu__item" href="{% url 'Tax_Regime' %}">
+                                <h4>Tax Regime</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu__item" href="">
+                                <h4>Form 16</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu__item" href="{% url 'ITDeclarations' %}">
+                                <h4>IT Declarations</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu__item" href="">
+                                <h4>FBI Claims</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu__item" href="">
+                                <h4>IT Proof Submissions</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu__item" href="">
+                                <h4>Work Item History</h4>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-1 mb"></div>
+            <div class="col-md-4 col-8  ibm1">
+                <h5 class="ibm text-white">IBM Tax Exemptions</h5>
+            </div>
+            <div class="col-md-3 col-0"></div>
+            <div class="col-md-5 col-0 logout d-flex align-items-center justify-content-end">
+                <h5 class="wel1 text-white">Welcome <strong>{{data.empname}}</strong> {{data.empid}}</h5>
+                &nbsp;<span class="wel2 text-white mx-2">|</span>&nbsp;
+                <a href="{% url 'Emp_logout' %}" class="wel3 text-white">Logout</a>
+            </div>
+
+        </div>
+
+        <div class="row r2 ">
+            <div class="col-12 d-flex align-items-center justify-content-end text-white">
+                <h5 class="we1">Welcome <strong>{{data.empname}}</strong> {{data.empid}}</h5>
+                &nbsp;<span class="we2">|</span>&nbsp;
+                <a href="{% url 'Emp_logout' %}" class="we3 text-white">Logout</a>
+            </div>
+        </div>
+
+
+        <div class="row d2 text-white">
+            <div class="col-md-12 d-flex align-items-center justify-content-center">
+                <h4 id="link1"><a href="">Home</a></h4>&nbsp;&nbsp;&nbsp;
+                <h4 id="link2"><a href="">Quick Links</a></h4>
+            </div>
+        </div>
+
+
+        <div class="row r3">
+            <div class="col-md-2 side">
+                <div class="sidebar text-white ">
+                    <ul class="nav flex-column">
+                        <li>
+                            <a href="{% url 'Emppage' %}" class=" menu__item">
+                                <h4>Basic Info</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'Tax_Regime' %}">
+                                <h4>Tax Regime</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <h4>Form 16</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'ITDeclarations' %}">
+                                <h4>IT Declarations</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <h4>FBP Claims</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <h4>IT Proof Submissions</h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                <h4>Work Item History</h4>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-content">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+
+</body>
+
+</html>

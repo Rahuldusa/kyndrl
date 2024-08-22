@@ -1,0 +1,1755 @@
+{% load static %}
+
+<html>
+
+<head>
+    <title>Tax_Declaration</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    
+
+    {% include 'cdnlines.html' %}
+    {% include 'header.html' %}
+    {% include 'menubar.html' %}
+
+
+    <link rel="stylesheet" href="{% static 'css/form16.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form1.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form2.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form4.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form5.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form6.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form7.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form8.css' %}">
+
+
+
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid c2">
+
+        <div class="row itdr1 ">            
+            <div class="col-md-12 formh1">
+                <h4 class="form_h1">Income Tax Declaration </h4>
+            </div>
+        </div>
+
+        <div class="row itdr4" id="no_declaration" style="display: none;">
+            <div class="col-md-12 col-12">
+                <div class="col-md-12">
+                    <p> Sorry, the tax declaration period is only active between April 1st and April 18th of each year. Please come back during that time.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row itdr2  " id="declaration_section1">            
+            <div class="col-md-12 col-12">
+                <div>
+                    <nav class="navbar navbar-expand-sm ">
+                        <ul class="navbar-nav col-12">
+
+                            {% if band in bandlist1 %}
+                            <li class="nav-link" onclick="showForm('carDeclarations')">
+                                <a href="#">
+                                    <h4>Car Declarations</h4>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            {% if regime.Regime == 'Old' %}
+
+                            <li class="nav-link" onclick="showForm('houseRentAllowance')">
+                                <a href="#">
+                                    <h4>House Rent Allowance</h4>
+                                </a>
+                            </li>
+
+                            <li class="nav-link" onclick="showForm('incomeLossProperty')">
+                                <a href="#">
+                                    <h4>Income/Loss from House Property</h4>
+                                </a>
+                            </li>
+
+                            <li class="nav-link" onclick="showForm('80OtherDeductions')">
+                                <a href="#">
+                                    <h4>80 Other Deductions</h4>
+                                </a>
+                            </li>
+
+                            <li class="nav-link" onclick="showForm('80CDeductions')">
+                                <a href="#">
+                                    <h4>80 C Deductions</h4>
+                                </a>
+                            </li>
+                                            
+                            {% if data.empdoj >= financial_year_start and financial_year_end >= data.empdoj %}
+                            <li class="nav-link" onclick="showForm('previousemp')">
+                                <a href="#">
+                                    <h4>Previous Employment</h4>
+                                </a>
+                            </li>
+
+                            {% endif %}
+                            {% endif %}
+
+                            {% if regime.Regime == 'New' %} 
+
+                            <li class="nav-link" onclick="showForm('other_income_Unspecified')">
+                                <a href="#">
+                                    <h4>Other Income Unspecified </h4>
+                                </a>
+                            </li>
+                            {% if data.empdoj >= financial_year_start and financial_year_end >= data.empdoj %}
+                            <li class="nav-link" onclick="showForm('previousemp2')">
+                                <a href="#">
+                                    <h4>Previous Employment</h4>
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            {% endif %}
+                        
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="row itdr3 " id="declaration_section2">            
+            <div class="col-md-12 col-12">
+
+                {% if band in bandlist1 %}
+
+                <div id="carDeclarationsForm" class="form">
+
+                    <form id="form1" action="{% url 'car_declarations_submit' %}" method="post">
+                        {% csrf_token %}
+
+                        <h5 class="table_heading" >Car Declaration </h5> <br>
+
+                        <table class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold; font-size: 15px;">Current Values</td>
+                                <td style="font-weight: bold; font-size: 15px;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="label" for="havecar" id="label">Do you have a CLC/Personal
+                                        Car?</label>
+                                </td>
+                                <td>
+                                    <label id="radio" class="mr"><input type="radio" name="havecar" id="havecarclc" value="CLC" onclick="haveCar(this.value)"
+                                             {% if tempcar %}{% if tempcar.clc == True %} checked {% endif %}{% endif %}>CLC</label>
+
+                                    <label id="radio" class="rdo"><input type="radio" name="havecar" id="havecarpersonal" value="Personal" onclick="haveCar(this.value)"
+                                           {% if tempcar %}{% if tempcar.have_car == True %} checked {% endif %}{% endif %}>
+                                        Personal</label>
+                                </td>
+                                <td>
+                                    {% if prevcar %}
+                                    {% if prevcar.clc == True %}                        
+                                        <input id="readonly" class="form-control inp" type="text" value="CLC" readonly>
+                                    {% endif %}
+                                    {% if prevcar.have_car == True %}                        
+                                        <input id="readonly" class="form-control inp" type="text" value="Personal" readonly>
+                                    {% endif %}
+                                    {% else %}
+                                        <input id="readonly" class="form-control inp" type="text" value="" readonly>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr id="ownOptions" style="display: none;">
+                                <td>
+                                    <label class="label" for="owncar" id="label">Do you own a Car?</label>
+                                </td>
+                                <td>
+                                    <label class="mr"><input type="radio" name="owncar" id="owncaryes"  value="Yes"  onclick="ownCar(this.value)" {% if tempcar %}{% if tempcar.own_car == True %} checked {% endif %}{% endif%}>
+                                        Yes</label>
+                                    <label class="rdo"><input type="radio" name="owncar" id="owncarno" value="No" onclick="ownCar(this.value)" {% if tempcar %}{% if tempcar.own_car == False %} checked {% endif %}{% endif %}>
+                                        No</label>
+                                </td>
+                                <td>
+                                    <input id="readonly" class="form-control inp" type="text" {% if prevcar %}
+                                        {% if prevcar.own_car == True %} value="Yes" {% endif %}
+                                        {% if prevcar.own_car == False %} value="No" {% endif %}
+                                        {% else %} value="" {% endif %} readonly>
+                                </td>
+                            </tr>
+                            <tr id="otheroption1"  style="display: none;">
+                                <td>
+                                    <label class="label" for="carregnum" id="label">Car's Registration Number
+                                    </label>
+                                </td>
+                                <td>                      
+                                    <input  type="text" name="carregnum" id="rnumber" placeholder="KA01AB1234" oninput="validateCarReg()"
+                                        class="form-control inp" {% if tempcar %} value="{{tempcar.registration}}" {% endif %}>
+
+                                    <span id="carregnumerror" class="error"></span>
+                                </td>
+                                <td>
+                                    <input id="readonly" class="form-control inp" type="text" {% if prevcar %} value="{{ prevcar.registration}}" {% endif %} readonly>
+                                </td>
+                            </tr>
+                            <tr id="otheroption2"  style="display: none;">
+                                <td><label class="label" for="enginecp" id="label">Car's Engine Capacity (Cubic
+                                        Capacity)</label>
+                                </td>
+                                <td>
+                                    <select id="enginecp" name="enginecp" class="form-control inp" >
+                                        <option {% if tempcar %} value="{{tempcar.cc}}" {% endif %}>{% if tempcar %}{{tempcar.cc}}{% endif %}</option> 
+                                        <option value="Less than 1600 CC">Less than 1600 CC</option>
+                                        <option value="More than 1600 CC">More than 1600 CC</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input id="readonly" class="form-control inp" type="text" {% if prevcar %} value="{{prevcar.cc}}" {% endif %} readonly>
+                                </td>
+                            </tr>
+                            <tr id="otheroption3"  style="display: none;">
+                                <td>
+                                    <label class="label" for="carreg_ts" id="label">Car's Registration Date</label>
+                                </td>
+                                <td>
+                                    <input type="date" name="carreg_ts" id="carreg_ts" oninput="validateCarRegDate()"  {% if tempcar %} value="{{tempcar.carregdt|date:'Y-m-d'}}" {% endif %} class="form-control inp">
+                                    <span id="carregDateError" class="error"></span>
+                                </td>
+                                <td>
+                                    <input id="readonly" class="form-control inp" type="text" {% if prevcar and prevcar.carregdt %} value="{{ prevcar.carregdt|date:'M. j, Y' }}" {% else %} value="None" {% endif %} readonly>
+                                </td>
+                            </tr>  
+
+                            {% if band in bandlist2 %}
+                            <tr id="otheroption4"  style="display: none;">
+                                <td>
+                                    <label class="label" for="havedriver" id="label">Do you have a
+                                        Driver?</label>
+                                </td>
+                                    <td>
+                                        <label class="mr"><input type="radio" name="havedriver" id="havedriveryes" onclick="haveDriver(this.value)"
+                                                value="Yes" {% if tempcar %}{% if tempcar.no_driver == 'Yes' %} checked {% endif %}{% endif %}>
+                                            Yes</label>
+                                        <label class="rdo"><input type="radio" name="havedriver" id="havedriverno" onclick="haveDriver(this.value)"
+                                                value="No" {% if tempcar %}{% if tempcar.no_driver == 'No' %} checked {% endif %}{% endif %}>
+                                            No</label>
+
+                                    </td>
+                                    <td>
+
+
+                                        <input id="readonly" class="form-control inp" type="text" {% if prevcar %} value="{{prevcar.no_driver}}" {% endif %} readonly>
+
+
+                                    </td>
+                            </tr>
+                            {% endif %}                  
+  
+                        </table>
+
+                        <div class="d-flex justify-content-center ">
+                            <button type="button" class="btn btn-sm btn-primary" id="previewButton1"
+                                onclick="Previewform1()" disabled>Preview & Submit</button>
+                            <button type="button" class="btn btn-sm btn-primary" id="savebtn1" onclick="saveForm1()"
+                                style="margin-left: 2px;">Save</button>
+
+                            {% if tempcar %}
+
+                            <a href="{% url 'del_temp_carDeclarations' tempcar.empid %}" type="button"
+                                style=" margin-left: 2px;" class="btn btn-sm btn-danger">Cancel</a>
+                            {% endif %}
+
+                        </div>
+
+
+
+                    </form>
+                    <div class="modal fade" id="confirmationModal1" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 21cm !important" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+
+                                </div>
+                                <div class="modal-body" id="confirmationMessage"></div>
+                                <div class="modal-footer">
+                                    <p style="color: red; font-size: 14px; text-align: justify;">                                    
+                                        For declaration in income tax and/ or exemptions under House Rent Allowance (HRA), Leave Travel Allowance ( LTA), Housing Loan, and any other permitted category, I shall only submit valid proofs and information, in accordance with the requirements of the Income Tax Act and other laws and regulations. If any incorrect, false or forged receipts/ declaration/ information is detected at any time, including during {{data.Company_Name}} regular audits, it would warrant stern disciplinary action including separation from services, as per Business Conduct Guidelines. In addition, any tax benefits may be withdrawn/ reversed. I am also liable to directly handle any investigation or action taken by the Income Tax Department. By signing the declaration/ disclaimer, I acknowledge and agree to the above.                                    
+                                    </p>
+                                    <p style="font-size: 14px; text-align: justify;">
+                                        <input type="checkbox" name="it_car_check" id="it_car_check" onchange="enable_btn_car()" required>
+                                        I hereby confirm that: The above contents updated by me are as per the company policy and guidelines and are correct to the best of my knowledge.
+                                    </p>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                        id="cancelButton">Cancel</button>                                    
+                                    <a href="#" id="sub_btn_car" class="btn btn-primary" onclick="submitForm1()" disabled >Submit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+                {% if regime.Regime == 'Old' %}
+
+                <div id="houseRentAllowanceForm" class="form">
+
+                    <form id="form2" action="{% url 'temp_houserent' %}" method="post">
+                        {% csrf_token %}
+
+                        <h5 class="table_heading" >House rent allowance </h5> <br>
+
+                        <table class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>
+                                    <label for="startdate">Starting Date:</label>
+                                </td>
+                                <td>
+                                    <input class="form-control " type="date" name="startdate" id="startdate" {% if doj_ %} value="{{emp_doj|date:'Y-m-d'}}" {% else %} value="{{financial_year_start|date:'Y-m-d'}}" {% endif %} readonly>
+                                    <span id="startdateError" class="error"></span>
+                                </td>
+                                <td>
+                                    
+
+                                    <input id="readonly" class="form-control " type="text"
+                                    {% if prevtax %}    value="{{ prevtax.d_houserentstartdt|date:'M. j, Y' }}" {% endif %} readonly>
+
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for=" rent">Rent Per Month:</label>
+                                </td>
+                                <td>
+                                    <input class="form-control " type="number" name="rent" id="rent" oninput="validateRent()" {% if temphra %} value="{{temphra.d_rentpermonth}}" {% endif %}  >
+                                    <span id="rentError" class="error"></span>
+                                </td>
+                                <td>
+                                    
+
+                                    <input id="readonly" class="form-control " type="text" {% if prevtax %} value="{{prevtax.d_rentpermonth}}" {% endif %}
+                                        readonly>
+
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="name">Landlord's Name:</label>
+                                </td>
+                                <td>
+                                    <input class="form-control " type="text" name="name" id="name" oninput="validateName()" {% if temphra %} value="{{temphra.d_landlordsname}}" {% endif %} >                                    
+                                    <span id="nameError" class="error"></span>
+                                </td>
+                                <td>                                
+                                    <input id="readonly" class="form-control " type="text" {% if prevtax %} value="{{prevtax.d_landlordsname}}" {% endif %}
+                                        readonly>                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="pannum">Landlord's PAN number:</label>
+                                </td>
+                                <td>
+                                    
+                                    <input class="form-control " type="text" name="pannum" id="pannum" oninput="validatePannum()" {% if temphra %} value="{{temphra.d_landlordspannum}}" {% endif %}>
+                                    <span id="pannumError" class="error"></span>
+                                </td>
+                                <td>
+                                    
+
+                                    <input id="readonly" class="form-control " type="text" {% if prevtax %} value="{{prevtax.d_landlordspannum}}" {% endif %}
+                                        readonly>
+
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="contact">Landlord's Contact</label>
+                                </td>
+                                <td>
+                                    <input class="form-control " type="number" name="contact" maxlength="10" id="contact" oninput="validateContact()" {% if temphra %} value="{{temphra.d_landlordscontact}}" {% endif %} >
+                                    <span id="contactError" class="error"></span>
+
+                                </td>
+                                <td>                                
+                                    <input id="readonly" class="form-control " type="text" {% if prevtax %} value="{{prevtax.d_landlordscontact}}"  {% endif %}
+                                        readonly>                                
+                                </td>
+                            </tr>
+
+                            
+
+                            <tr>
+                                <td>
+                                    <label for="Paddress">Landlord's Address:</label>
+                                </td>
+                                <td>
+                                    <textarea class="form-control" name="Paddress" id="Paddress" rows="2"
+                                        >{% if temphra %}{{temphra.d_landlordsaddress}}{% endif %}</textarea>
+                                </td>
+                                <td>                            
+                                    <textarea id="readonly" class="form-control" rows="2"
+                                        readonly>{% if prevtax %}{{ prevtax.d_landlordsaddress }}{% endif %}</textarea>                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="Taddress">Address of Rented Property:</label>
+                                </td>
+                                <td>
+                                    <textarea class="form-control" name="Taddress" id="Taddress" rows="2"
+                                        >{% if temphra %}{{temphra.d_rentaddress}}{% endif %}</textarea>
+                                </td>
+                                <td>                                
+                                    <textarea id="readonly" class="form-control" rows="2" 
+                                        readonly>{% if prevtax %}{{prevtax.d_rentaddress}}{% endif %}</textarea>                                    
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label for="pincode">Pin code:</label>
+                                </td>
+                                <td>
+                                    <input class="form-control " type="number"   name="pincode" id="pincode" oninput="validatePincode()"  {% if temphra %} value="{{temphra.d_pincode}}" {% endif %} >
+                                    <span id="pincodeError" class="error"></span>
+                                </td>
+                                <td>                        
+                                    <input type="text" class="form-control " id="readonly" {% if prevtax %} value="{{prevtax.d_pincode}}"  {% endif %} readonly >                          
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label for="citytype">City type:</label>
+                                </td>
+                                <td>
+                                    <input type="text" name="citytype" id="citytype" class="form-control" {% if temphra %} value="{{temphra.d_citytype}}" {% endif %} readonly>                                    
+                                </td>
+                                <td>                        
+                                    <input type="text" class="form-control " id="readonly" {% if prevtax %} value="{{prevtax.d_citytype}}"  {% endif %} readonly >                          
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="d-flex justify-content-center ">
+                            
+                            <button type="submit" class="btn btn-sm btn-primary" id="savebtn2" 
+                            >Save</button>
+
+                                {% if temphra %}
+                                <a href="{% url 'del_temp_houserent' empid=temphra.empid %}" type="button"
+                                    style="margin-left: 2px;" class="btn btn-sm btn-danger">Cancel</a>
+                            {% endif %}
+                        </div>
+
+                    </form>
+                </div>
+
+                <div id="incomeLossPropertyForm" class="form">
+                    <form id="form3" action="#" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <h5 class="table_heading">Self Occupied Property</h5> <br>
+                        <table  class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="">Home Loan Sanction Letter <br> (File Upload)</label>
+                                </td>
+                                <td>
+                                    <input type="file" id="self_file" name="self_file" accept=".pdf, .jpg, .png" multiple> <br>
+                                    <button id="self_file_btn" class="btn btn-sm btn-primary" style="margin-top: 5px;"
+                                        type="submit" onclick="uploadSelf_file()">Upload</button>
+                                    <p style="color: red;font-size: 12px;">Accepts only .pdf, .png and .jpg</p>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="self_loan_dt">Loan Sanctioned Date</label>
+                                </td>
+                                <td>
+                                    <input type="date" name="self_loan_dt" id="self_loan_dt" class="form-control" oninput="ValidateSelf_loan_dt()" {% if tempincom %} value="{{tempincom.d_selfloan_dt|date:'Y-m-d'}}" {% endif %}>
+                                    <span id="self_loan_dtError" class="error"></span>
+                                </td>
+                                <td>
+                                    <input type="date" name="" id="readonly" class="form-control" readonly {% if prevtax %} value="{{prevtax.d_selfloan_dt|date:'Y-m-d'}}" {% endif %}>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="selfloan">Self Occupied Home Loan Interest</label>
+                                </td>
+                                <td><input class="form-control" type="number" name="selfloan" id="selfloan" oninput="validateSelfLoan()" {% if tempincom %} value="{{tempincom.d_selfoccupiedloanint}}" {% endif %}>
+                                    <span id="selfloanError" class="error"></span>
+                                </td>
+                                <td><input class="form-control"  type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_selfoccupiedloanint}}" {% endif %}  readonly></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="lendername1">Loan Lender's Name</label>
+                                </td>
+                                <td>
+                                    <select id="lendername1" name="lendername1"  class="form-control" >
+                                        <option {% if tempincom %}  value="{{tempincom.d_selflendername}}" data-pan="{{ tempincom.d_selflenderpannum }}" {% endif %}> {% if tempincom %}{{tempincom.d_selflendername}}{% endif %}</option> 
+                                        {% if lendername %} {% for i in lendername %} <option value="{{i.LoanLenderName}}" data-pan="{{ i.LoanLenderPan }}">{{i.LoanLenderName}}</option> {% endfor %}{% endif %}
+                                    </select>
+                                </td>
+                                <td><input type="text" id="readonly" readonly {% if prevtax %} value="{{prevtax.d_selflendername}}" {% endif %}  class="form-control" ></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="lenderpan1">Loan Lender's PAN</label>
+                                </td>
+                                <td><input type="text" readonly id="lenderpan1" name="lenderpan1" class="form-control" {% if tempincom %} value="{{tempincom.d_selflenderpannum}}" {% endif %} ></td>
+                                <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_selflenderpannum}}" {% endif %} readonly class="form-control" ></td>
+                            </tr>
+                            
+                            <tr id="otherlendernm1" style="display: none;">
+                                <td>
+                                    <label for="otherlendername1"> other Loan Lender's Name</label>
+                                </td>
+                                <td><input type="text"  id="otherlendername1" name="otherlendername1" class="form-control" {% if tempincom %} value="{{tempincom.d_selfotherlendername}}" {% endif %} ></td>
+                                <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_selfotherlendername}}" {% endif %} readonly class="form-control" ></td>
+                            </tr>
+                            <tr id="otherlenderpn1"  style="display: none;">
+                                <td>
+                                    <label for="otherlenderpan1">other Loan Lender's PAN</label>
+                                </td>
+                                <td><input type="text" id="otherlenderpan1" name="otherlenderpan1" class="form-control" oninput="validateOtherlenderpan1()"  {% if tempincom %} value="{{tempincom.d_selfotherlenderpannum}}" {% endif %} >
+                                    <span id="otherlenderpan1Error" class="error"></span>
+                                </td>
+                                <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_selfotherlenderpannum}}" {% endif %} readonly class="form-control" ></td>
+                            </tr>
+                            
+
+                            
+                        </table>
+                        <h5 class="table_heading">Let Out Property</h5> <br>
+                        <table  class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="annualvalue">Annual Lettable Value(Rent Received for the Full Year)</label>
+                                </td>
+                                <td><input type="number" id="annualrent" name="annualvalue" oninput="validateAnnualRent()" class="form-control" {% if tempincom %} value="{{tempincom.d_letannuallettable}}" {% endif %} >
+                                    <p style="color: red; font-size: 14px;"> *please fill this field to enable below fields</p>
+                                    <span id="annualrentError" class="error"></span>
+                                    <p id="convertedText_annualLettable"></p>
+                                </td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_letannuallettable}}" {% endif %} readonly class="form-control" ></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="municipaltax">Municipal Property Tax</label>
+                                </td>
+                                <td><input type="number" id="municipaltax" name="municipaltax" class="form-control" oninput="validateMunicipalTax()" disabled {% if tempincom %} value="{{tempincom.d_letmunicipalprotax}}" {% endif %} >
+                                    <span id="municipaltaxError" class="error"></span>
+                                </td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_letmunicipalprotax}}" {% endif %} readonly class="form-control" ></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="Homeinterest">Home Loan Interest</label>
+                                </td>
+                                <td><input type="number" id="Homeinterest" name="Homeinterest" class="form-control" oninput="validateHomeInterest()" disabled {% if tempincom %} value="{{tempincom.d_lethomeloaninterest}}" {% endif %} >
+                                    <span id="HomeinterestError" class="error"></span>
+                                </td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_lethomeloaninterest}}" {% endif %} readonly class="form-control" ></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="incomeloss">Income/Loss on House Property</label>
+                                </td>
+                                <td><input type="number" id="incomeloss" name="incomeloss" class="form-control"  readonly {% if tempincom %} value="{{tempincom.d_letincomeloss}}" {% endif %} ></td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_letincomeloss}}" {% endif %} readonly class="form-control" ></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="standerdded">Standard Deduction (30%)</label>
+                                </td>
+                                <td><input type="number" id="standerdded" name="standerdded" class="form-control" readonly {% if tempincom %} value="{{tempincom.d_letstanderedded}}" {% endif %} >
+                                    <span id="standerddedError" class="error"></span>
+                                </td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_letstanderedded}}" {% endif %} readonly class="form-control" ></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="lendername2">Loan Lender's Name</label>
+                                </td>
+                                <td>
+                                    <select id="lendername2" name="lendername2" class="form-control" disabled >
+                                         <option {% if tempincom %} value="{{tempincom.d_letlendername}}" data-pan="{{ tempincom.d_letlenderpannum }}"  {% endif %}> {% if tempincom %}{{tempincom.d_letlendername}}{% endif %} </option>
+                                        {% if lendername %} {% for i in lendername %} <option value="{{i.LoanLenderName}}" data-pan="{{ i.LoanLenderPan }}">{{i.LoanLenderName}}</option> {% endfor %} {% endif %}
+                                    </select>
+                                </td>
+                                <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_letlendername}}" {% endif %} readonly class="form-control" ></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="lenderpan2">Loan Lender's PAN</label>
+                                </td>
+                                <td><input type="text" id="lenderpan2" readonly name="lenderpan2"  class="form-control"  disabled {% if tempincom %} value="{{tempincom.d_letlenderpannum}}" {% endif %} ></td>
+                                <td><input type=" text" id="readonly" {% if prevtax %} value="{{prevtax.d_letlenderpannum}}" {% endif %} readonly class="form-control" ></td>
+                            </tr>
+
+
+                            <tr id="otherlendernm2" style="display: none;">
+                                <td>
+                                    <label for="otherlendername2"> other Loan Lender's Name</label>
+                                </td>
+                                <td><input type="text"  id="otherlendername2" name="otherlendername2" class="form-control" {% if tempincom %} value="{{tempincom.d_letotherlendername}}" {% endif %} ></td>
+                                <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_letotherlendername}}" {% endif %} readonly class="form-control" ></td>
+                            </tr>
+                            <tr id="otherlenderpn2"  style="display: none;">
+                                <td>
+                                    <label for="otherlenderpan2">other Loan Lender's PAN</label>
+                                </td>
+                                <td><input type="text" id="otherlenderpan2" name="otherlenderpan2"  class="form-control" oninput="validateOtherlenderpan2()" {% if tempincom %} value="{{tempincom.d_letotherlenderpannum}}" {% endif %} >
+                                    <span id="otherlenderpan2Error" class="error"></span>
+                                </td>
+                                <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_letotherlenderpannum}}" {% endif %} readonly class="form-control" ></td>
+                            </tr>
+                        </table>
+
+                        <div id="section_80ee" style="display: none;">
+                            <h5 class="table_heading">80EE<span id="subtab3Error" class="error"></span> </h5> <br>
+                            <table class="table table-border table-striped" id="80EE">
+                                <tr>
+                                    <td></td>
+                                    <td style="font-weight: bold;">Current Values</td>
+                                    <td style="font-weight: bold;">Previously Declared Values</td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <td>
+                                        <label for="sanctiondate3">Loan sanctioned date</label>
+                                    </td>
+                                    <!-- oninput="validateSanctiondate3()" -->
+                                    <td><input type="date" id="sanctiondate3" name="sanctiondate3" class="form-control" {% if tempincom %} value="{{tempincom.d_80eeloadsanctiondt|date:'Y-m-d'}}" {% endif %}  readonly>
+                                        <span id="sanctiondate3Error" class="error"></span>
+                                    </td>
+                                    <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_80eeloadsanctiondt|date:'Y-m-d'}}" {% endif %} readonly class="form-control" ></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="loanammount">Loan Amount</label>
+                                    </td>
+                                    <td><input type="number" id="loanammount" name="loanammount" oninput="validateLoanAmmount()" class="form-control"  {% if tempincom %} value="{{tempincom.d_80eeloanammount}}" {% endif %} >
+                                        <span id="loanammountError" class="error"></span>
+                                    </td>
+                                    <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80eeloanammount}}" {% endif %} readonly class="form-control" ></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="propertyvalue3">Property Value</label>
+                                    </td>
+                                    <td><input type="number" id="propertyvalue3" name="propertyvalue3" oninput="validatePropertyValue3()" class="form-control"   {% if tempincom %} value="{{tempincom.d_80eepropertyvalue}}" {% endif %} >
+                                        <span id="propertyvalue3Error" class="error"></span>
+                                    </td>
+                                    <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80eepropertyvalue}}" {% endif %} readonly class="form-control" ></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="hlinterest">Home Loan Interest</label>
+                                    </td>
+                                    <td><input type="number" id="hlinterest" name="hlinterest" class="form-control" oninput="validateHomeLoanInterest()"   {% if tempincom %} value="{{tempincom.d_80eehomeloanint}}" {% endif %} >
+                                        <span id="hlinterestError" class="error"></span>
+                                    </td>
+                                    <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80eehomeloanint}}" {% endif %} readonly class="form-control" ></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="lendername3">Loan Lender's Name</label>
+                                    </td>
+                                    <td>
+                                        <select id="lendername3" name="lendername3" class="form-control"  >
+                                            <option {% if tempincom %} value="{{tempincom.d_80eelendername}}" data-pan="{{ tempincom.d_80eelenderpannum }}" {% endif %}> {% if tempincom %}{{tempincom.d_80eelendername}}{% endif %} </option> 
+                                            {% if lendername %} {% for i in lendername %} <option value="{{i.LoanLenderName}}" data-pan="{{ i.LoanLenderPan }}">{{i.LoanLenderName}}</option> {% endfor %} {% endif %}
+                                        </select>
+                                    </td>
+                                    <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_80eelendername}}" {% endif %} readonly class="form-control" ></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="lenderpan3">Loan Lender's PAN</label>
+                                    </td>
+                                    <td><input type="text" id="lenderpan3" readonly name="lenderpan3" class="form-control"  {% if tempincom %} value="{{tempincom.d_80eelenderpannum}}" {% endif %} ></td>
+                                    <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_80eelenderpannum}}" {% endif %} readonly class="form-control" ></td>
+                                </tr>
+
+                                <tr id="otherlendernm3" style="display: none;">
+                                    <td>
+                                        <label for="otherlendername3"> other Loan Lender's Name</label>
+                                    </td>
+                                    <td><input type="text"  id="otherlendername3" name="otherlendername3" class="form-control" {% if tempincom %} value="{{tempincom.d_80eeotherlendername}}" {% endif %} ></td>
+                                    <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_80eeotherlendername}}" {% endif %} readonly class="form-control" ></td>
+                                </tr>
+                                <tr id="otherlenderpn3"  style="display: none;">
+                                    <td>
+                                        <label for="otherlenderpan3">other Loan Lender's PAN</label>
+                                    </td>
+                                    <td><input type="text" id="otherlenderpan3" name="otherlenderpan3" class="form-control" oninput="validateOtherlenderpan3()" {% if tempincom %} value="{{tempincom.d_80eeotherlenderpannum}}" {% endif %} >
+                                        <span id="otherlenderpan3Error" class="error"></span>
+                                    </td>
+                                    <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_80eeotherlenderpannum}}" {% endif %} readonly class="form-control" ></td>
+                                </tr>
+
+
+
+                            </table>
+                        </div>
+
+                        <div  id="section_80eea" style="display: none;">
+                            <h5 class="table_heading">80EEA<span id="subtab4Error" class="error"></span> </h5> <br>
+                            <table class="table table-border table-striped" id="80EEA">
+                                <tr>
+                                    <td></td>
+                                    <td style="font-weight: bold;">Current Values</td>
+                                    <td style="font-weight: bold;">Previously Declared Values</td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <td>
+                                        <label for="sanctiondate4">Loan sanctioned date</label>
+                                    </td>
+                                    <!-- oninput="validateSanctiondate4()" -->
+                                    <td><input type="date" id="sanctiondate4" name="sanctiondate4"   class="form-control"  {% if tempincom %} value="{{tempincom.d_80eealoadsanctiondt|date:'Y-m-d'}}" {% endif %} readonly ></td>
+                                    <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_80eealoadsanctiondt|date:'Y-m-d'}}" {% endif %} readonly  class="form-control" ></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="havehouseproperty">Do you own another property other than this</label>
+                                    </td>
+                                    <td>
+                                        <label id="radio"><input type="radio" name="havehouseproperty" id="havehousepropertyyes"
+                                                value="Yes" class="radioButton" onchange="validateHavehouseproperty(this)" {% if tempincom %} {% if tempincom.d_80eeahaveproperty == 'Yes' %} checked {% endif %} {% endif %} >Yes</label>
+                                        <label id="radio"><input type="radio" name="havehouseproperty" id="havehousepropertyno"
+                                                value="No" class="radioButton" onchange="validateHavehouseproperty(this)" {% if tempincom %} {% if tempincom.d_80eeahaveproperty == 'No' %} checked {% endif %} {% endif %}>No</label>
+                                    </td>
+                                    <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_80eeahaveproperty}}" {% endif %} readonly  class="form-control" ></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="propertyvalue4">Property Value</label>
+                                    </td>
+                                    <td><input type="number" id="propertyvalue4" name="propertyvalue4" class="form-control" oninput="validatePropertyValue4()" {% if tempincom %} value="{{tempincom.d_80eeaprpertyvalue}}" {% endif %} >
+                                        <span id="propertyvalue4Error" class="error"></span>
+                                    </td>
+                                    <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80eeaprpertyvalue}}" {% endif %} readonly class="form-control" ></td>
+                                </tr>
+                                <tr style="display: none;">
+                                    <td>
+                                        <label for="Eligibility">Eligibility</label>
+                                    </td>
+                                    <td>
+                                        <label id="radio"><input type="radio" name="Eligibility" id="Eligibilityyes" class="radioButton"
+                                                value="Yes" {% if tempincom %} {% if tempincom.d_80eeaeligibility == 'Yes' %} checked {% endif %} {% endif %}>Yes</label>
+                                        <label id="radio"><input type="radio" name="Eligibility" id="Eligibilityno" value="No" class="radioButton" {% if tempincom %} {% if tempincom.d_80eeaeligibility == 'No' %} checked {% endif %} {% endif %}>No</label>
+                                    </td>
+                                    <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_80eeaeligibility}}" {% endif %} readonly class="form-control"></td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+
+                        <div class="modal fade" id="80EEAErrorMSGmodal" tabindex="-1" role="dialog"
+                            aria-labelledby="80EEAErrorMSGlabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" style="width: 10cm !important ;" role="document">
+                            <!-- modal-lg provides a larger modal for better A4 representation -->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="80EEAErrorMSGlabel">Message</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" id="80EEAErrorMSGmessage"></div>
+                                <!-- <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    id="Allpreviewcancle">Cancel</button>
+                                    <button type="submit" class="btn btn-primary"
+                                    onclick="Allpreviewsubmit()">Submit</button>
+                                </div> -->
+                            </div>
+                        </div>
+                        </div>
+                        <h5 class="table_heading">Other Income and 80TTA</h5> <br>
+                        <table class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                            <tr>
+                                <td>
+                                    <label for="otherincome">Other Income Unspecified</label>
+                                </td>
+                                <td><input type="number" id="otherincome" name="otherincome" class="form-control" oninput="validateOtherIncome()" {% if tempincom %} value="{{tempincom.d_80ttaotherincome}}" {% endif %}>
+                                    <span id="otherincomeError" class="error"></span>
+                                    <p id="convertedText_otherincome"></p>
+                                </td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80ttaotherincome}}" {% endif %} readonly class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="savinginterest">Interest Income from Savings account</label>
+                                    <p style="font-size: 11px; color: red;">80TTA max exemption is 10000</p>
+                                </td>
+                                <td><input type="number" id="savinginterest" name="savinginterest" class="form-control" oninput="validateSavingInterest()" {% if tempincom %} value="{{tempincom.d_80ttasavinginterest}}" {% endif %} disabled>
+                                    <span id="savinginterestError" class="error"></span>
+                                </td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80ttasavinginterest}}" {% endif %} readonly class="form-control"></td>
+                            </tr>
+                            </tr>
+                        </table>
+                        
+                        <div class="d-flex justify-content-center ">
+                            
+                            <button onclick="temp_incomeLoss_fun()" class="btn btn-sm btn-primary" id="savebtn3" >Save</button>
+
+                            {% if tempincom %}
+                                <a href="{% url 'del_temp_incomeLoss' empid=tempincom.empid %}" type="button"
+                                    style="margin-left: 2px;" class="btn btn-sm btn-danger">Cancel</a>
+                            {% endif %}
+
+                                
+                        </div>
+
+                    </form>
+                </div>
+
+                <div id="80OtherDeductionsForm" class="form">
+                    <form id="form4" action="#" method="post"  enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <h5 class="table_heading" >Deduction under Section 80 D-Medical Insurance Premium</h5> <br>
+                        <table class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <p style="color: red; font-size: 14px;"> * The sum of Mediclaim insurance for self, spouse, and children, along with preventive health checkup, should be less than or equal to 25,000.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="selfinsurance">Mediclaim Insurance for Self/Spouse and Children</label>
+                                    
+                                </td>
+                                <td>
+                                    <input class="form-control" type="number" name="selfinsurance" id="selfinsurance" oninput="validateSelfInsurance()" {% if temp80other %} value="{{temp80other.d_80dselfinsurance}}" {% endif %} id="selfinsurance" >                                                                        
+                                    <span id="selfinsuranceError" class="error"></span>
+                                </td>
+                                <td><input class="form-control" type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80dselfinsurance}}" {% endif %} readonly></td>
+                            </tr>
+                            <tr>
+                                <td><label for="checkup">Preventive Health Checkup</label></td>
+                                <td>
+                                    <input type="number" id="checkup" name="checkup" class="form-control" oninput="validateCheckup()" {% if temp80other %} value="{{temp80other.d_80dpreventivecheckup}}" {% endif %}>
+                                    <p style="color: red; font-size: 12px;"> * Max limit for Preventive Health checkup is upto 5,000</p>
+                                    <span id="checkupError" class="error"></span>
+                                </td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80dpreventivecheckup}}" {% endif %} readonly class="form-control"></td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3">
+                                    <p style="color: red; font-size: 14px;"> * The sum of Mediclaim insurance for both senior and non-senior citizens should be less than or equal to 50,000.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="parantinsurance1">Mediclaim Insurance for Parents - Non Senior
+                                        Citizen</label>
+                                </td>
+                                <td>
+                                    
+                                    <input class="form-control" type="number" name="parantinsurance1" id="parantinsurance1" oninput="validateParantInsurance1()" {% if temp80other %} value="{{temp80other.d_80dnonseniorinsurance}}" {% endif %} id="parantinsurance1" >
+                                    <p style="color: red; font-size: 12px;"> * Max limit for Mediclaim Insurance for Non Senior is upto 25,000</p>
+                                    <span id="parantinsurance1Error" class="error"></span>
+                                </td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80dnonseniorinsurance}}" {% endif %} readonly class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>
+
+                                    <label for="parantinsurance2">Mediclaim Insurance for Parents - Senior Citizen</label>
+                                </td>
+                                <td>
+                                    <input type="number" id="parantinsurance2" name="parantinsurance2" class="form-control" oninput="validateParantInsurance2()" {% if temp80other %} value="{{temp80other.d_80dseniorinsurance}}" {% endif %}>
+                                    <span id="parantinsurance2Error" class="error"></span>
+                                </td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80dseniorinsurance}}" {% endif %} readonly class="form-control"></td>
+                            </tr>
+                            
+                        </table>
+    
+                        <h5 class="table_heading" >Deduction under Section 80 DDB-Medical Treatment for Critical Illness</h5> <br>
+                        
+                        <table class="table table-border table-striped">
+
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label for="illnesstype">Select any Critical illness</label>
+                                </td>                                
+                                <td>
+                                    <select class="form-control" name="illnesstype" id="illnesstype" onchange="validateillnesstype()">
+                                        
+                                        <option {% if temp80other %} value="{{temp80other.d_80dillnesstype}}" {% endif %}> {% if temp80other %} {{temp80other.d_80dillnesstype}} {% endif %} </option>                                        
+                                        {% if illnesses %}
+                                        {% for i in illnesses %}                                        
+                                        <option value="{{i.illnessname }}">{{ i.illnessname }}</option>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" {% if prevtax %} value="{{prevtax.d_80dillnesstype}}" {% endif %} readonly>
+                                </td>
+                            </tr>
+
+                            <tr id="medicaltreatmentsect" style="display: none;">
+                                <td>
+                                    <label class="rdo1"><input type="radio" name="medicaltreatment" id="nonseniorcitizen" value="nonseniorcitizen" onclick="MedicalTreatment(this.value)" {% if temp80other %} {% if temp80other.d_80ddbmedicalfield == 'nonseniorcitizen' %} checked {% endif %} {% endif %}> Non-Senior citizen</label> <br>
+                                    <label class="rdo1"><input type="radio" name="medicaltreatment" id="seniorcitizen" value="seniorcitizen" onclick="MedicalTreatment(this.value)" {% if temp80other %} {% if temp80other.d_80ddbmedicalfield == 'seniorcitizen' %} checked {% endif %} {% endif %}> Senior citizen</label> <br>
+                                    <label class="rdo1"><input type="radio" name="medicaltreatment" id="bothcitizen" value="bothcitizen" onclick="MedicalTreatment(this.value)" {% if temp80other %} {% if temp80other.d_80ddbmedicalfield == 'bothcitizen' %} checked {% endif %} {% endif %}> Both Non-Senior and Senior citizen</label>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="number" name="medicaltreatmentvalue" id="medicaltreatmentinput" oninput="validateMedicalTreatment()" {% if temp80other %} value="{{temp80other.d_80ddbmedicaltreatment}}" {% endif %}  readonly>
+                                    <span id="medicaltreatmentinputError"  class="error" ></span> 
+                                </td>
+                                <td><input class="form-control" type="text" {% if prevtax %} value="{{prevtax.d_80ddbmedicaltreatment}}" {% endif %} readonly></td>
+                            </tr>
+
+                        </table>
+    
+                        <h5 class="table_heading" >Deduction under Section 80 E-Interest on Education Loan</h5> <br>
+                        <table class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="">Education Loan Sanction Letter <br> (File Upload)</label>
+                                </td>
+                                <td>
+                                    <input type="file" id="education_file" name="education_file" accept=".pdf, .jpg, .png" multiple> <br>
+                                    <button id="education_file_btn" class="btn btn-sm btn-primary"  style="margin-top: 5px;"
+                                        type="submit" onclick="uploadEducation_file()">Upload</button>
+                                    <p style="color: red;font-size: 12px;">Accepts only .pdf, .png and .jpg</p>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="education_loan_dt">Loan Sanctioned Date</label>
+                                </td>
+                                <td>
+                                    <input type="date" name="education_loan_dt" id="education_loan_dt" class="form-control" onchange="ValidateEducation_loan_dt()" {% if temp80other %} value="{{temp80other.d_80eeducation_dt|date:'Y-m-d'}}" {% endif %}>
+                                    <span id="education_loan_dtError" class="error"></span>
+                                </td>
+                                <td>
+                                    <input type="date" name="" id="readonly" class="form-control" readonly {% if prevtax %} value="{{prevtax.d_80eeducation_dt|date:'Y-m-d'}}" {% endif %}>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="educationinterest">Interest on education loan for higher studies</label>
+                                </td>
+                                <td><input type="number" id="educationinterest" name="educationinterest" class="form-control" oninput="validateEducationInterest()" {% if temp80other %} value="{{temp80other.d_80eeducationint}}" {% endif %}>                                    
+                                    <span id="educationinterestError" class="error"></span>
+                                    <p id="convertedText_educationinterest"></p>
+                                </td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80eeducationint}}" {% endif %} readonly class="form-control"></td>
+                            </tr>
+                        </table>
+    
+                        <h5 class="table_heading" >Deduction under Section 80U-Self Disability</h5> <br>
+                        <table class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="handicaped">Deduction for self disability/ handicapped</label>
+                                </td>
+                                <td>
+                                    <select id="handicaped" name="handicaped" class="form-control">
+                                        {% if temp80other %} <option  value="{{temp80other.d_80uselfdisable}}" >  {{temp80other.d_80uselfdisable}} </option>{% endif %}
+                                        <option value="0">0</option>
+                                        <option value="75000">75000</option>
+                                        <option value="125000">125000</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80uselfdisable}}" {% endif %} readonly class="form-control"></td>
+                            </tr>
+                        </table>
+       
+                        <h5 class="table_heading" >Deduction under Section 80DD-Dependent Disability</h5> <br>
+                        <table class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="dependhandicape">Deduction for Dependent disability/ handicapped</label>
+                                </td>
+                                <td>
+                                    <select id="dependhandicape" name="dependhandicape" class="form-control">
+                                        {% if temp80other %} <option  value="{{temp80other.d_80dddependdisable}}"> {{temp80other.d_80dddependdisable}} </option> {% endif %}
+                                        <option value="0">0</option>
+                                        <option value="75000">75000</option>
+                                        <option value="125000">125000</option>
+                                    </select>
+                                </td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80dddependdisable}}" {% endif %} readonly class="form-control"></td>
+                            </tr>
+                            
+    
+                        </table>
+    
+                        <h5 class="table_heading" >80EEB - Deduction in respect to Loan taken for Electric vehicle (April 2019 - March 2023)<span id="A80EEBError" class="error"></span> </h5> <br>
+                        <p style="color: red; font-size: 14px;"> *This section is only for who has an Electric vehicle</p>
+                        <table class="table table-border table-striped" id="80EEB">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="vehicletype">Vehicle Type</label>
+                                </td>
+                                <td>
+                                    <input type="text" id="vehicletype" name="vehicletype" class="form-control" readonly  value="Electric">
+                                </td>
+                                <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_80eebvehicltype}}" {% endif %} readonly class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="loansanctiondate">Loan sanctioned date</label>
+                                </td>
+                                <td><input type="date" id="loansanctiondate" name="loansanctiondate" class="form-control" oninput="validateLoanSanctionDate()"  {% if temp80other %} value="{{temp80other.d_80eebloansactiondt|date:'Y-m-d'}}" {% endif %}>
+                                </td>
+                                <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_80eebloansactiondt|date:'Y-m-d'}}" {% endif %} readonly class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="carinterest">Interest on Car Loan</label>
+                                </td>
+                                <td><input type="number" id="carinterest" name="carinterest" class="form-control" oninput="validateCarInterest()" {% if temp80other %} value="{{temp80other.d_80eebcarint}}" {% endif %}>
+                                    <span id="carinterestError" class="error"></span>
+                                </td>
+                                <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_80eebcarint}}" {% endif %} readonly class="form-control"></td>
+                            </tr>
+    
+                        </table>
+        
+                        <div class="modal fade" id="80EEBmodal" tabindex="-1" role="dialog"
+                            aria-labelledby="80EEBlabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" style="width: 10cm !important ;" role="document">
+                                <!-- modal-lg provides a larger modal for better A4 representation -->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="80EEBlabel">Message</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" id="80EEBmessage"></div>
+                                    <!-- <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                        id="Allpreviewcancle">Cancel</button>
+                                        <button type="submit" class="btn btn-primary"
+                                        onclick="Allpreviewsubmit()">Submit</button>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+    
+                        <h5 class="table_heading" >Deduction under Section 80CCD(1B)- National Pension Scheme(NPS)</h5> <br>
+                        <table class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="ccd80">80 CCD (1B) - Deduction for Self-contribution to Pension Account (NPS)</label>
+                                </td>
+                                <td><input type="number" id="ccd80" name="ccd80" class="form-control"  oninput="validateCc80()" {% if temp80other %} value="{{temp80other.d_80ccbselfcontrib}}" {% endif %}>
+                                    <span id="ccd80Error" class="error"></span>
+                                </td>
+                                <td><input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80ccbselfcontrib}}" {% endif %} readonly class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="prannumb">PRAN number</label>
+                                </td>
+                                <td><input type="number" id="prannumb" name="prannumb" oninput="validatePrannum()" class="form-control" {% if temp80other %} value="{{temp80other.d_80ccbprannum}}" {% endif %}>
+                                    <span id="prannumbError" class="error"></span>
+                                </td>
+                                <td><input type="text" id="readonly" {% if prevtax %} value="{{prevtax.d_80ccbprannum}}" {% endif %} readonly class="form-control"></td>
+                            </tr>
+    
+                        </table>
+    
+                        <div class="d-flex justify-content-center ">
+                            
+                            <button onclick="temp_Other_fun()" class="btn btn-sm btn-primary" id="savebtn4">Save</button>
+                            {% if temp80other %}
+                                <a href="{% url 'del_temp_Other' empid=temp80other.empid %}" type="button" onclick="cancelForm4()"
+                                    style="margin-left: 2px;" class="btn btn-sm btn-danger">Cancel</a>
+                            {% endif %}
+    
+                        </div>
+    
+                    </form>
+                </div>
+
+                <div id="80CDeductionsForm" class="form">
+                    <form id="form5" action="{% url 'temp_80C' %}" method="post">
+                        {% csrf_token %}
+
+                        <h5 class="table_heading">80 C Deductions</h5> <br>
+
+                        <table class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="lifeInsurance" class="form-label">Payment towards Life Insurance
+                                        Policy</label>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form5-number-input" id="lifeInsurance" name="lifeInsurance" {% if temp80d %} value="{{temp80d.d_80clifeinsurance}}" {% endif %}>
+                                    <span id="lifeInsuranceError" class="error"></span>
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control "
+                                    {% if prevtax %}   value="{{prevtax.d_80clifeinsurance}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="timeDeposit" class="form-label ">5 year time deposit under the Post
+                                        Office
+                                        Time
+                                        Deposit
+                                        Rules 1981</label>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form5-number-input " id="timeDeposit" name="timeDeposit" {% if temp80d %} value="{{temp80d.d_80c5yrtimedeposit}}" {% endif %}
+                                        >
+                                    <span id="timeDepositError" class="error"></span>
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control "
+                                    {% if prevtax %} value="{{prevtax.d_80c5yrtimedeposit}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="ulip" class="form-label">Contribution to ULIP</label>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form5-number-input" id="ulip" name="ulip" {% if temp80d %} value="{{temp80d.d_80culip}}" {% endif %} >
+                                    <span id="ulipError" class="error"></span>
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control"
+                                    {% if prevtax %}  value="{{prevtax.d_80culip}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="savingsCertificate" class="form-label">Subscription to notified
+                                        Central Govmt
+                                        Savings
+                                        certificate (NSC VIII issue)</label>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form5-number-input " id="savingsCertificate" {% if temp80d %} value="{{temp80d.d_80cnscsubscription}}" {% endif %}
+                                        name="savingsCertificate" >
+                                    <span id="savingsCertificateError" class="error"></span>
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control "
+                                    {% if prevtax %}   value="{{prevtax.d_80cnscsubscription}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="interestNSC" class="form-label">Interest on NSC</label>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form5-number-input" id="interestNSC" name="interestNSC" {% if temp80d %} value="{{temp80d.d_80cnscint}}" {% endif %}
+                                        >
+                                    <span id="interestNSCError" class="error"></span>
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control"
+                                    {% if prevtax %}  value="{{prevtax.d_80cnscint}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="ppf" class="form-label">Contribution to Public Provident Fund</label>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form5-number-input" id="ppf" name="ppf" {% if temp80d %} value="{{temp80d.d_80cpublicpfund}}" {% endif %} >
+                                    <span id="ppfError" class="error"></span>
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control"
+                                    {% if prevtax %}  value="{{prevtax.d_80cpublicpfund}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="houseLoan" class="form-label">House loan principal Only / Stamp Duty
+                                        &
+                                        Registration
+                                        fees</label>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form5-number-input " id="houseLoan" name="houseLoan"  {% if temp80d %} value="{{temp80d.d_80chouseloan}}" {% endif %}>
+                                    <span id="houseLoanError" class="error"></span>
+
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control"
+                                    {% if prevtax %}  value="{{prevtax.d_80chouseloan}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="tuitionFee" class="form-label">Tuition fee - Children(Max two
+                                        children)</label>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form5-number-input" id="tuitionFee" name="tuitionFee" {% if temp80d %} value="{{temp80d.d_80ctuitionfee}}" {% endif %}
+                                        >
+                                    <span id="tuitionFeeError" class="error"></span>
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control"
+                                    {% if prevtax %} value="{{prevtax.d_80ctuitionfee}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="mutualFund" class="form-label">Subscription to notified Mutual
+                                        Fund</label>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form5-number-input" id="mutualFund" name="mutualFund" {% if temp80d %} value="{{temp80d.d_80cmutualfund}}" {% endif %}
+                                        >
+                                    <span id="mutualFundError" class="error"></span>
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control"
+                                    {% if prevtax %}  value="{{prevtax.d_80cmutualfund}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="termDeposit" class="form-label">5 Year Term Deposit</label>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form5-number-input" id="termDeposit" name="termDeposit" {% if temp80d %} value="{{temp80d.d_80ctermdposite}}" {% endif %}
+                                        >
+                                    <span id="termDepositError" class="error"></span>
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control"
+                                    {% if prevtax %}  value="{{prevtax.d_80ctermdposite}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="sukanyaSamriddhi" class="form-label">Sukanya Samriddhi</label>
+                                </td>
+                                <td>
+                                    <input type="number" class="form-control form5-number-input" id="sukanyaSamriddhi" {% if temp80d %} value="{{temp80d.d_80csuksam}}" {% endif %}
+                                        name="sukanyaSamriddhi" >
+                                    <span id="sukanyaSamriddhiError" class="error"></span> <br>
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control"
+                                    {% if prevtax %}  value="{{prevtax.d_80csuksam}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="d-flex justify-content-center ">
+                            
+                            <button type="submit" class="btn btn-sm btn-primary" id="savebtn5" 
+                            >Save</button>
+                                {% if temp80d %}
+                                <a href="{% url 'del_temp_80C' empid=temp80d.empid %}" type="button"
+                                    style="margin-left: 2px;" class="btn btn-sm btn-danger">Cancel</a>
+                            {% endif %}
+                                
+                        </div>
+
+                    </form>
+                    
+                    
+                </div> 
+
+                
+                {% if data.empdoj >= financial_year_start and financial_year_end >= data.empdoj %}
+                <div id="previousempForm" class="form">
+                    <form id="form6" action="{% url 'temp_prevemp' %}"  method="post">
+                        {% csrf_token %}
+                
+                        <h5  class="table_heading" >Previous Employment</h5> <br>                                      
+                        <table class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="empsalary" class="form-label"> Salary (Gross Salary Minus Section 10 Exemptions)</label>
+                                </td>
+                                <td>
+                                    <input type="number" name="empsalary" id="empsalary" class="form-control" oninput="validateEmpSalary()"  {% if tempprev %} value="{{tempprev.d_prevsalary}}" {% endif %}>
+                                    <span id="empsalaryError"  class="error" ></span> 
+                                    <p id="convertedText_empsalary"></p>
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control " {% if prevtax %} value="{{prevtax.d_prevsalary}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <label for="professionaltax" class="form-label"> Professional Tax </label>
+                                </td>
+                                <td>
+                                    <input type="number" id="professionaltax" name="professionaltax" oninput="validateProfessionalTax()" class="form-control" {% if tempprev %} value="{{tempprev.d_prevprofessionaltax}}" {% endif %} >
+                                    <p id="convertedText_professionaltax"></p>
+                                    <span id="professionaltaxError" class="error"></span> 
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control " {% if prevtax %} value="{{prevtax.d_prevprofessionaltax}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>
+        
+                            <tr>
+                                <td>
+                                    <label for="providentfund" class="form-label"> Provident Fund </label>
+                                </td>
+                                <td>
+                                    <input type="number" name="providentfund" id="providentfund" class="form-control" oninput="validateProvidentfund()" {% if tempprev %} value="{{tempprev.d_prevprofund}}" {% endif %}>
+                                    <p id="convertedText_providentfund"></p>
+                                    <span id="providentfundError" class="error" ></span>
+                                        
+                                </td>
+                                <td>
+                                    
+                                    <input id="readonly" readonly type="number" class="form-control " {% if prevtax %} value="{{prevtax.d_prevprofund}}" {% endif %}>
+                                    
+                                </td>
+                            </tr>                             
+                            <tr>
+                                <td>
+                                    <label for="incometax6" class="form-label"> Income Tax </label>
+                                </td>
+                                <td>
+                                    <input type="number"  id="incometax6" name="incometax6" oninput="validateIncometax6()" class="form-control" {% if tempprev %} value="{{tempprev.d_previncometax}}" {% endif %}>
+                                    <p id="convertedText_incometax6"></p>
+                                    <span id="incometax6Error" class="error"></span>
+                                        
+                                </td>
+                                <td>
+                                    <input id="readonly" readonly type="number" class="form-control " {% if prevtax %} value="{{prevtax.d_previncometax}}" {% endif %}>                                    
+                                </td>
+                            </tr>
+                        </table>
+                        
+
+                        <div class="d-flex justify-content-center ">                            
+                            <button type="submit" class="btn btn-sm btn-primary" id="savebtn6" 
+                                >Save</button> 
+                            {% if tempprev %}
+                                <a href="{% url 'del_temp_prevemp' empid=tempprev.empid %}" type="button"
+                                    style="margin-left: 2px;" class="btn btn-sm btn-danger">Cancel</a>
+                            {% endif %}    
+                            
+                        </div>
+                        
+                    </form>    
+                </div>
+                {% endif %}
+
+                <div class="modal fade" id="Allpreviewmodal" tabindex="-1" role="dialog"
+                    aria-labelledby="Allpreviewlabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 21cm !important" role="document">
+                        <!-- modal-lg provides a larger modal for better A4 representation -->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="Allpreviewlabel">Confirmation</h5>
+                            </div>
+                            <div class="modal-body" id="Allpreviewmessage">                                
+                            </div>
+                            <div class="modal-footer">
+                                <p style="color: red; font-size: 14px; text-align: justify;">                                    
+                                    For declaration in income tax and/ or exemptions under House Rent Allowance (HRA), Leave Travel Allowance ( LTA), Housing Loan, and any other permitted category, I shall only submit valid proofs and information, in accordance with the requirements of the Income Tax Act and other laws and regulations. If any incorrect, false or forged receipts/ declaration/ information is detected at any time, including during {{data.Company_Name}} regular audits, it would warrant stern disciplinary action including separation from services, as per Business Conduct Guidelines. In addition, any tax benefits may be withdrawn/ reversed. I am also liable to directly handle any investigation or action taken by the Income Tax Department. By signing the declaration/ disclaimer, I acknowledge and agree to the above.                                    
+                                </p>
+                                <p style="font-size: 14px; text-align: justify;">
+                                    <input type="checkbox" name="it_dec_check1" id="it_dec_check1" onchange="enable_btn_1()">
+                                    I hereby confirm that: The above contents updated by me are as per the company policy and guidelines and are correct to the best of my knowledge.
+                                </p>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                id="Allpreviewcancle">Cancel</button>
+                                <!-- <button type="submit" class="btn btn-primary" id="sub_btn_1" onclick="Allpreviewsubmit()" disabled>Submit</button> -->
+                                <a href="#" id="sub_btn_1" onclick="Allpreviewsubmit()" class="btn btn-primary" disabled >Submit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav_links" style="margin-left: 87%;">
+                    <button class="btn btn-secondary btn-sm" id="prevBtn" onclick="navigate('previous')">Previous</button>
+                    <button class="btn btn-secondary btn-sm" id="nextBtn" onclick="navigate('next')">Next</button>
+                </div>
+                
+                          
+                <div class="d-flex justify-content-center">
+                    <button id="PreviewSubmit" class="btn btn-md btn-primary" onclick="PreviewSubmit()" >Preview & Submit</button>
+                </div>
+
+                {% endif %}
+
+
+
+                {% if regime.Regime == 'New' %}
+                
+                <div id="other_income_UnspecifiedForm" class="form">
+                    <form id="form7" action="{% url 'temp_incomeLoss2' %}" method="post">
+                        {% csrf_token %}                
+                        <h5  class="table_heading" >Other Income Unspecified</h5> <br>                      
+                        <table class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="unspecified_income" class="form-label"> Other Income Unspecified</label>
+                                </td>
+                                <td>
+                                    <input type="number" name="unspecified_income" id="unspecified_income" class="form-control" oninput="validateunspecified_income()" {% if tempincom %} value="{{tempincom.d_80ttaotherincome}}" {% endif %}>
+                                    <span id="unspecified_incomeError"  class="error" ></span> 
+                                </td>
+                                <td>                                                                        
+                                    <input type="number" id="readonly" {% if prevtax %} value="{{prevtax.d_80ttaotherincome}}" {% endif %} readonly class="form-control">                                    
+                                </td>
+                            </tr>                                                                                                                    
+                        </table> 
+
+                        <div class="d-flex justify-content-center ">                            
+                            <button type="submit" class="btn btn-sm btn-primary" id="savebtn7" 
+                                >Save</button> 
+                            {% if tempincom %}
+                                <a href="{% url 'del_temp_incomeLoss' empid=tempincom.empid %}" type="button"
+                                    style="margin-left: 2px;" class="btn btn-sm btn-danger">Cancel</a>
+                            {% endif %}
+                              
+                        </div>     
+                    </form>
+                </div>
+
+                {% if data.empdoj >= financial_year_start and financial_year_end >= data.empdoj %}
+                <div id="previousemp2Form" class="form">
+                    <form id="form8" action="{% url 'temp_prevemp2' %}"  method="post">
+                        {% csrf_token %}                
+                        <h5  class="table_heading" >Previous Employment</h5> <br>               
+                        <table class="table table-border table-striped">
+                            <tr>
+                                <td></td>
+                                <td style="font-weight: bold;">Current Values</td>
+                                <td style="font-weight: bold;">Previously Declared Values</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="empsalary2" class="form-label"> Salary (Gross Salary Minus Section 10 Exemptions)</label>
+                                </td>
+                                <td>
+                                    <input type="number" name="empsalary2" id="empsalary2" class="form-control" oninput="validateEmpSalary2()"  {% if tempprev %} value="{{tempprev.d_prevsalary}}" {% endif %}>
+                                    <p id="convertedText_empsalary_2"></p>
+                                    <span id="empsalary2Error"  class="error" ></span> 
+                                </td>
+                                <td>                                    
+                                    <input id="readonly" readonly type="number" class="form-control " {% if prevtax %} value="{{prevtax.d_prevsalary}}" {% endif %}>                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="professionaltax2" class="form-label"> Professional Tax </label>
+                                </td>
+                                <td>
+                                    <input type="number" id="professionaltax2" name="professionaltax2" oninput="validateProfessionalTax2()" class="form-control" {% if tempprev %} value="{{tempprev.d_prevprofessionaltax}}" {% endif %} >
+                                    <p id="convertedText_professionaltax2"></p>
+                                    <span id="professionaltax2Error" class="error"></span> 
+                                </td>
+                                <td>                                    
+                                    <input id="readonly" readonly type="number" class="form-control " {% if prevtax %} value="{{prevtax.d_prevprofessionaltax}}" {% endif %}>                                    
+                                </td>
+                            </tr>        
+                            <tr>
+                                <td>
+                                    <label for="providentfund2" class="form-label"> Provident Fund </label>
+                                </td>
+                                <td>
+                                    <input type="number" name="providentfund2" id="providentfund2" class="form-control" oninput="validateProvidentfund2()" {% if tempprev %} value="{{tempprev.d_prevprofund}}" {% endif %}>
+                                    <p id="convertedText_providentfund2"></p>
+                                    <span id="providentfund2Error" class="error" ></span>
+                                        
+                                </td>
+                                <td>                                    
+                                    <input id="readonly" readonly type="number" class="form-control " {% if prevtax %} value="{{prevtax.d_prevprofund}}" {% endif %}>                                    
+                                </td>
+                            </tr>                             
+                            <tr>
+                                <td>
+                                    <label for="incometax62" class="form-label"> Income Tax </label>
+                                </td>
+                                <td>
+                                    <input type="number"  id="incometax62" name="incometax62" oninput="validateIncometax62()" class="form-control" {% if tempprev %} value="{{tempprev.d_previncometax}}" {% endif %}>
+                                    <p id="convertedText_incometax62"></p>
+                                    <span id="incometax62Error" class="error"></span>                                        
+                                </td>
+                                <td>
+                                    <input id="readonly" readonly type="number" class="form-control " {% if prevtax %} value="{{prevtax.d_previncometax}}" {% endif %}>                                    
+                                </td>
+                            </tr>
+                        </table>                    
+                        <div class="d-flex justify-content-center ">                            
+                            <button type="submit" class="btn btn-sm btn-primary" id="savebtn8" 
+                                >Save</button> 
+                            {% if tempprev %}
+                                <a href="{% url 'del_temp_prevemp' empid=tempprev.empid %}" type="button"
+                                    style="margin-left: 2px;" class="btn btn-sm btn-danger">Cancel</a>
+                            {% endif %}                                
+                        </div>                        
+                    </form>    
+                </div>
+                {% endif %}
+
+                <div class="modal fade" id="New_modal" tabindex="-1" role="dialog"
+                    aria-labelledby="New_label" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 21cm !important" role="document">
+                        <!-- modal-lg provides a larger modal for better A4 representation -->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="New_label">Confirmation</h5>
+                            </div>
+                            <div class="modal-body" id="New_message"></div>
+                            <div class="modal-footer">
+                                <p style="color: red; font-size: 14px; text-align: justify;">                                    
+                                    For declaration in income tax and/ or exemptions under House Rent Allowance (HRA), Leave Travel Allowance ( LTA), Housing Loan, and any other permitted category, I shall only submit valid proofs and information, in accordance with the requirements of the Income Tax Act and other laws and regulations. If any incorrect, false or forged receipts/ declaration/ information is detected at any time, including during {{data.Company_Name}} regular audits, it would warrant stern disciplinary action including separation from services, as per Business Conduct Guidelines. In addition, any tax benefits may be withdrawn/ reversed. I am also liable to directly handle any investigation or action taken by the Income Tax Department. By signing the declaration/ disclaimer, I acknowledge and agree to the above.                                    
+                                </p>
+                                <p style="font-size: 14px; text-align: justify;">
+                                    <input type="checkbox" name="it_dec_check2" id="it_dec_check2" onchange="enable_btn_2()" required>
+                                    I hereby confirm that: The above contents updated by me are as per the company policy and guidelines and are correct to the best of my knowledge.
+                                </p>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"
+                                id="New_cancle">Cancel</button>
+                                <!-- <button type="submit" class="btn btn-primary" onclick="New_submit()">Submit</button> -->
+                                <a href="#" id="sub_btn_2" class="btn btn-primary" onclick="New_submit()" disabled >Submit</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="nav_links" style="margin-left: 87%;">
+                    <button class="btn btn-secondary btn-sm" id="prevBtn" onclick="navigate('previous')">Previous</button>
+                    <button class="btn btn-secondary btn-sm" id="nextBtn" onclick="navigate('next')">Next</button>
+                </div>
+
+                
+                <div class="d-flex justify-content-center">
+                    <button id="New_Submit" class="btn btn-md btn-primary" onclick="New_Submit()" >Preview & Submit</button>
+                </div>
+
+                {% endif %}
+                
+            </div>
+        </div>
+
+        
+        <div class="row re"></div>
+    </div>
+
+
+    {% if success_message %}
+    <script>
+        // JavaScript code to display the success message as an alert
+        window.onload = function () {
+            alert("{{ success_message|safe }}");
+            window.location.href = "{% url 'ITDeclarations' %}";
+        };
+    </script>
+    {% endif %}
+
+    
+
+    
+
+
+
+    
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI/tZl5koj9nS0FqgtFfBdWYj63pFnxFpZl/O2qI=" crossorigin="anonymous"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-Uo5F6Ndy7B1xpoHOIlGgGA1yFHaFl4lGpxkvBxVCvnuSkoMuy1fOyZiJKfDAusy" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+<div id="pdf-url-80ee" data-pdf-url="{% static 'media/Eligibility_reference_docs/80ee.pdf' %}"></div>
+<div id="pdf-url-80eea" data-pdf-url="{% static 'media/Eligibility_reference_docs/80eea.pdf' %}"></div>
+<div id="pdf-url-80eeb" data-pdf-url="{% static 'media/Eligibility_reference_docs/80eeb.pdf' %}"></div>
+    
+
+
+    {% block content %}
+<!-- Your existing HTML content -->
+
+<!-- Pass data to JavaScript -->
+<script>
+// Define a global variable that holds the employee's date of joining
+var empDoj = "{{ data.empdoj }}";
+var Band = "{{ data.Band }}";
+var temp_havcar = "{{tempcar.havecar}}";
+var temp_owncar = "{{tempcar.owncar}}";
+var temp_havedriver   = "{{tempcar.havedriver}}";
+var regimeValue = "{{regime.Regime}}";
+
+
+
+</script>
+
+
+{% if regime.Regime == 'Old' %}
+<!-- Now, include your external JavaScript file -->
+<script src="/static/js/form1.js"></script>
+<script src="/static/js/form2.js"></script>
+<script src="/static/js/form3.js"></script>
+<script src="/static/js/form4.js"></script>
+<script src="/static/js/form5.js"></script>
+<script src="/static/js/form6.js"></script>
+<script src="/static/js/form16.js"></script>
+
+{% endif %}
+
+{% if regime.Regime == 'New' %}
+<script src="/static/js/form1.js"></script>
+<script src="/static/js/form_new_regime.js"></script>
+<script src="/static/js/form16.js"></script>
+{% endif %}
+
+
+{% endblock %}
+
+
+{% if regime.Regime == 'Old' %}
+
+<script src="{% static 'js/form1.js' %}"></script>
+<script src="{% static 'js/form2.js' %}"></script>
+<script src="{% static 'js/form3.js' %}"></script>
+<script src="{% static 'js/form4.js' %}"></script>
+<script src="{% static 'js/form5.js' %}"></script>
+<script src="{% static 'js/form6.js' %}"></script> 
+<script src="{% static 'js/form16.js' %}"></script>
+
+{% endif %}
+
+
+{% if regime.Regime == 'New' %}
+<script src="{% static 'js/form16.js' %}"></script>
+<script src="{% static 'js/form1.js' %}"></script>
+<script src="{% static 'js/form_new_regime.js' %}"></script>
+{% endif %}
+
+</body>
+
+</html>
+

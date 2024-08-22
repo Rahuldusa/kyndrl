@@ -1,0 +1,50 @@
+{% load static %}
+
+<html>
+
+
+<head>
+    <title>Tax Declaration</title>
+    {% include 'cdnlines.html' %}
+    {% include 'header.html' %}
+    {% include 'menubar.html' %}
+
+    <link rel="stylesheet" href="{% static 'css/fbpclaim.css' %}">
+</head>
+
+<body>
+    <div class="container-fluid c2">
+        <div class="row r2">       
+            <div class="col-md-12">
+                <h4 class="fbph1">Flexible Benefit Plan Claim Details</h4> <br><br>
+
+                <p><b>Note:</b></p> <br>
+
+                <p style="color: red;">A, Under new tax regime LTA cannot be claimed, other than that Fuel and Maintenance, Driver salary can be claimed.</p><br>
+
+                <p><b>Purpose:</b></p> <br>
+
+                <p>The Purpose of this section is for employees to submit the claims to avail tax benefits.</p>
+                            
+                <div class="d-flex">
+                    <p>*</p>
+                    {% if not regime %}
+                        <a href="#" style="margin-left: 5px;" onclick="no_Regime()">Click here to Add New Claims</a>
+                    {% else %}                    
+                        <a href="{% url 'emp_fbp_claim' %}" style="margin-left: 5px;">Click here to Add New Claims</a>                    
+                    {% endif %}                                   
+                </div>
+                
+            </div>
+        </div> 
+    </div>
+
+    <script>
+        function no_Regime(){
+            alert('Please select Regime.')
+        }       
+    </script>
+    
+    <script src="{% static 'js/fbpclaim.js' %}"></script> 
+</body>
+</html>

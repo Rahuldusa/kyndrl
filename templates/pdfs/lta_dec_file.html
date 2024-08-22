@@ -1,0 +1,247 @@
+
+<html>
+    <head>
+        <title>Declaration for LTA</title>
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    </head>
+
+    <style>
+        h2{
+            font-size: 16px;                      
+        }
+
+        h6{
+            font-size: 14px;
+            margin-left: 65px;
+            margin-right: 65px;
+            font-weight: normal;
+        }
+
+        h5{
+            font-size: 14px;
+            margin-left: 75px;
+            margin-right: 75px;
+            font-weight: normal;
+        }
+                
+        #tbl_1,
+        #tbl_2,
+        #tbl_3{
+            width: 80%;
+            border-collapse: collapse;
+            border: 1px solid #000;
+            text-align: center;                                 
+        }    
+
+
+
+        #tbl_1 th,
+        #tbl_2 th,
+        #tbl_3 th,
+        #tbl_1 td,
+        #tbl_2 td,
+        #tbl_3 td{
+            padding: 5px;
+            width: 20%;        
+        }
+
+        #tbl_1 th,
+        #tbl_2 .th_1,
+        #tbl_3 th{
+            font-size: 14px;
+            background-color: #F8EDE3;
+        }
+        #tbl_1 td,
+        #tbl_2 td,
+        #tbl_3 td{
+            font-size: 14px;
+        }
+       
+
+        .th_1,
+        .th_2{
+            font-weight: bold;            
+        }
+           
+        #header{
+            background-color: #d68b7a; 
+            height: 40px;
+            color: #ffffff;
+            padding-top: 7px;
+        }
+       
+
+    </style>
+    <body>    
+        <div id="header">
+            <h2 align="center">Leave Travel Allowance (LTA) DECLARATION - Financial Year -{{financial_year_start|date:'Y'}} - {{financial_year_end|date:'Y'}} <br> Self Declaration by Employee </h2>
+        </div>
+
+        <h6>I <strong>{{data.empname}}</strong>, with employee id <strong>{{data.empid}}</strong>.do hereby confirm that:</h6>
+        <h6>I am claiming expenses incurred for Economy Class Fare only. (Applicable if travelled in Air ways).</h6>
+        
+        <h6 class="mt-2">I have travelled by the shortest route.</h6>
+        <div id="td_1">
+        <table class="table table-bordered text-center" align="center" id="tbl_1">
+            <thead>
+                <tr>
+                    <th>Start point (Place From)</th>
+                    <th>End point (Place To)</th>
+                    <th>Mode of Travel</th>
+                    <th>Total Fare Rs.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{st_point}}</td>
+                    <td>{{end_point}}</td>
+                    <td>{{tra_mode}}</td>
+                    <td>{{tot_fare}}</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        <p style="color: red; font-size: 11px; margin-left: 65px;">(Please refer the illustrations provided in the policy FAQs)</p>
+
+        <h6 class="mt-2">Following are the details of my approved leave:</h6>
+        <table class="table table-bordered text-center" align="center" id="tbl_2">                                            
+            <tr>
+                <td rowspan="2" class="th_2 align-middle" >Leave Period</td>
+                <td class="th_1">Start Date</td>
+                <td class="th_1">End Date</td>                               
+            </tr>                                        
+            <tr>                                                    
+                <td>
+                    {{st_dt|date:'d/m/Y'}}
+                </td>
+                <td>
+                    {{end_dt|date:'d/m/Y'}}
+                </td>
+                        
+            </tr>                                                                                            
+        </table>
+
+        <h6 class="mt-2">Below are family member's details accompanied in my travel (Name and Relationship):</h6>
+        <table class="table table-bordered text-center" align="center" id="tbl_3">
+            <thead>
+                <tr>
+                    <th>Sl.No</th>
+                    <th>Family member name</th>
+                    <th>Relationship</th>   
+                     
+                </tr>
+            </thead>
+            <tbody>
+                {% if fm_1 %}
+                <tr>
+                    <td>1</td>
+                    <td>{{fm_1}}</td>
+                    <td>{{rel_1}}</td> 
+                    
+                </tr>
+                {% endif %}
+
+                {% if fm_2 %}
+                <tr>
+                    <td>2</td>
+                    <td>{{fm_2}}</td>
+                    <td>{{rel_2}}</td> 
+                                      
+                </tr>
+                {% endif %}
+
+                {% if fm_3 %}
+                <tr>
+                    <td>3</td>
+                    <td>{{fm_3}}</td>
+                    <td>{{rel_3}}</td> 
+                                      
+                </tr>
+                {% endif %}
+
+                {% if fm_4 %}
+                <tr>
+                    <td>4</td>
+                    <td>{{fm_4}}</td>
+                    <td>{{rel_4}}</td> 
+                                     
+                </tr>
+                {% endif %}
+
+                {% if fm_5 %}
+                <tr>
+                    <td>5</td>
+                    <td>{{fm_5}}</td>
+                    <td>{{rel_5}}</td>  
+                                    
+                </tr>
+                {% endif %}
+
+                {% if fm_6 %}
+                <tr>
+                    <td>6</td>
+                    <td>{{fm_6}}</td>
+                    <td>{{rel_6}}</td>   
+                                   
+                </tr>
+                {% endif %}
+
+                {% if fm_7 %}
+                <tr>
+                    <td>7</td>
+                    <td>{{fm_7}}</td>
+                    <td>{{rel_7}}</td>   
+                                  
+                </tr>
+                {% endif %}
+
+                {% if fm_8 %}
+                <tr>
+                    <td>8</td>
+                    <td>{{fm_8}}</td>
+                    <td>{{rel_8}}</td>                                       
+                </tr>
+                {% endif %}                
+            </tbody>
+        </table>
+
+        <h6 class="mt-2">Further, I am aware that</h6>
+        
+        <h5 class="mt-2">
+            (i)	Journey through sea, hired taxis, mini-buses and personal cars cannot be claimed. Expenses incurred towards hotel charges (food, accommodation) toll charges, driver's bata local conveyance like taxi charges from residence to the airport are not be reimbursable.
+        </h5>
+        <h5 class="mt-2">
+            (ii) In case of multiple destinations, the claim will be reimbursed to the extent of 1st a/c train fare by the shortest route from the start point to end point.
+        </h5>
+        <h5 class="mt-2">
+            (iii) Travel should be a round trip and the start location should be my work location.
+        </h5>
+        <h5 class="mt-2">
+            (iv) Exemption will be allowed on travel expenditure of self, parents, spouse, children (max 2) & fully dependent siblings.
+        </h5>       
+        
+
+        <h6 class="mt-2">I confirm,</h6>
+        
+        <h5 class="mt-2">
+            (i)	that the exemption under section 10(5) of the Income-tax Act, 1961 (the Act) claimed by me is in accordance with the sub-rule (2) of Rule 2B of the Income-tax Rules, 1962 (the Rules) as per which the exemption  can  be  claimed  only  for  two  journeys  in  a  block  of  four  calendar  years  commencing  from  1986.
+        </h5>
+        <h5 class="mt-2">
+            (ii) that I shall be fully responsible to the Company for any income-tax liability including interest, penalty etc. that may arise on account of non-fulfillment of this undertaking in-toto or in part by me.                
+        </h5>    
+        
+
+        <h6 class="mt-2">Date: {{current_date|date:"d-m-Y"}}</h6>
+        <h6 class="mt-2">Place: {{fm_place}}</h6>
+        
+
+    </body>
+</html>

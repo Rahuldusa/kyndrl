@@ -1,0 +1,47 @@
+
+
+
+
+.hra_table_1 {
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+
+.hra_table_1 tr td {
+    padding-top: 15px;
+    padding-bottom: 6px;
+    width: 12% !important;
+    font-size: 13px; 
+}
+
+.hra_table_1 input,
+.hra_table_1 select{
+    width: 113px;
+    font-size: 13px; 
+}
+
+
+.hra_table_2 tr td:first-child {
+    padding-top: 15px;
+    padding-bottom: 6px;
+    width: 20%;
+    font-size: 13px; 
+}
+
+.hra_table_2 tr td:nth-child(2),
+.hra_table_2 tr td:nth-child(3),
+.hra_table_2 tr td:nth-child(4),
+.hra_table_2 tr td:nth-child(5),
+.hra_table_2 tr td:nth-child(6) {
+    padding-top: 15px;
+    padding-bottom: 6px;
+    width: 16%;
+    font-size: 13px; 
+}
+
+.hra_table_2 input,
+.hra_table_2 select{
+    width: 113px;
+    font-size: 13px; 
+}

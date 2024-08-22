@@ -1,0 +1,62 @@
+#form6 {
+    box-shadow: 0px 0px 4px rgb(117, 114, 114);
+    overflow-x: auto;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+#form6 label {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#form6 input {
+    border: 1px solid black;
+    font-size: 16px;
+}
+
+#form6 tr {
+    height: 50px;
+}
+
+
+#form6 .form-control {
+    width: 250px;
+}
+
+#form6 td {
+    width: 500px;
+}
+
+#form6 #formid2{
+    font-size: 20px;
+}
+
+#form6 #readonly {
+    background-color: #e6e5e5;
+}
+
+#form6 span {
+    color: red;
+}
+
+@media (max-width: 768px) {
+    #form6 td {
+        width: 200px;
+    }
+
+    #form6 label,
+    #form6 input {
+        font-size: 12px;
+    }
+
+
+    #form6 .form-control {
+        width: 150px;
+    }
+    #form6 #formid2{
+        font-size: 14px;
+    }
+}

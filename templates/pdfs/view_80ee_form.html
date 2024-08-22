@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        Declaration OtherIncome Unspecified
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+
+    p, li{
+        font-size: 13px;
+    }
+
+    h4{
+        background-color: #B4D4FF;
+        padding-top: 10px;
+    }
+</style>
+
+<body>
+    <h4 style="font-size:16px;text-align:center;margin-top:25px;margin-bottom:20px;">80EE DECLARATION</h4>
+    <p style="text-align:justify;">
+        I Mr/Ms. <strong> {{data.empname|title}} </strong> (Emp No <strong>{{data.empid}}</strong>).  declare that, I fulfill the below mentioned conditions and the same is true to the best of my knowledge and information to claim exemption under section 80 EE of the Income-tax Act for the Financial Year 2024-25.
+    </p>
+    <ul>
+        <li>
+            1.	I am a resident individual (may be ordinarily resident or not ordinarily resident) as per tax laws. 
+        </li> <br>
+        <li>
+            2.	Home Loan amount is Rs. <strong>{{saved_Ilhp.loan_amount}}</strong>.(being less than INR 35,00,000)
+        </li> <br>
+        <li>
+            3.	Home Loan has been sanctioned by <strong>{% if not saved_Ilhp.loan_lender == 'other' %}{{saved_Ilhp.loan_lender}}{% else %}{{saved_Ilhp.otherloan_lender}}{% endif %}</strong> between the FY 1/4/2016-31/3/2017  on <strong>{{saved_Ilhp.loan_sanctioned_date|date:'d-m-Y'}}</strong> as evidenced by the loan sanction document from <strong>{% if not saved_Ilhp.loan_lender == 'other' %}{{saved_Ilhp.loan_lender}}{% else %}{{saved_Ilhp.otherloan_lender}}{% endif %}</strong> -attached herewith
+        </li> <br>
+                                    
+        <li>
+            4.	The interest paid by me during the is Rs. <Strong>{{saved_Ilhp.home_loan}}</Strong> as evidenced by letter issued from <strong>{% if not saved_Ilhp.loan_lender == 'other' %}{{saved_Ilhp.loan_lender}}{% else %}{{saved_Ilhp.otherloan_lender}}{% endif %}</strong>
+        </li> <br>
+        <li>
+            5.	Value of residential house property located at <strong>{{loc_80ee}}</strong> is Rs. <strong>{{saved_Ilhp.property_value}}</strong> (within the limit if INR 50,00,000) as evidenced by the Purchase agreement enclosed herewith 
+        </li> <br>
+        <li>
+            6.	I am a first time home buyer and do not own any other residential house property on the date on loan sanction.
+        </li> <br>                                                  
+    </ul>
+    <p style="text-align:justify;margin-top:15px;">
+        I also undertake to reimburse the Income-tax department/Company, any liability/action arising out of disallowance of any of the above exemption by the Income tax authorities on account of error in claim                                                                                                
+    </p>
+    <p style="text-align:justify;margin-top:20px;">
+        <strong>Disclaimer</strong>: For claiming income tax benefits and/ or exemptions under House Rent Allowance (HRA), Leave Travel Allowance (LTA),  Medical allowance, Housing Loan, and any other permitted category, I shall only submit valid proofs and information, in accordance with the requirements of the Income Tax Act and other laws and regulations.  If any incorrect, false or forged receipts/ declaration/ information is detected at any time, including during {{data.Company_Name}} regular audits, it would warrant stern disciplinary action including separation from services, as per Business Conduct Guidelines. In addition, any tax benefits may be withdrawn/ reversed. I am also liable to directly handle any investigation or action taken by the Income Tax Department. By signing the declaration/ disclaimer, I acknowledge and agree to the above.
+    </p>
+    <p style="text-align:left">        
+        Date: {{current_date|date:"d-m-Y" }} <br>
+        Place: {{place_80ee}} 
+    </p>
+    <p style="text-align:right">(SIGNATURE OF THE EMPLOYEE)</p>
+</body>
+
+</html>

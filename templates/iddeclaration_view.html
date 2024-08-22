@@ -1,0 +1,522 @@
+{% load static %}
+
+<html>
+
+<head>
+    <title>Tax Declaration</title>
+    {% include 'cdnlines.html' %}
+    {% include 'header.html' %}
+    {% include 'menubar.html' %}
+
+    <link rel="stylesheet" href="{% static 'css/itdeclaration_view.css' %}">
+</head>
+
+<body>
+    <div class="container-fluid c2">
+        <div class="row cartbr1">
+
+            <div class="col-md-12">
+                <h4>Your IT Declaration here</h4>
+            </div>
+        </div>
+        <div class="row cartbr2">
+            <div class="col-md-10">
+                <a href="{% url 'workhistory' %}" class="btn btn-sm btn-secondary mb-3">Back</a>
+
+            <div class="table-container">
+
+                {% if taxdec1.d_landlordsname %}
+               
+                <table class="table table-bordered">
+                    <thead class="text-white">
+                        
+                        <tr class="A2">
+                            <th colspan="5" class="text-center">
+                                <h6>House Rent Allowances Section</h6>
+                            </th>
+                        </tr>
+                        <tr class="A1">
+                            <th>Field Name</th>
+                            <th>Value</th>
+                        </tr>
+   
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Landlord's Name</td>
+                            <td>{{taxdec1.d_landlordsname}}</td>
+                        </tr>
+                        <tr>
+                            <td>Landlord's PAN number</td>
+                            <td>{{taxdec1.d_landlordspannum}}</td>
+                        </tr>
+                        <tr>
+                            <td>Rent Staring Date</td>
+                            <td>{{taxdec1.d_houserentstartdt|date:"d-m-Y"}}</td>
+                        </tr>
+                        <tr>
+                            <td>Rent Ammount</td>
+                            <td>{{taxdec1.d_rentpermonth}}</td>
+                        </tr>
+                        <tr>
+                            <td>Landlord's Contact</td>
+                            <td>{{taxdec1.d_landlordscontact}}</td>
+                        </tr>
+                        <tr>
+                            <td>City Type</td>
+                            <td>{{taxdec1.d_citytype}}</td>
+                        </tr>
+                        <tr>
+                            <td>Landlord's Address</td>
+                            <td>{{taxdec1.d_landlordsaddress}}</td>
+                        </tr>
+                        <tr>
+                            <td>Rent Address</td>
+                            <td>{{taxdec1.d_rentaddress}}</td>
+                        </tr>
+                        <tr>
+                            <td>Pincode</td>
+                            <td>{{taxdec1.d_pincode}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                {% endif %}
+
+
+                {% if taxdec1.d_selfoccupiedloanint or taxdec1.d_letannuallettable or taxdec1.d_80eeloanammount or taxdec1.d_80eeaprpertyvalue %}
+                
+                <table class="table table-bordered">
+                    <thead class="text-white">
+                        <tr class="A2">
+                            <th colspan="5" class="text-center">
+                                <h6>Income/Loss From House Property Section</h6>
+                            </th>
+                        </tr>
+                        <tr class="A1">
+                            <th>Field Name</th>
+                            <th>Value</th>
+                        </tr>
+                        
+                    </thead>
+                    <tbody>
+
+                        {% if taxdec1.d_selfoccupiedloanint %}
+                        <tr>
+                            <td>Self Occupied loan interest</td>
+                            <td>{{taxdec1.d_selfoccupiedloanint}}</td>
+                        </tr>
+                        <tr>
+                            <td>Self Lender Name</td>
+                            <td>{{taxdec1.d_selflendername}}</td>
+                        </tr>
+
+                        {% if taxdec1.d_selflendername == 'other' %}
+
+                        <tr>
+                            <td>Self Other Lender Name</td>
+                            <td>{{taxdec1.d_selfotherlendername}}</td>
+                        </tr>
+                        <tr>
+                            <td>Self Other Lender PAN number</td>
+                            <td>{{taxdec1.d_selfotherlenderpannum}}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td>Self Lender PAN number</td>
+                            <td>{{taxdec1.d_selflenderpannum}}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% endif %}
+
+                        {% if taxdec1.d_letannuallettable %}
+
+                        <tr>
+                            <td>Annual letable Value</td>
+                            <td>{{taxdec1.d_letannuallettable}}</td>
+                        </tr>
+                        <tr>
+                            <td>Municipal Tax</td>
+                            <td>{{taxdec1.d_letmunicipalprotax}}</td>
+                        </tr>
+                        <tr>
+                            <td>Home Loan Interest</td>
+                            <td>{{taxdec1.d_lethomeloaninterest}}</td>
+                        </tr>
+                        <tr>
+                            <td>Income/Loss on House Property</td>
+                            <td>{{taxdec1.d_letincomeloss}}</td>
+                        </tr>
+                        <tr>
+                            <td>Standered Deductions</td>
+                            <td>{{taxdec1.d_letstanderedded}}</td>
+                        </tr>
+                        <tr>
+                            <td>Let Lender Name</td>
+                            <td>{{taxdec1.d_letlendername}}</td>
+                        </tr>
+
+
+                        {% if taxdec1.d_letlendername == 'other' %}
+
+                        <tr>
+                            <td>Self Other Lender Name</td>
+                            <td>{{taxdec1.d_letotherlendername}}</td>
+                        </tr>
+                        <tr>
+                            <td>Let Other Lender PAN Number</td>
+                            <td>{{taxdec1.d_letotherlenderpannum}}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td>Let Lender PAN Number</td>
+                            <td>{{taxdec1.d_letlenderpannum}}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% endif %}
+
+                        {% if taxdec1.d_80eeloanammount %}
+                        
+                        <tr>
+                            <td>80EE Loan Sanctioned Date</td>
+                            <td>{{taxdec1.d_80eeloadsanctiondt|date:"d-m-Y"}}</td>
+                        </tr>
+                        <tr>
+                            <td>80EE Loan Ammount</td>
+                            <td>{{taxdec1.d_80eeloanammount}}</td>
+                        </tr>
+                        <tr>
+                            <td>80EE Property Value</td>
+                            <td>{{taxdec1.d_80eepropertyvalue}}</td>
+                        </tr>
+                        <tr>
+                            <td>80EE Home Loan Interest</td>
+                            <td>{{taxdec1.d_80eehomeloanint}}</td>
+                        </tr>
+                        <tr>
+                            <td>80EE Loan Lender Name</td>
+                            <td>{{taxdec1.d_80eelendername}}</td>
+                        </tr>
+
+
+                        {% if taxdec1.d_80eelendername == 'other' %}
+
+                        <tr>
+                            <td>80EE Other Lender Name</td>
+                            <td>{{taxdec1.d_80eeotherlendername}}</td>
+                        </tr>
+                        <tr>
+                            <td>80EE Other Lender PAN Number</td>
+                            <td>{{taxdec1.d_80eeotherlenderpannum}}</td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td>80EE Lender PAN Number</td>
+                            <td>{{taxdec1.d_80eelenderpannum}}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% endif %}
+
+                        {% if taxdec1.d_80eeaprpertyvalue %}
+                        
+                        <tr>
+                            <td>80EEA Loan Sanctioned Date</td>
+                            <td>{{taxdec1.d_80eealoadsanctiondt|date:"d-m-Y"}}</td>
+                        </tr>
+                        <tr>
+                            <td>80EEA Do you own another property other than this</td>
+                            <td>{{taxdec1.d_80eeahaveproperty}}</td>
+                        </tr>
+                        <tr>
+                            <td>80EEA House Property Value</td>
+                            <td>{{taxdec1.d_80eeaprpertyvalue}}</td>
+                        </tr>
+                        <tr>
+                            <td>80EEA Eligibility</td>
+                            <td>{{taxdec1.d_80eeaeligibility}}</td>
+                        </tr>
+
+                        {% endif %}
+
+                        
+                        
+                    </tbody>
+                </table>
+                
+                {% endif %}
+
+                {% if taxdec1.d_80ttaotherincome %}
+                <table class="table table-bordered">
+                    <thead class="text-white">
+                        <tr class="A2">
+                            <th colspan="5" class="text-center">
+                                <h6>Other Income Unspecified</h6>
+                            </th>
+                        </tr>
+                        <tr class="A1">
+                            <th>Field Name</th>
+                            <th>Value</th>
+                        </tr>                        
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Other Unspecified Income</td>
+                            <td>{{taxdec1.d_80ttaotherincome}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                {% endif %}
+
+                {% if taxdec1.d_80ttasavinginterest %}
+                <table class="table table-bordered">
+                    <thead class="text-white">
+                        <tr class="A2">
+                            <th colspan="5" class="text-center">
+                                <h6>80TTA</h6>
+                            </th>
+                        </tr>
+                        <tr class="A1">
+                            <th>Field Name</th>
+                            <th>Value</th>
+                        </tr>                        
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>80TTA Interest Income from Savings account</td>
+                            <td>{{taxdec1.d_80ttasavinginterest}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                {% endif %}
+
+                {% if taxdec1.d_80dselfinsurance or taxdec1.d_80dnonseniorinsurance or taxdec1.d_80dseniorinsurance or taxdec1.d_80dpreventivecheckup  or taxdec1.d_80ddbmedicalfield or taxdec1.d_80eeducationint or taxdec1.d_80uselfdisable or taxdec1.d_80dddependdisable or taxdec1.d_80eebcarint or taxdec1.d_80ccbselfcontrib %}
+                <table class="table table-bordered">
+                    <thead class="text-white">
+                        <tr class="A2">
+                            <th colspan="5" class="text-center">
+                                <h6>80 Other Deduction Section</h6>
+                            </th>
+                        </tr>
+                        <tr class="A1">
+                            <th>Field Name</th>
+                            <th>Value</th>
+                        </tr>
+                        
+                    </thead>
+                    <tbody>
+
+                        {% if taxdec1.d_80dselfinsurance %}
+
+                        <tr>
+                            <td>Mediclaim Insurance for Self/Spouse and Children</td>
+                            <td>{{taxdec1.d_80dselfinsurance}}</td>
+                        </tr>
+
+                        {% endif %}
+                        
+                        {% if taxdec1.d_80dnonseniorinsurance %}
+                        <tr>
+                            <td>Mediclaim Insurance for Parents - Non Senior Citizen</td>
+                            <td>{{taxdec1.d_80dnonseniorinsurance}}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if taxdec1.d_80dseniorinsurance %}
+                        <tr>
+                            <td>Mediclaim Insurance for Parents - Senior Citizen</td>
+                            <td>{{taxdec1.d_80dseniorinsurance}}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if taxdec1.d_80dpreventivecheckup %}
+                        <tr>
+                            <td>Preventive Health Checkup</td>
+                            <td>{{taxdec1.d_80dpreventivecheckup}}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if taxdec1.d_80ddbmedicalfield %}
+                        <tr>
+                            <td>80 DDB-Medical Treatment for Critical Illness for</td>
+                            <td>{{taxdec1.d_80ddbmedicalfield}}</td>
+                        </tr>
+                    
+                        <tr>
+                            <td>80 DDB-Medical Treatment for Critical Illness</td>
+                            <td>{{taxdec1.d_80ddbmedicaltreatment}}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if taxdec1.d_80eeducationint %}
+                        <tr>
+                            <td>Interest on education loan</td>
+                            <td>{{taxdec1.d_80eeducationint}}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if taxdec1.d_80uselfdisable %}
+                        <tr>
+                            <td>Deduction under Section 80U-Self Disability</td>
+                            <td>{{taxdec1.d_80uselfdisable}}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if taxdec1.d_80dddependdisable %}
+                        <tr>
+                            <td>Deduction under Section 80DD-Dependent Disability</td>
+                            <td>{{taxdec1.d_80dddependdisable}}</td>
+                        </tr>
+                        {% endif %}
+
+                        
+
+                        {% if taxdec1.d_80eebcarint %}
+                        <tr>
+                            <td>80EEB Vehicle Type</td>
+                            <td>{{taxdec1.d_80eebvehicltype}}</td>
+                        </tr>                     
+                        <tr>
+                            <td>80EEB Loan sanction date</td>
+                            <td>{{taxdec1.d_80eebloansactiondt|date:"d-m-Y"}}</td>
+                        </tr>
+                        <tr>
+                            <td>Interest on Car Loan</td>
+                            <td>{{taxdec1.d_80eebcarint}}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if taxdec1.d_80ccbselfcontrib %}
+
+                        <tr>
+                            <td>80 CCD (1B) - Deduction for Self-contribution to Pension Account (NPS)</td>
+                            <td>{{taxdec1.d_80ccbselfcontrib}}</td>
+                        </tr>
+                        <tr>
+                            <td>PRAN number</td>
+                            <td>{{taxdec1.d_80ccbprannum}}</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+                {% endif %}
+
+                {% if taxdec1.d_80clifeinsurance or taxdec1.d_80c5yrtimedeposit or taxdec1.d_80culip or taxdec1.d_80cnscsubscription or taxdec1.d_80cnscint or taxdec1.d_80cpublicpfund or taxdec1.d_80chouseloan or taxdec1.d_80ctuitionfee or taxdec1.d_80cmutualfund or taxdec1.d_80ctermdposite or taxdec1.d_80csuksam %}
+                <table class="table table-bordered">
+                    <thead class="text-white">
+                        <tr class="A2">
+                            <th colspan="5" class="text-center">
+                                <h6>80C Deduction Section</h6>
+                            </th>
+                        </tr>
+                        <tr class="A1">
+                            <th>Field Name</th>
+                            <th>Value</th>
+                        </tr>
+                        
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Payment towards Life Insurance Policy</td>
+                            <td>{{taxdec1.d_80clifeinsurance}}</td>
+                        </tr>
+                        <tr>
+                            <td>5 year time deposit under the Post Office Time Deposit Rules 1981</td>
+                            <td>{{taxdec1.d_80c5yrtimedeposit}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contribution to ULIP</td>
+                            <td>{{taxdec1.d_80culip}}</td>
+                        </tr>
+                        <tr>
+                            <td>Subscription to notified Central Govmt Savings certificate (NSC VIII issue)</td>
+                            <td>{{taxdec1.d_80cnscsubscription}}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Interest on NSC</td>
+                            <td>{{taxdec1.d_80cnscint}}</td>
+                        </tr>
+                        <tr>
+                            <td>Contribution to Public Provident Fund</td>
+                            <td>{{taxdec1.d_80cpublicpfund}}</td>
+                        </tr>
+                        <tr>
+                            <td>House loan principal Only / Stamp Duty & Registration fees</td>
+                            <td>{{taxdec1.d_80chouseloan}}</td>
+                        </tr>
+                        <tr>
+                            <td>Tuition fee - Children</td>
+                            <td>{{taxdec1.d_80ctuitionfee}}</td>
+                        </tr>
+                        <tr>
+                            <td>Subscription to notified Mutual Fund</td>
+                            <td>{{taxdec1.d_80cmutualfund}}</td>
+                        </tr>
+                        
+                        <tr>
+                            <td>5 Year Term Deposit</td>
+                            <td>{{taxdec1.d_80ctermdposite}}</td>
+                        </tr>
+                        <tr>
+                            <td>Sukanya Samriddhi</td>
+                            <td>{{taxdec1.d_80csuksam}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                {% endif %}
+
+                {% if data.empdoj|date:"Y-m-d" >= "2023-04-01" and  "2024-03-31" >= data.empdoj|date:"d-m-Y" %}
+
+                {% if taxdec1.d_prevsalary %}
+                <table class="table table-bordered">
+                    <thead class="text-white">
+                        <tr class="A2">
+                            <th colspan="5" class="text-center">
+                                <h6>Previous Employeement Section</h6>
+                            </th>
+                        </tr>
+                        <tr class="A1">
+                            <th>Field Name</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Salary</td>
+                            <td>{{taxdec1.d_prevsalary}}</td>
+                        </tr>
+                        <tr>
+                            <td>Professional Tax</td>
+                            <td>{{taxdec1.d_prevprofessionaltax}}</td>
+                        </tr>
+                        <tr>
+                            <td>Provident Fund</td>
+                            <td>{{taxdec1.d_prevprofund}}</td>
+                        </tr>
+                        <tr>
+                            <td>Income Tax</td>
+                            <td>{{taxdec1.d_rentpermonth}}</td>
+                        </tr>                        
+                    </tbody>
+                </table>
+                {% endif %}
+
+                {% endif %}
+            
+            </div>
+
+
+            
+
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

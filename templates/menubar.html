@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Responsive Sidebar</title>
+  <!-- Link Styles -->
+  
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <link rel="stylesheet" href="{% static 'css/menubar.css' %}">
+  
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-1">
+        <div class="sidebar">
+          <div class="logo_details">
+            <i class="bx bx-menu" id="btn"></i>
+          </div>
+          <ul class="nav-list">
+    
+            <li>
+              <a href="{% url 'Emppage' %}" {% if request.resolver_match.url_name == 'Emppage' %}class="active"{% endif %}>
+                <i class='bx bx-user'></i>
+                <span class="link_name">Basic Info</span>
+              </a>
+              <span class="tooltip">Basic Info</span>
+            </li>
+            <li >
+              <a href="{% url 'Tax_Regime' %}" {% if request.resolver_match.url_name == 'Tax_Regime' %}class="active"{% endif %}>
+                <i class='bx bx-rupee'></i>
+                <span class="link_name">Tax Regime</span>
+              </a>
+              <span class="tooltip">Tax Regime</span>
+            </li>
+            <li >
+                <a href="{% url 'formpage' %}" {% if request.resolver_match.url_name == 'formpage' %}class="active"{% endif %}>
+                  <i class='bx bx-file'></i>
+                  <span class="link_name">Form 16</span>
+                </a>
+                <span class="tooltip">Form 16</span>
+              </li>
+            <li >
+              <a href="{% url 'ITDeclarations' %}" {% if request.resolver_match.url_name == 'ITDeclarations' %}class="active"{% endif %}>
+                <i class='bx bx-receipt' ></i>
+                <span class="link_name">IT Declarations</span>
+              </a>
+              <span class="tooltip">IT Declarations</span>
+            </li>
+            
+            <li >
+              <a href="{% url 'fbpclaim' %}" {% if request.resolver_match.url_name == 'fbpclaim' %}class="active"{% endif %}>
+                <i class='bx bx-wallet'></i>
+                <span class="link_name">FBP Claims</span>
+              </a>
+              <span class="tooltip">FBP Claims</span>
+            </li>
+            <li >
+              <a href="{% url 'itproof_sub' %}" {% if request.resolver_match.url_name == 'itproof_sub' %}class="active"{% endif %}>
+                <i class='bx bx-export'></i>
+                <span class="link_name">IT Proof Submissions</span>
+              </a>
+              <span class="tooltip">IT Proof Submissions</span>
+            </li>
+            <li >
+              <a href="{% url 'workhistory' %}" {% if request.resolver_match.url_name == 'workhistory' %}class="active"{% endif %}>
+                <i class='bx bx-time'></i>
+                <span class="link_name">Work Item History</span>
+              </a>
+              <span class="tooltip">Work Item History</span>
+            </li>
+
+            <li class="links">
+              <button class="btn btn-sm bg-light text-black" id="home_btn" onclick="redirecthome()">Home</button>
+              <button class="btn btn-sm bg-light text-black"><a href="#"></a>Quick links</button>
+            </li>    
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+  <!-- Scripts -->
+  <script src="{% static 'js/menubar.js' %}"></script>
+</body>
+
+</html>

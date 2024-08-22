@@ -1,0 +1,94 @@
+.row {
+    margin-top: 50px;
+}
+
+body {
+    background-color: #e7e9ed;
+}
+
+.scrollable-table{
+    overflow-y: auto;
+    max-height: 600px;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-left: -20px;
+    z-index: 1;
+    border: 1px solid black;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+
+
+#employeeTable th,
+#employeeTable td {
+    border: 1px solid black !important;
+}
+
+.table thead>tr.A1.A1>th {
+    background-color: #008080;
+    color: white;
+    font-weight: bold;
+}
+
+/* 
+.table tbody tr:hover{
+    cursor: pointer;
+    background-color: #f1f1f1;
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+} */
+
+/* Custom styles for DataTables search input and "Show" entries dropdown */
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_length {
+
+    margin-bottom: 1em;
+
+    /* Adjust this value to increase/decrease the gap */
+}
+
+/* Custom styles for DataTables search input */
+.dataTables_wrapper .dataTables_filter input {
+
+    margin-right: 0.5em;
+    /* Adds some space on the right of the search input */
+    margin-bottom: 0.5em;
+    /* Adds some space below the search input */
+}
+
+/* Custom styles for DataTables "Show" entries dropdown */
+.dataTables_wrapper .dataTables_length select {
+    margin-right: 0.5em;
+    /* Adds some space on the right of the dropdown */
+    margin-bottom: 0.5em;
+    /* Adds some space below the dropdown */
+}
+
+/* Custom styles for DataTables pagination */
+.dataTables_wrapper .dataTables_paginate {
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    /* Add a border at the top of pagination */
+
+}
+
+/* Custom styles for DataTables pagination buttons */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    margin: 0;
+    border: 1px solid #ddd;
+    /* Add a border around each pagination button */
+    border-radius: 4px;
+    padding: 5px 10px;
+
+}
+
+/* Highlight the current page */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background-color: #ddd;
+    color: #333;
+
+}

@@ -1,0 +1,67 @@
+
+/* HRA_Section */
+
+.form-control{
+    margin-top: 2px;
+}
+
+
+
+
+.section_id{
+    background-color: #B4D4FF;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.radio-custom {
+    display: inline-block;
+    position: relative;
+    padding-left: 25px;
+    margin-right: 15px;
+    cursor: not-allowed;
+    font-size: 14px;
+    user-select: none;
+}
+
+.radio-custom::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ccc;
+}
+
+.radio-custom.checked::before {
+    background-color: #2196F3;
+}
+
+.radio-custom::after {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: white;
+    display: none;
+}
+
+.radio-custom.checked::after {
+    display: block;
+}
+/* 
+
+#op80eeayes,
+#op80eeano,
+#op80eeayes_elig,
+#op80eeano_elig{
+    width: auto;
+} */
+
+

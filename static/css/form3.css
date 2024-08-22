@@ -1,0 +1,79 @@
+#form3 {
+    box-shadow: 0px 0px 4px rgb(117, 114, 114);
+    overflow-x: auto;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+#form3 label {
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#form3 #radio {
+    font-weight: normal;
+
+}
+
+#form3 input,
+#form3 select {
+    border: 1px solid black;
+    font-size: 16px;
+}
+
+
+
+#form3 tr {
+    height: 50px;
+}
+
+
+#form3 .form-control {
+    width: 250px;
+}
+
+#form3 td {
+    width: 500px;
+}
+
+
+#form3 #readonly,
+#form3 #standerdded,
+#form3 #incomeloss  {
+    background-color: #e6e5e5;
+}
+
+
+
+
+
+#form3 span {
+    color: red;
+}
+
+
+@media (max-width: 768px) {
+    #form3 td {
+        width: 200px;
+    }
+
+    #form3 label,
+    #form3 input,
+    #form3 select {
+        font-size: 12px;
+    }
+
+
+    #form3 .form-control {
+        width: 150px;
+    }
+
+
+    #form3{
+        font-size: 14px;
+    }
+
+
+}

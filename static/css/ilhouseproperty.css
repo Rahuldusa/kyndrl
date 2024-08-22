@@ -1,0 +1,258 @@
+
+
+.r2 {
+    margin-top: 5px;
+}
+
+
+
+.r2 h5 {
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+.r2 p {
+    margin-top: -3px;
+    font-weight: bold;
+}
+
+.r2 h6 {
+    margin-top: -10px;
+    font-weight: bold;
+}
+
+.r1 {
+    margin-top: 50px;
+}
+
+
+.edit_48 {
+    margin-top: 80px;
+}
+
+
+
+
+.r3,
+.r4,
+.r5,
+.r6 {
+    margin-top: 30px;
+}
+
+#Declarations_desc1 {
+    color: rgb(247, 123, 123);
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+#Declarations_desc2 {
+    color: rgb(157, 69, 240);
+    font-weight: bold;
+}
+
+#SaveData {
+    background-color: rgb(140, 33, 240);
+    color: white;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+
+.extra {
+    height: 400px;
+}
+
+
+
+#Download12BB {
+    text-decoration: none;
+    background-color: rgb(211, 208, 208);
+    padding: 5px;
+    color: black;
+}
+
+.sumbitbtns {
+    background-color: burlywood;
+    padding: 10px;
+}
+
+/* 
+tr > td > h5 {
+    background-color: rgb(255, 243, 166);
+    border-radius: 5px;
+    padding: 10px;
+} */
+
+.il_form0 {
+    border: 1px solid blue;
+    border-radius: 5px;
+}
+
+.r4 form {
+    margin-left: -11px;
+    width: 102%;
+
+}
+
+.itpr4 #ilh_label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+
+#radio_self1,
+#radio_self2 {
+    margin-left: 5px;
+}
+
+.qst1 {
+    border-bottom: 1px solid black;
+    padding: 15px 25px;
+    margin-top: 10px;
+}
+
+.qst2 {
+    padding: 15px 25px;
+}
+
+.itpr4 a {
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.hra_table tr td {
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.r4 p {
+    margin-top: 10px;
+}
+
+.r3 form {
+    width: 102%;
+    margin-left: -11px;
+}
+
+.quicklinks2 a {
+    margin-left: 10px;
+}
+
+#label {
+    width: 200px;
+    padding-left: 10px;
+}
+
+#input {
+    width: 350px;
+}
+
+.readonly {
+    background-color: rgb(233, 233, 233);
+}
+
+.qst2 {
+    background-color: rgb(221, 221, 221);
+}
+
+.readonly {
+    margin-top: 10px;
+}
+
+#rent_file_upload {
+    margin-left: 10px;
+}
+
+#pan_file_upload {
+    margin-right: 10px;
+}
+
+.table-bordered {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table-bordered, .table-bordered th, .table-bordered td {
+    border: 1px solid #ddd;
+    padding: 5px; /* Reduced from 8px */
+  }
+  
+  /* Style for the input fields */
+  input[type="text"] {
+    width: calc(100% - 20px); /* Adjusted to account for border width */
+    padding: 3px; /* Reduced from 5px */
+    margin: 2px 0; /* Reduced from 5px */
+  }
+  
+  /* Style for the buttons */
+  button {
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  #standardDeduction,
+  #incomeLossOnHouseProperty {
+      background-color: rgb(233, 232, 232); /* Change input text color to grey */
+  }
+
+  input[type="number"], input[type="text"]{
+    width: 80%; /* Adjusted number field size */
+    padding: 5px; /* Reduced from 5px */
+    margin: 2px 0; /* Reduced from 5px */
+    
+}
+
+input[type="date"] {
+    width: 80%; /* Fixed width for date input */
+    padding: 5px; /* Reduced from 5px */
+    margin: 2px 0; /* Reduced from 5px */
+}
+#loanLenderName,
+#selfHomeLoanLenderPAN {
+    width: 80%; /* Adjusted number field size */
+    padding: 5px; /* Reduced from 5px */
+    margin: 2px 0; /* Reduced from 5px */
+}
+
+.table-bordered {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-bordered,
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #ddd;
+    padding: 5px; /* Reduced from 8px */
+} 
+
+@media (max-width: 768px) {
+
+    td,
+    tr {
+        display: block;
+    }
+
+    td[id="label"] {
+        width: 100%;
+    }
+
+    #input {
+        width: 100%;
+    }
+
+
+    .r3 form {
+        width: 103%;
+        margin-left: -11px;
+    }
+
+
+}
+

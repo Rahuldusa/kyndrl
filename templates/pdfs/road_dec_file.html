@@ -1,0 +1,66 @@
+
+<html>
+    <head>
+        <title>Declaration for CLC</title>
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    </head>
+    <style>
+        h6{
+            font-size: 14px;
+            margin-left: 90px;
+            margin-right: 90px;
+            font-weight: normal;
+        }
+        h2{
+            font-size: 27px;
+        }
+        .list_{
+            margin-left: 110px;
+            font-weight: normal;
+        }
+        #header{
+            background-color: #d68b7a; 
+            height: 10px;
+            color: #ffffff;
+            padding-top: 10px;
+        }
+    </style>
+    <body>
+
+        <div id="header">
+            <h2 align="center" >Declaration for CLC</h2>
+        </div>
+        <h6>
+            Please note that the personal car Accessory/Road tax are not reimbursable, Accessory/Road tax cost is reimbursable only towards CLC for Single Instance. 
+        </h6> 
+        <h6>
+            If you have claimed CLC Car Accessory /Road tax already then you will not be eligible to claim second time.
+        </h6>   
+        
+        <h6>
+            Hence we request you to kindly confirm the below:- 
+        </h6>
+       
+        {% if road_check_1 %}
+
+        <h6 class="list_">--    Expenses claimed have not been funded by the leasing company during the purchase of the vehicle - </h6>
+        {% endif %}
+
+        {% if road_check_2 %}
+        <h6 class="list_">--    The Accessory bill submitted is towards CLC or Personal car - </h6>
+        {% endif %}
+
+        {% if road_check_3 %}
+        <h6 class="list_">--    If CLC, please declare that you have not claimed this expenses before and claiming it for the 1st time -  </h6>
+        {% endif %}
+      
+        
+    </body>
+</html>

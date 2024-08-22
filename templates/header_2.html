@@ -1,0 +1,95 @@
+
+{% load static %}
+<html>
+
+<head>
+    <title></title>
+
+    {% include 'cdnlines.html' %}
+
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+   
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row header1">
+            <div class="col-md-4 ibm1">
+                <h5 class="ibm text-white">{{data.Company_Name}} Tax Exemptions</h5>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-5 logout1" >
+                <ul class="d-flex align-items-center justify-content-end" style="list-style-type: none;">
+                    <li>
+                        Welcome <strong>{{data.empname|title}}</strong> {{data.empid}}
+                        <a href="{% url 'Emppage' %}" class="wel3 text-white">Home</a>
+                    </li>
+                    <li style="margin:0px 4px; ">
+                        |
+                    </li>
+                    <li >                        
+                        <a  onclick="emplogout()" class="wel3 btn btn-sm text-white">Logout</a>
+                    </li>
+                </ul>
+            </div>                        
+        </div>
+
+        <div class="row header2">
+            <div class="col-12 mibm1">
+                <h6 class="mibm text-white">{{data.Company_Name}} Tax Exemptions</h6>                                    
+                    <ul class="d-flex align-items-center justify-content-end" style="list-style-type: none;">
+                        <li>
+                            Welcome {{data.empname|title}} {{data.empid}} 
+                            <a href="{% url 'Emppage' %}" class="wel3 text-white">Home</a>
+                        </li>
+                        <li style="margin:0px 4px; ">
+                            |
+                        </li>
+                        <li >                            
+                            <a  onclick="emplogout()" class="wel3 btn btn-sm text-white">Logout</a>
+                        </li>
+                    </ul>                
+            </div>
+        </div>        
+    </div>
+
+    
+    <script>
+
+        function emplogout(){
+            localStorage.clear();
+            window.location.href = 'Emp_logout/';
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+                let timeout;
+
+                function resetTimer() {
+                    clearTimeout(timeout);
+                    timeout = setTimeout(logout, 5 * 60 * 1000); // 5 minutes in milliseconds
+                }
+
+                function logout() {
+                    // Redirect to the logout URL
+                    localStorage.clear();
+                    window.location.href = 'Emp_logout/'; // Change this to your actual logout URL
+                    
+                }
+
+                // List of events that will reset the timer
+                const events = ['mousemove', 'keydown', 'click', 'scroll'];
+
+                events.forEach(event => {
+                    window.addEventListener(event, resetTimer);
+                });
+
+                // Initialize the timer
+                resetTimer(); 
+            });
+    </script>
+
+</body>
+
+
+
+</html>

@@ -1,0 +1,93 @@
+
+
+.c2 {
+    margin-top: 20px;
+}
+.r2,
+.r3,
+.r4{
+    margin-left: 45px;
+}
+
+.r3,
+.r4{
+    margin-top: 20px;
+}
+
+
+#noproofsub{
+    margin-top: 30px;
+    color: red;
+}
+
+.itproofh1, .itproofh2 {
+    color: #4793af;
+    border-bottom: 1px dashed #4793af;
+    margin-top: 5px; 
+}
+
+.r5, .r6{
+    margin-left: 45px; 
+    text-align: center;
+    margin-top: 10px;
+}
+#link2{
+    border: 1px solid black;
+    height: 80px;
+    padding: 5px 0px;
+    font-size: 14px;
+}
+.r5 h6, .r6 h6{
+    font-size: 16px;
+}
+
+
+.r3, .r4{
+    margin-top: 60px;
+}
+#link1{
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(134, 12, 248);
+}
+
+.sidebar {
+    transition: all 0.3s ease;
+}
+
+
+.container-fluid {
+    transition: margin-left 0.3s ease;
+}
+
+.r2,
+.r3,
+.r4,
+.r5,
+.r6 {
+    transition: margin-left 0.3s ease;
+}
+
+
+body.sidebar-open .r2,
+body.sidebar-open .r3,
+body.sidebar-open .r4,
+body.sidebar-open .r5,
+body.sidebar-open .r6 {
+    margin-left: 240px;
+    transition: margin-left 0.3s ease;
+}
+
+
+
+@media (max-width: 768px) {
+
+    body.sidebar-open .r2,
+    body.sidebar-open .r3,
+    body.sidebar-open .r4,
+    body.sidebar-open .r5,
+    body.sidebar-open .r6 {
+        margin-left: 45px;
+        transition: margin-left 0.3s ease;
+    }
+}

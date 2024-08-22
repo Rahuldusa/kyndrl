@@ -1,0 +1,85 @@
+
+{% load static %}
+<html>
+
+<head>
+    <title>
+        Tax_Declaration
+    </title>
+    {% include 'cdnlines.html' %}
+    {% include 'header.html' %}
+    {% include 'menubar.html' %}
+
+    <link rel="stylesheet" href="{% static 'css/tax_regime.css' %}">
+</head>
+
+
+<body>
+    <div class="container-fluid c2">
+        <div class="row taxr1">
+            <div class="col-md-12 hd ">
+                <h4 class="hd1">Regime Declaration </h4>        
+            </div>
+        </div>
+
+        
+        <div  class="row taxr2" id="regime">
+            <div class="col-md-12 form ">
+                <form action="{% url 'Tax_Regime' %}" method="post">
+                    {% csrf_token %}
+                    <div class="choose">
+                        <h5>Choose Tax Regime</h5>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="options">
+                    <label><input type="radio" name="taxRegime" value="Old" {% if data1.Regime == 'Old' %}checked{% endif %}>Old Tax Regime</label> <br> <br>
+                    <label style="margin-left: 10px;"><input type="radio" name="taxRegime" value="New" {% if data1.Regime == 'New' or data1.Regime is None %}checked{% endif %}>New Tax Regime</label> <br>
+                </div>
+                </div>
+                <div class="checkbox-container">
+                    <label style="color: red; text-align: left;">
+                        <input type="checkbox" id="agreeCheckbox" onchange="checkBox()">
+                        <div>
+                       <p> New Tax Regime is now the default Tax Regime. Employees would have to opt for Old Tax Regime to claim exemptions and deductions. </p>
+                       <p> Under the new tax regime LTA cannot be claimed. Other than that Fuel & Maintenance, Driver salary can be claimed. </p>
+                       <p> Please note that you will not be given tax exemption for some of the sections because you have opted for New Tax Regime. </p>
+                       <p> Once Regime is Selected you would not be able to change the Regime in this Financial Year. </p>
+                    </div>
+                    </label>
+                </div>
+                    <button type="submit" id="submitbtn" class="btn btn-secondary submit" disabled>Submit</button>
+                </form>
+            </div>
+        </div>
+            
+        <div class="row taxr3" id="noregime" style="display: none;">
+            <div class="col-md-12 col-12">
+                <div class="col-md-12">
+                    <p> Sorry, the tax declaration period is only active between April 1st and April 18th of each year. Please come back during that time.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    
+
+    {% if success_message %}
+    <script>
+        // JavaScript code to display the success message as an alert
+        window.onload = function () {
+            alert("{{ success_message }}");
+            window.location.href = "{% url 'Emppage' %}";
+        };
+    </script>
+    {% endif %}
+
+    <script>        
+        var empDoj = "{{ data.empdoj}}";    
+    </script>
+
+    <script src="{% static 'js/tax_regime.js' %}"></script>
+
+</body>
+
+</html>

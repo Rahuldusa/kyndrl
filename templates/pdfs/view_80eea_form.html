@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        Declaration OtherIncome Unspecified
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+
+    p, li{
+        font-size: 13px;
+    }
+
+    h4{
+        background-color: #B4D4FF;
+        padding-top: 10px;
+    }
+</style>
+
+<body>
+    <h4 style="font-size:16px;text-align:center;margin-top:25px;margin-bottom:20px;">80EEA DECLARATION</h4>
+    <p style="text-align:justify;">
+        I Mr/Ms.<strong> {{data.empname|title}} </strong> (Emp No.<strong>{{data.empid}}</strong>) declare that, I fulfill the below mentioned conditions and the same is true to the best of my knowledge and information to claim exemption under section 80 EEA of the Income-tax Act for the Financial Year 2024-25.
+    </p>
+    <ul>
+        <li>
+            1.	Home Loan amount is Rs. <strong>{{hl_80eea}}</strong> (being less than INR 35,00,000)
+        </li> <br>
+        <li>
+            2.	The interest paid by me during the is Rs. <strong>{{saved_Ilhp.selfOccupiedHouseProperty}}</strong> as evidenced by letter issued from <strong>{% if not saved_Ilhp.selfHomeLoanLenderName == 'other' %}{{saved_Ilhp.selfHomeLoanLenderName}}{% else %}{{saved_Ilhp.otherselfHomeLoanLenderName}}{% endif %}</strong> and the loan is sanctioned between 01 Apr 2019 to 31 Mar 2022
+        </li> <br>
+        <li>
+            3.	Stamp Duty Value of residential house property located at <strong>{{loc_80eea}}</strong> is Rs. <strong>{{saved_Ilhp.property_value_other}}</strong> (within the limit if INR 45,00,000) as evidenced by the Purchase agreement enclosed herewith 
+        </li> <br>
+                                    
+        <li>
+            4.	I am a first time home buyer and do not own any other residential house property on the date on loan sanction.
+        </li> <br>
+                                                         
+    </ul>
+    <p style="text-align:justify;margin-top:15px;">
+        I also undertake to reimburse the Income-tax department/Company, any liability/action arising out of disallowance of any of the above exemption by the Income tax authorities on account of error in claim                                                                                                
+    </p>
+    <p style="text-align:justify;margin-top:20px;">
+        <strong>Disclaimer</strong>: For claiming income tax benefits and/ or exemptions under House Rent Allowance (HRA), Leave Travel Allowance (LTA),  Medical allowance, Housing Loan, and any other permitted category, I shall only submit valid proofs and information, in accordance with the requirements of the Income Tax Act and other laws and regulations.  If any incorrect, false or forged receipts/ declaration/ information is detected at any time, including during {{data.Company_Name}} regular audits, it would warrant stern disciplinary action including separation from services, as per Business Conduct Guidelines. In addition, any tax benefits may be withdrawn/ reversed. I am also liable to directly handle any investigation or action taken by the Income Tax Department. By signing the declaration/ disclaimer, I acknowledge and agree to the above.
+    </p>
+    <p style="text-align:left">        
+        Date: {{current_date|date:"d-m-Y" }} <br>
+        Place: {{place_80eea}} 
+    </p>
+    <p style="text-align:right">(SIGNATURE OF THE EMPLOYEE)</p>
+</body>
+
+</html>

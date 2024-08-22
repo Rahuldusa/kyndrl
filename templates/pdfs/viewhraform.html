@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>House Rent Allowance Declaration</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>       
+        table,
+        td,
+        th {
+            border: 1px solid #000;
+            text-align:left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width:100%;
+            margin: auto; /* Center the main table */
+
+        }
+        th,
+        td {
+            padding:5px 5px 5px 5px;
+            width:50%;
+            font-size: 14px;
+
+        }
+        .additional-declaration {
+            margin-top: 10px;
+        }
+        .emp-sign{
+            text-align: right;
+            margin-top:20px;
+        }
+        .text-center{
+            text-align: center;
+            background-color: #cde1fc;
+        }
+
+        li, p {
+            font-size: 13px;
+        }
+
+        h4{
+            background-color: #B4D4FF;
+            padding-top: 10px;
+        }
+
+    
+    </style>
+</head>
+
+<body>    
+    <h4 style="font-size:16px;text-align:center;margin-top:25px;margin-bottom:20px;">House Rent Allowance (HRA) DECLARATION (FY 2024-25)<br>Self Declaration by Employee</h4>
+
+<div>
+    <table align="center" style="margin-top:5px;">
+
+        <tr>
+            <th>Employee Number</th>
+            <td>{{data.empid}}</td>
+
+        </tr>
+        <tr>
+            <th>Employee Name</th>
+            <td>{{data.empname}}</td>
+        </tr>
+        <tr>
+            <th>Owner of the Rented Property</th>
+            <td>No</td>
+        </tr>
+        <tr>
+            <th>Annual Rent Paid</th>
+            <td>{{total_rent}}</td>
+
+        </tr>
+        <tr>
+            <th>Mode of Rent Payment</th>
+            <td>{{saved_hra.mode_of_pay}}</td>
+        </tr>
+    </table>
+
+
+</div>
+    
+    <div>
+        {% if saved_hra.itd1enddt %}
+
+        <table align="center" style="margin-top:10px;">
+
+            <tr>
+                <th colspan="2" class="text-center"> Rent 1</th>
+            </tr>
+            <tr>
+                <th>Address of Rented Property</th>
+                <td>{{saved_hra.rentedAdd1}}</td>
+
+            </tr>
+            <tr>
+                <th>Name of Landlord</th>
+                <td>{{saved_hra.landlordName}}</td>
+
+            </tr>
+            <tr>
+                <th>Contact No</th>
+                <td>{{saved_hra.LandlordContact}}</td>
+            </tr>
+            <tr>
+                <th>Landlord Address</th>
+                <td>{{saved_hra.LandlordAddress}}</td>
+            </tr>
+            <tr>
+                <th>PAN</th>
+                <td>{{saved_hra.LandLordPan}}</td>
+
+            </tr>
+        </table>
+        {% endif %}
+
+    </div>
+
+    <div >
+        {% if saved_hra.itd2enddt %}
+
+        <table align="center" style="margin-top:10px;">
+
+            <tr>
+                <th colspan="2" class="text-center"> Rent 2</th>
+            </tr>
+            <tr>
+                <th>Address of Rented Property</th>
+                <td>{{saved_hra.rentedAdd2}}</td>
+            </tr>
+            <tr>
+                <th>Name of Landlord</th>
+                <td>{{saved_hra.LandlordName2}}</td>
+            </tr>
+            <tr>
+                <th>Contact No</th>
+                <td>{{saved_hra.LandlordContact2}}</td>
+            </tr>
+            <tr>
+                <th>Landlord Address</th>
+                <td>{{saved_hra.LandlordAdd2}}</td>
+
+            </tr>
+            <tr>
+                <th>PAN</th>
+                <td>{{saved_hra.LandlordPan2}}</td>
+
+            </tr>
+        </table>
+        {% endif %}
+
+    </div>
+
+
+    <div>
+        {% if saved_hra.itd3enddt %}
+
+        <table align="center" style="margin-top:10px;">
+
+            <tr>
+                <th colspan="2" class="text-center"> Rent 3</th>
+            </tr>
+            <tr>
+                <th>Address of Rented Property</th>
+                <td>{{saved_hra.rentedAdd3}}</td>
+
+            </tr>
+            <tr>
+                <th>Name of Landlord</th>
+                <td>{{saved_hra.LandlordName3}}</td>
+            </tr>
+            <tr>
+                <th>Contact No</th>
+                <td>{{saved_hra.LandlordContact3}}</td>
+            </tr>
+            <tr>
+                <th>Landlord Address</th>
+                <td>{{saved_hra.LandlordAdd3}}</td>
+            </tr>
+            <tr>
+                <th>PAN</th>
+                <td>{{saved_hra.LandlordPan3}}</td>
+            </tr>
+        </table>
+        {%endif %}
+    </div>
+
+
+    <div>
+        {% if saved_hra.itd4enddt %}
+
+        <table align="center" style="margin-top:10px;">
+
+            <tr>
+                <th colspan="2" class="text-center"> Rent 4</th>
+            </tr>
+            <tr>
+                <th>Address of Rented Property</th>
+                <td>{{saved_hra.rentedAdd4}}</td>
+            </tr>
+            <tr>
+                <th>Name of Landlord</th>
+                <td>{{saved_hra.LandlordName4}}</td>
+
+            </tr>
+            <tr>
+                <th>Contact No</th>
+                <td>{{saved_hra.LandlordContact4}}</td>
+            </tr>
+            <tr>
+                <th>Landlord Address</th>
+                <td>{{saved_hra.LandlordAdd4}}</td>
+            </tr>
+            <tr>
+                <th>PAN</th>
+                <td>{{saved_hra.LandlordPan4}}</td>
+
+            </tr>
+        </table>
+        {% endif %}
+
+    </div>
+
+    <div>
+        {% if saved_hra.itd5enddt %}
+
+        <table align="center" style="margin-top:10px;">
+
+            <tr>
+                <th colspan="2" class="text-center"> Rent 5</th>
+            </tr>
+            <tr>
+                <th>Address of Rented Property</th>
+                <td>{{saved_hra.rentedAdd5}}</td>
+            </tr>
+            <tr>
+                <th>Name of Landlord</th>
+                <td>{{saved_hra.LandlordName5}}</td>
+            </tr>
+            <tr>
+                <th>Contact No</th>
+                <td>{{saved_hra.LandlordContact5}}</td>
+            </tr>
+            <tr>
+                <th>Landlord Address</th>
+                <td>{{saved_hra.LandlordAdd5}}</td>
+            </tr>
+            <tr>
+                <th>PAN</th>
+                <td>{{saved_hra.LandlordPan5}}</td>
+            </tr>
+        </table>
+        {% endif %}
+
+    </div>
+
+
+    <div class="additional-declaration">
+        <ul>
+            <li>Further, I hereby declare that I will continue to pay the rent till end of Financial Year
+                2024-25,
+                as the tax proofs are collected in the month of December 2024.</li>
+            <li>The rent amount & period declared in the tool and proof/declaration to be considered for
+                providing
+                HRA exemption.</li>
+            <li>The above information is complete, true and correct to the best of my knowledge and I have
+                no
+                reason to believe that this information can be misleading or inaccurate. I shall be
+                personally
+                responsible and liable if the same is found incorrect.</li>
+            <li>I undertake to provide any further information which {{data.Company_Name}} or its authorized representatives
+                may
+                request me to provide in context of my House Rent Allowance.</li>
+            <li>I hereby consent to {{data.Company_Name}} or its authorized representatives to contact me or my Landlord or
+                their
+                authorized representatives to collect any information regarding my House Rent Allowance
+                payments.
+            </li>
+            <li style="color: rgb(0, 81, 255);">I acknowledge and understand that, in light of the overall
+                pandemic situation, only for Financial Year 2024-25, {{data.Company_Name}} has permitted me to temporarily
+                submit a
+                soft copy declaration, stating that the details submitted by me are true and correct. I
+                undertake to
+                submit the original/ signed hard copy documents, duly signed by me and/or my landlord, on
+                demand
+                from {{data.Company_Name}}. Notwithstanding the above, I agree and acknowledge that {{data.Company_Name}} may reject my claims
+                if it is
+                not satisfied with the documents, or may require further documents from me, including
+                original/
+                signed hard copy documents. I further acknowledge that {{data.Company_Name}} may require me to submit such
+                documents
+                even after I separate from {{data.Company_Name}}. If {{data.Company_Name}} is not satisfied with my documents, {{data.Company_Name}} may, at its
+                option,
+                reject my claims for tax benefits, recover taxes due from me, or notify the tax authorities.
+                {{data.Company_Name}}'s
+                discretion in this respect shall be final.</li>
+            <li>If any part of the information contained herein (including the actual rent paid) is found to
+                be
+                fully or partly incorrect or misleading then I will be personally liable including filing of
+                original/revised individual tax return payment of any differential tax to the Income-tax
+                Department
+                and any other consequences.</li>
+            <li>I acknowledge that any inaccurate/misleading information furnished by me will also amount to
+                violation of the {{data.Company_Name}} Business Conduct Guidelines (BCG) and {{data.Company_Name}} can take disciplinary action
+                against
+                me including termination of my services.</li>
+        </ul>
+    </div>
+
+
+    <div>
+        
+        <p class="emp-sign">Signed Digitally by the employee</p>
+    </div>
+
+
+
+
+</body>
+
+</html>

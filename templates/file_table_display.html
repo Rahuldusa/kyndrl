@@ -1,0 +1,46 @@
+
+{{data.empid}}
+
+<form action="{% url 'change_table_data' %}" method="post">
+    {% csrf_token %}
+    {% if filenames %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped file_table1">
+            <thead>
+                <tr class="A1">
+                    <th>Sl.No</th>
+                    <th>Section</th>
+                    <th>File Name</th>
+                    <th>Submit File</th>
+                    <th>Ignore File</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, i in enumerated_filenames %}
+                <tr>
+                    <td>{{ index}}</td>
+                    <td>{{i.section}}</td>
+                    <td>{{i.filename}}</td>
+                    <td>
+                        <label for="{{i.filename}}">
+                            <input type="radio" name="{{i.filename}}" id="{{i.filename}}_submit" value="submit" {% if i.file_status == 'submit' %} checked {% endif %} >
+                        </label>
+                    </td>
+                    <td>
+                        <label for="file_status">
+                            <input type="radio" name="{{i.filename}}" id="{{i.filename}}_ignore" value="ignore" {% if i.file_status == 'ignore' %} checked {% endif %}>
+                        </label>
+                    </td>
+                    <td><a href="#" onclick="openPdf('{{ i.empid }}/{{i.filename}}')"  class="btn btn-sm">view</a></td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+    {% endif %}
+
+    <button type="submit">Change</button>
+</form>

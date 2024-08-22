@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        INCOME/LOSS FROM HOUSE PROPERTY
+    </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        #dec_ilhp_table2,
+        #dec_ilhp_table3 {
+            width: 90%;
+            border-collapse: collapse;
+            border: 1px solid #000;
+        }
+
+        #dec_ilhp_table1,        
+        #dec_ilhp_table4 {
+            width: 140%;
+            border-collapse: collapse;
+            border: 1px solid #000;
+        }
+
+        
+        #dec_ilhp_table2 td,
+        #dec_ilhp_table3 td {
+            width: 30%;
+            padding: 5px 5px 5px 5px;
+            font-size: 13px;
+        }
+
+        #dec_ilhp_table1 td,
+        #dec_ilhp_table4 td {
+            width: 30%;
+            padding: 5px 5px 5px 5px;
+            font-size: 13px;
+        }
+
+        
+        #dec_ilhp_table2 th,
+        #dec_ilhp_table3 th {         
+            width: 50%;
+            padding: 5px 5px 5px 5px;
+            font-size: 15px;
+        }
+
+        #dec_ilhp_table1 th,
+        #dec_ilhp_table4 th {         
+            width: 60%;
+            padding: 5px 5px 5px 5px;
+            font-size: 15px;
+        }
+
+        p, h6, li{
+            font-size: 13px;
+        }
+
+        h4{
+            background-color: #B4D4FF;
+            padding-top: 10px;
+        }
+
+        #dec_ilhp_table2 thead th,
+        #dec_ilhp_table3 thead th,
+        #dec_ilhp_table4 #tbl4_hd {
+            background-color: #cde1fc;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <h4 style="font-size:16px;text-align:center;margin-top:25px;margin-bottom:20px;">
+        DECLARATION TO CLAIM
+        INCOME/LOSS FROM
+        HOUSE PROPERTY</h4>
+
+    <table class="table table-bordered" id="dec_ilhp_table1" align="center">
+        <tbody>
+            <tr>
+                <th>Employee Number</th>
+                <td>{{data.empid}}</td>
+            </tr>
+            <tr>
+                <th>Employee Name</th>
+                <td>{{data.empname|title}}</td>
+            </tr>
+            <tr>
+                <th>PAN</th>
+                <td>{{data.emppan}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-bordered" id="dec_ilhp_table2" align="center">
+        <h6>Declaration regarding House Property:</h6>
+        <tbody>
+            <tr>
+                <th>
+                    "Whether the Property is Solely owned or Jointly Owned
+                    if the loan is taken along with a Co-borrower"
+                </th>
+                <td>{{saved_Ilhp.sole_join_owner_let}}</td>
+            </tr>
+            <tr>
+                <th>Name of Joint Owner (if applicable)</th>
+                <td>{{saved_Ilhp.name_joint_owner_let}}</td>
+            </tr>
+            <tr>
+                <th>Joint Owner relationship with employee</th>
+                <td>{{saved_Ilhp.relationship_let}}</td>
+            </tr>
+            <tr>
+                <th>Income Tax exemption claimed to the extent of (Rs. / %)</th>
+                <td>{{saved_Ilhp.extent_income_tax_let}}</td>
+            </tr>
+            <tr>
+                <th>Housing Loan - Principal paid/payable during FY 2024-25
+                </th>
+                <td>
+                    {{saved_Ilhp.principal_loan_tax_let}}
+                </td>
+            </tr>
+            <tr>
+                <th>Housing Loan - Interest paid/payable during FY 2024-25
+                </th>
+                <td>
+                    {% if saved_Ilhp.annualLettableValue %}{{saved_Ilhp.annualLettableValue}}{% else %}0{%endif%}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="border-left: 1px solid #fff;border-right: 1px solid #fff;"></td>
+            </tr>
+            <tr>
+                <th>Is the House property Self Occupied/Let Out
+                </th>
+                <td>{{saved_Ilhp.is_house_self}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <p style="color:rgb(0, 81, 255);">[Employees having both Self Occupied & Let Out
+        properties are hereby requested to submit separate declarations respectively]
+    </p>
+    <table class="table table-bordered" id="dec_ilhp_table3" align="center">
+        <tbody>
+            <tr>
+                <th>
+                    Address of the Property
+                </th>
+                <td>{{saved_Ilhp.property_address_let}}</td>
+            </tr>
+            <tr>
+                <th>Name of the Lender (Banks/Financial Institutions/Others)
+                </th>
+                <td>                    
+                    {% if saved_Ilhp.annualLettableValue %}{% if saved_Ilhp.loanLenderName == 'other' %}
+                    {{saved_Ilhp.otherloanLenderName}} {% else %}{{saved_Ilhp.loanLenderName}} {% endif %} {% endif %}                    
+                </td>
+            </tr>            
+            <tr>
+                <th>Permanent Account Number (PAN) of the Lender
+                </th>
+                <td>                    
+                    {% if saved_Ilhp.annualLettableValue %}{% if saved_Ilhp.loanLenderName == 'other' %}
+                    {{saved_Ilhp.otherloanLenderPAN}} {% else %}{{saved_Ilhp.loanLenderPAN}} {% endif %} {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>Date of borrowing loan
+                </th>
+                <td>
+                    {{saved_Ilhp.barrow_date_let|date:'Y-m-d'}}
+                </td>
+            </tr>
+            <tr>
+                <th>Date of Possession / Date of completion of construction
+                </th>
+                <td>{{saved_Ilhp.possession_date_let|date:'Y-m-d'}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p style="color: rgb(0, 81, 255);">IN CASE HOUSE PROPERTY IS SELF OCCUPIED:</p>
+    <div>
+        <ol style="list-style-type:none">
+            <li>1.The Gross Annual Value is 'NIL'.</li>
+            <li>2.No deduction allowed towards Property Tax/Municipal Tax paid.</li>
+            <li>3.No deduction except interest on borrowed capital is available.</li>
+            <li>4.Maximum deduction of Rs. 200,000/- allowed towards interest on borrowed capital for self
+                occupied property.</li>
+        </ol>
+    </div>
+    
+    <table class="table table-bordered" id="dec_ilhp_table4" align="center">
+        <tbody>
+            <tr>
+                <th id="tbl4_hd" colspan="2" style="text-align: center;">
+                    COMPUTATION
+                </th>
+            </tr>
+            <tr>
+                <th>
+                </th>
+                <th>Amount in Rs.
+                </th>
+            </tr>
+
+            <tr>
+                <th>1. GROSS ANNUAL VALUE :<br>
+                    In case of Let out, Actual rent received during the FY 2024-25.
+                </th>
+                <td>
+                    {{saved_Ilhp.annualLettableValue}}
+                </td>
+            </tr>
+            <tr>
+                <th>2. Less : Property Tax / Municipal Tax Paid for the LET OUT property only
+                </th>
+                <td>{{saved_Ilhp.municipalPropertyTax}}</td>
+            </tr>
+            <tr>
+                <th>3. Annual Value u/s 25 (a) =( 1 - 2)
+                </th>
+                <td>
+                    {% if Annual_Value %}{{Annual_Value}}{% else %}0{%endif%}
+                </td>
+            </tr>
+            <tr>
+                <th>4. Less: 30% of the Annual Value u/s 25(a)
+                </th>
+                <td>{{saved_Ilhp.standardDeduction}}</td>
+            </tr>
+            <tr>
+                <th>5. Less: Interest on borrowed capital
+                </th>
+                <td>{{saved_Ilhp.incomeLossOnHouseProperty}}</td>
+            </tr>
+            <tr>
+                <th>6. TOTAL DEDUCTIONS
+                </th>
+                <td>{% if totaldeduction %}{{totaldeduction}}{% else %}0{% endif %}</td>
+            </tr>
+            <tr>
+                <th>7. INCOME / LOSS FROM HOUSE PROPERTY*
+                </th>
+                <td>{% if income_loss_new %}{{income_loss_new}}{% else %}0{% endif %}</td>
+            </tr>
+
+
+        </tbody>
+    </table>    
+    
+    <h6 style="text-transform:uppercase;">Declaration</h6>
+    <p style="margin-top:15px;color: rgb(0, 81, 255);">I acknowledge
+        and understand that, in light of the overall pandemic situation, only for Financial
+        Year 2024-25,{{data.Company_Name}} has permitted me to temporarily submit a soft copy declaration, stating that
+        the details submitted by me are true and correct. I undertake to submit the original/ signed
+        hard copy documents, duly signed by me and/or my landlord, on demand from {{data.Company_Name}}. Notwithstanding
+        the above, I agree and acknowledge that {{data.Company_Name}} may reject my claims if it is not satisfied with the
+        documents, or may require further documents from me, including original/ signed hard copy
+        documents. . I further acknowledge that {{data.Company_Name}} may require me to submit such documents even after I
+        separate from {{data.Company_Name}}. If {{data.Company_Name}} is not satisfied with my documents, {{data.Company_Name}} may, at its option, reject my
+        claims for tax benefits, recover taxes due from me, or notify the tax authorities. {{data.Company_Name}}'s
+        discretion in this respect shall be final.
+
+    </p>
+    <p>For claiming income tax benefits and/ or exemptions
+        under House Rent Allowance (HRA), Leave
+        Travel Allowance ( LTA), Medical allowance, Housing Loan, and any other permitted category, I
+        shall only submit valid proofs and information, in accordance with the requirements of the
+        Income Tax Act and other laws and regulations. If any incorrect, false or forged receipts/
+        declaration/ information is detected at any time, including during {{data.Company_Name}} regular audits, it would
+        warrant stern disciplinary action including separation from services, as per Business Conduct
+        Guidelines. In addition, any tax benefits may be withdrawn/ reversed. I am also liable to
+        directly handle any investigation or action taken by the Income Tax Department. By signing the
+        declaration/ disclaimer, I acknowledge and agree to the above
+    </p>
+    <p><b>The above said Amount is paid by my Taxable Income and the Tax exemption is claimed only by
+            me</b></p>
+    <p style="text-align:left">
+        Date: {{current_date|date:"d-m-Y" }}
+    </p>
+    <p style="text-align:right">Employee Signature</p>
+
+
+    <p style="text-align:justify;margin-top:15px;color: red;font-size:14px;">
+        <b>Note:</b><br>
+        * Income from House Property(Net amount) can be -ve or +ve basis which it will be considered as
+        Income or Loss from House property.<br>
+        * Positive value is added to the Salary Income and Negative value will be reduced from the Salary
+        Income.
+
+    </p>
+
+</body>
+
+</html>

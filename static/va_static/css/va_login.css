@@ -1,0 +1,72 @@
+body {
+    background-color: #c8cacd; /* Light gray background color */
+}
+.main-content {
+    width: 90%;
+    max-width: 50%; /* Set maximum width for better responsiveness */
+    margin: 5em auto;
+    border-radius: 20px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.1);
+    overflow: hidden; /* Ensure border-radius is applied correctly */
+}
+.company__info {
+    background-color: #008080;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+    padding: 3em;
+}
+.company__logo {
+    font-size: 3em;
+}
+.login_form {
+    background-color: #fff;
+    padding: 2em;
+    border-top-right-radius: 20px;
+    
+}
+.form__input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    transition: border-color 0.3s;
+}
+.form__input:focus {
+    border-bottom-color: #008080;
+    box-shadow: 0 0 5px rgba(0,80,80,.4); 
+    border-radius: 4px;
+}
+.btn {
+    transition: all .5s ease;
+    width: 100%;
+    border-radius: 30px;
+    color: #008080;
+    background-color: #fff;
+    border: 1px solid #008080;
+    padding: 0.75em;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+    cursor: pointer;
+}
+.btn:hover, .btn:focus {
+    background-color: #008080;
+    color: #fff;
+}
+@media screen and (max-width: 640px) {
+    .main-content { width: 90%; }
+    .company__info {
+        display: none;
+    }
+    .login_form {
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+}
+@media screen and (min-width: 642px) and (max-width: 800px){
+    .main-content { width: 70%; }
+}

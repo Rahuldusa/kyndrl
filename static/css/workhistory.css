@@ -1,0 +1,106 @@
+
+
+.c2 {
+    margin-top: 20px;
+}
+
+.head_1{
+    color: #4793af;
+    border-bottom: 1px dashed #4793af; 
+    margin-top: 5px; 
+}
+
+.whr1 {    
+    margin-left: 45px;
+}
+
+.whr2 {
+    margin-left: 45px;
+    margin-top: 20px;
+}
+
+
+
+.sidebar {
+    transition: all 0.3s ease;
+}
+
+
+.container-fluid {
+    transition: margin-left 0.3s ease;
+}
+
+.whr1,
+.whr2 {
+    transition: margin-left 0.3s ease;
+}
+
+
+body.sidebar-open .whr1,
+body.sidebar-open .whr2 {
+    margin-left: 260px;
+    transition: margin-left 0.3s ease;
+}
+
+.table thead>tr.A1.A1>th {
+    background-color: #004f83;
+    color: white;
+    font-weight: bold;
+}
+
+.table {
+    text-align: center;
+}
+
+.table tbody>tr .btn {
+    background-color: rgb(228, 226, 226);
+    color: black;
+    border: 1px solid black;
+}
+
+
+
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.table-container {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;    
+}
+
+th,
+td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+table th{
+    font-size: 13px;
+    position: sticky;
+    top: 0;
+
+}
+table td{
+    font-size: 11px;
+}
+
+
+
+@media (max-width: 768px) {
+
+    body.sidebar-open .whr1,
+    body.sidebar-open .whr2 {
+        margin-left: 45px;
+        transition: margin-left 0.3s ease;
+    }
+}

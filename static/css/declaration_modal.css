@@ -1,0 +1,173 @@
+
+.table .A2 th {
+    background-color: rgb(101, 101, 245);
+}
+
+.dec_files th{
+    position: sticky;
+    top: 0;
+    font-size: 11px;
+}
+
+.invalid-input {
+    border: 2px solid red;
+}
+
+.table .A3 th {
+    background-color: rgb(101, 101, 245);
+}
+
+
+#declaration_pdfs_table{
+    width: 80%;    
+}
+
+
+/* viewhraform */
+
+.modal-dialog {
+    max-width: 70%;
+}
+
+.modal-content {
+    padding: 3px;
+}
+
+.modal-title {
+    margin-left: 10px;
+}
+
+
+.modal-header{
+    display: inline !important;;
+}
+.modal-header h5{
+    text-align: center;
+}
+
+.btn-close{
+position: absolute;
+right: 43px;
+top: 28px;
+}
+
+
+
+#rentTable,
+#rentTable1 {
+    border-collapse: collapse;
+    width: 80%;
+    font-size: 14px;
+}
+
+#rentTable th,
+#rentTable td,
+#rentTable1 th,
+#rentTable1 td  {
+    padding: 4px;
+    text-align: left;
+}
+
+#renttable,
+#rentTable1 {
+    border: 1px solid black;
+
+}
+
+
+#rentTable th,
+#rentTable1 th  {
+    background-color: #f2f2f2;
+}
+
+#rentTable1 .extra_hra{
+    border: 1px solid white;
+}
+
+#rentTable1 .rent-number{
+    border: 1px solid black;
+}
+
+.form-check {
+    padding-left: 50px;
+    margin-top: 0;
+}
+
+.rent-number {
+    font-weight: bold;
+    background-color: #f2f2f2;
+    padding: 4px;
+    border-bottom: 1px solid #efe4e4;
+    text-align: center;
+}
+
+.additional-declaration {
+    margin-top: 0;
+    font-size: 14px;
+    line-height: 1.2;
+    text-align: justify;
+
+}
+
+@media (max-width: 576px) {
+    .modal-dialog {
+        max-width: 95%;
+    }
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.modal-body .table {
+    width: 100%;
+}
+
+#rentTable th,
+#rentTable1 th {
+    padding: 4px;
+    width: 35%;
+    font-size: 14px;
+    padding-left: 2%;
+}
+
+#rentTable td,
+#rentTable1 td {
+    padding-left: 2%;
+}
+
+/* viewhraform */
+
+
+
+#dec_ilhp_table1, #dec_ilhp_table2, #dec_ilhp_table3, #dec_ilhp_table4, #dec_ilhp_table5 {
+    width: 85%;
+    border-collapse: collapse;
+    border: 1px solid #000;
+
+}
+
+#dec_ilhp_table1 td, #dec_ilhp_table2 td, #dec_ilhp_table3 td, #dec_ilhp_table4 td, #dec_ilhp_table5 td{
+    width: 25%;
+}
+
+#dec_ilhp_table1 th, #dec_ilhp_table2 th, #dec_ilhp_table3 th, #dec_ilhp_table4 th, #dec_ilhp_table5 th {
+    font-weight: normal;
+    width: 30%;
+    background-color: #f3f3f3;
+}
+
+.modal-body {
+    padding: 30px !important;
+}
+
+#hra_hl_dec_form table td{
+    width: 50%;
+}
+
+
+#hra_hl_dec_form table td input{
+    width: 40%;
+}

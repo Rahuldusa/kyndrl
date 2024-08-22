@@ -1,0 +1,414 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>FBP claim Verification</title>
+    {% include 'cdnlines.html' %}
+    {% include 'va_templates/fbp1_navbar.html' %}
+
+    
+    <link rel="stylesheet" href="{% static 'va_static/css/fbp_maker_verify.css' %}"> 
+</head>
+<body>
+    <div class="verification-container">
+        <div class="verification-header">
+            FBP Verification (Level1)
+        </div>
+
+        <form action="{% url 'fbp_maker_submit' %}" method="post">
+            {% csrf_token %}
+
+            <div class="card mt-3">
+                <div class="card-header text-center">General Info</div>
+                <div class="card-body">                
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <label for="verification_level" style="font-size: 18px; font-weight: bold;">Verification Level</label>
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" name="fbp_ver_level_1" id="ver_level_1" required> Level1
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                <label for="cnum">CNUM</label>
+                            </td>
+                            <td class="input1">
+                                <input type="text" name="cnum" id="cnum" class="form-control readonly" value="{{emp_data.empid}}" readonly>
+                            </td>
+                            <td class="label">
+                                <label for="empname">Name</label>
+                            </td>
+                            <td class="input1">
+                                <input type="text" name="empname" id="empname" class="form-control readonly" value="{{emp_data.emp_name}}" readonly>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td id="label3">
+                                <label for="claim_no">Claim No.</label>
+                            </td>
+                            <td id="input3" colspan="3">
+                                <input type="text" name="claim_no" id="claim_no" class="form-control readonly" value="{{emp_data.ClaimNo}}" readonly>
+                            </td>
+                        </tr>
+                    </table>                
+                </div>
+            </div>
+
+            <!-- Fuel & Maintenance Table -->        
+            {% if fuel_tb %}
+            <div class="card mt-3">
+                <div class="card-header table-header">Fuel & Maintenance</div>
+                <div class="card-body">
+                    <table class="table table-bordered claim_table">
+                        <thead>
+                            <tr>
+                                <th>Sl.no</th>
+                                <th>Expense Date</th>
+                                <th>Receipt Number</th>
+                                <th>Vehicle Number</th>
+                                <th>Amount Claimed</th>
+                                <th>FBP Approver Amt.</th>
+                                <th>Remarks</th>
+                                <th>View File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index, i in fuel_tb_1 %}
+                            <tr>
+                                <td>{{index}}</td>
+                                <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                <td>{{i.RecNumber}}</td>
+                                <td>{{i.VehNumber}}</td>
+                                <td>{{i.AmtClaimed}}</td>
+                                <td>
+                                    <input type="number" name="fuel_allowed_value_{{ index }}" id="fuel_allowed_value_{{ index }}" oninput="Validate_Fuel_amt('{{ index }}')" class="form-control" value="{{i.AmtClaimed}}" required>
+                                </td>
+                                <td>
+                                    <textarea name="fuel_remark_{{ index }}" id="fuel_remark_{{ index }}" cols="15" rows="1"></textarea>
+                                </td>
+                                <td>
+                                    {% for j in fbp_files %}
+                                        {% if i.RecNumber == j.reciept_no %}
+                                        <a href="{% static 'media/' %}{{ j.empid }}/{{ j.file_path|cut:'~'|slice:'12:' }}"
+                                                    target="_blank">{{j.filename}}</a>                                                                             
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>                               
+                            {% endfor %}                              
+
+                        </tbody>
+                    </table>
+                    <div class="balance-amount">
+                        Remaining Balance Amount: {{remaining_fuel}}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Road & Accessories Table -->
+            {% if road_tb %}
+            <div class="card mt-3">
+                <div class="card-header table-header">Road & Accessories</div>
+                <div class="card-body">
+                    <table class="table table-bordered claim_table">
+                        <thead>
+                            <tr>
+                                <th>Sl.no</th>
+                                <th>Expense Date</th>
+                                <th>Receipt Number</th>
+                                <th>Vehicle Number</th>
+                                <th>Amount Claimed</th>
+                                <th>FBP Approver Amt.</th>
+                                <th>Remarks</th>
+                                <th>View File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index, i in road_tb_1 %}
+                            <tr>
+                                <td>{{index}}</td>                            
+                                <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>                            
+                                <td>{{i.RecNumber}}</td>
+                                <td>{{i.VehNumber}}</td>
+                                <td>{{i.AmtClaimed}}</td>
+                                <td>
+                                    <input type="number" name="road_allowed_value_{{ index }}" id="road_allowed_value_{{ index }}" oninput="Validate_Road_amt('{{ index }}')" class="form-control" value="{{i.AmtClaimed}}" required>
+                                </td>
+                                <td>
+                                    <textarea name="road_remark_{{ index }}" id="road_remark_{{ index }}" cols="15" rows="1"></textarea>
+                                </td>
+                                <td>
+                                    {% for j in fbp_files %}
+                                    {% if i.RecNumber == j.reciept_no %}
+                                    <a href="{% static 'media/' %}{{ j.empid }}/{{ j.file_path|cut:'~'|slice:'12:' }}"
+                                                    target="_blank">{{j.filename}}</a>
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>    
+                            {% endfor %} 
+                            
+                            {% if dec_files %}                        
+                            {% for i in dec_files %}
+                            {% if i.section == 'road_dec' %}
+                            <tr>
+                                <td colspan="7" class="text-center">Declaration File</td>
+                                <td>
+                                    <a href="{% static 'media/' %}{{ i.empid }}/{{ i.file_path|cut:'~'|slice:'12:' }}"
+                                                    target="_blank">{{i.filename}}</a>
+                                </td>
+                            </tr> 
+                            {% endif %}                  
+                            {% endfor %}
+                            {% endif %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- LTA Table -->
+            {% if lta_tb %}
+            <div class="card mt-3">
+                <div class="card-header table-header">LTA</div>
+                <div class="card-body">
+                    <table class="table table-bordered claim_table_2">
+                        <thead>
+                            <tr>
+                                <th>Sl.no</th>
+                                <th>Exp. date</th>
+                                <th>Start date</th>
+                                <th>End date</th>
+                                <th>Rec.No.</th>
+                                <th>Place of Origin</th>
+                                <th>Place of Travel</th>
+                                <th>Family Declaration</th>
+                                <th>Last Year of Claim</th>
+                                <th>Amount Claimed</th>
+                                <th>FBP Approver Amt.</th>
+                                <th>Remarks</th>
+                                <th>View File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index, i in lta_tb_1 %}
+                            <tr>
+                                <td>{{index}}</td>
+                                <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                <td>{{i.StDt|date:'d/m/Y'}}</td>
+                                <td>{{i.EndDt|date:'d/m/Y'}}</td>
+                                <td>{{i.RecNumber}}</td>
+                                <td>{{i.Origin}}</td>
+                                <td>{{i.PlaceTravel}}</td>
+                                <td>{{i.FamDec}}</td>
+                                <td>{{i.LastClaim}}</td>
+                                <td>{{i.AmtClaimed}}</td>
+                                <td>
+                                    <input type="number" name="lta_allowed_value_{{ index }}" id="lta_allowed_value_{{ index }}" oninput="Validate_lta_amt('{{ index }}')" class="form-control" value="{{i.AmtClaimed}}" required>
+                                </td>
+                                <td>
+                                    <textarea name="lta_remark_{{ index }}" id="lta_remark_{{ index }}" cols="10" rows="1"></textarea>
+                                </td>
+                                <td>
+                                    {% for j in fbp_files %}
+                                    {% if i.RecNumber == j.reciept_no %}
+                                    <a href="{% static 'media/' %}{{ j.empid }}/{{ j.file_path|cut:'~'|slice:'12:' }}"
+                                                    target="_blank">{{j.filename}}</a> <br>
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                            {% if dec_files %}
+                            {% for i in dec_files %}
+                            {% if i.section == 'lta_dec' %}
+                            <tr>
+                                <td colspan="12" class="text-center">Declaration File</td>
+                                <td>
+                                    <a href="{% static 'media/' %}{{ i.empid }}/{{ i.file_path|cut:'~'|slice:'12:' }}"
+                                                    target="_blank">LTA_Dec</a>
+                                </td>
+                            </tr> 
+                            {% endif %}                  
+                            {% endfor %}
+                            {% endif %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Driver Salary Table -->
+            {% if driver_tb %}
+            <div class="card mt-3">
+                <div class="card-header table-header">Driver Salary</div>
+                <div class="card-body">
+                    <table class="table table-bordered claim_table">
+                        <thead>
+                            <tr>
+                                <th>Sl.no</th>
+                                <th>Expense Date</th>
+                                <th>Receipt Number</th>
+                                <th>Salary Month</th>    
+                                <th>Driver Salary</th>                                                    
+                                <th>FBP Approver Amt.</th>
+                                <th>Remarks</th>
+                                <th>View File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for index, i in driver_tb_1 %}
+                            <tr>
+                                <td>{{index}}</td>
+                                <td>{{i.ExpenseDt|date:'d/m/Y'}}</td>
+                                <td>{{i.RecNumber}}</td>
+                                <td>{{i.SalaryMonth}}</td>  
+                                <td>{{i.DriveSal}}</td>                                                      
+                                <td>
+                                    <input type="number" name="driver_allowed_value_{{ index }}" id="driver_allowed_value_{{ index }}" oninput="Validate_Driver_amt('{{ index }}')" class="form-control" value="{{i.DriveSal}}" required>
+                                </td>
+                                <td>
+                                    <textarea name="driver_remark_{{ index }}" id="driver_remark_{{ index }}" cols="15" rows="1"></textarea>
+                                </td>
+                                <td>
+                                    {% for j in fbp_files %}
+                                    {% if i.RecNumber == j.reciept_no %}
+                                    <a href="{% static 'media/' %}{{ j.empid }}/{{ j.file_path|cut:'~'|slice:'12:' }}"
+                                                    target="_blank">{{j.filename}}</a>
+                                    {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                            {% if dec_files %}
+                            {% for i in dec_files %}
+                            {% if i.section == 'drive_dec' %}
+                            <tr>
+                                <td colspan="7" class="text-center">Declaration File</td>
+                                <td>
+                                    <a href="{% static 'media/' %}{{ i.empid }}/{{ i.file_path|cut:'~'|slice:'12:' }}"
+                                                    target="_blank">{{i.filename}}</a>
+                                </td>
+                            </tr> 
+                            {% endif %}                  
+                            {% endfor %}
+                            {% endif %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Custom Remarks and Status -->
+            <div class="card mt-3">
+                <div class="card-header table-header">Additional Information</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="customRemarks" class="form-label">Custom Remarks</label>
+                        <textarea class="form-control" name="customRemarks" id="customRemarks" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="Status" class="form-label">Status</label>
+                        <select class="form-select" style="width: 150px;" name="Status" id="Status" required>
+                            <option value=""></option>
+                            <option value="Approved">Approved</option>
+                            <option value="Reject">Reject</option>
+                            <option value="On Hold">On Hold</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="subbtn">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+        </form>
+    </div>
+
+    {% if message %}
+    <script>     
+        window.onload = function () {
+            alert("{{  message|safe }}");                
+            window.location.href = "{% url 'fbp_verifier1' %}";
+        };
+    </script>
+    {% endif %}    
+
+
+    <script>
+        var fuelData = [];
+    </script>
+
+    {% if fuel_tb %}
+    {% for index, i in fuel_tb_1 %}
+    <script>
+    var currentIndex = '{{ index }}';    
+    fuelData[currentIndex] = "{{ i.AmtClaimed }}";
+    </script>
+    {% endfor %}
+    {% endif %}
+
+    <script>
+        var roadData = [];
+    </script>
+
+    {% if road_tb %}
+    {% for index, i in road_tb_1 %}
+    <script>
+    var currentIndex = '{{ index }}';    
+    roadData[currentIndex] = "{{ i.AmtClaimed }}";
+    </script>
+    {% endfor %}
+    {% endif %}
+
+    <script>
+        var ltaData = [];
+    </script>
+
+    {% if lta_tb %}
+    {% for index, i in lta_tb_1 %}
+    <script>
+    var currentIndex = '{{ index }}';    
+    ltaData[currentIndex] = "{{ i.AmtClaimed }}";
+    </script>
+    {% endfor %}
+    {% endif %}
+
+
+    <script>
+        var driverData = [];
+    </script>
+
+    {% if driver_tb %}
+    {% for index, i in driver_tb_1 %}
+    <script>
+    var currentIndex = '{{ index }}';    
+    driverData[currentIndex] = "{{ i.DriveSal }}";
+    </script>
+    {% endfor %}
+    {% endif %}
+
+    {% if remaining_fuel %}
+    <script>var rem_fuel = "{{remaining_fuel}}";</script>
+    {% else %}
+    <script>var rem_fuel = null;</script>
+    {% endif %}
+
+
+
+    <script src="{% static 'va_static/js/fbp_ver_validations.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% load static %}
+
+<html>
+
+<head>
+    <title>Tax Declaration</title>
+    {% include 'cdnlines.html' %}
+    {% include 'header.html' %}
+    {% include 'menubar.html' %}
+
+    <link rel="stylesheet" href="{% static 'css/cardeclaration_view.css' %}">
+</head>
+
+<body>
+    <div class="container-fluid c2">
+        <div class="row cartbr1">
+            
+            <div class="col-md-12">
+                <h4>Your Regime Details here</h4>
+            </div>
+        </div>
+        <div class="row cartbr2">
+            <div class="col-md-8">
+                <a href="{% url 'workhistory' %}" class="btn btn-sm btn-secondary mb-3">Back</a>
+                {{emp_regime.Regime}}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

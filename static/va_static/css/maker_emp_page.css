@@ -1,0 +1,180 @@
+body {
+    font-family: Arial, sans-serif;
+}
+.container {
+    margin-top: 50px;
+}
+.form-control[readonly] {
+    background-color: #e9ecef;
+    opacity: 1;
+}
+.card-header, .form-label {
+    background-color: #007bff;
+    color: white;
+}
+.card {
+    border-color: #ced4da;
+    margin-bottom: 20px;
+}
+.card-body {
+    background-color: #f8f9fa;
+}
+
+#lb1{
+    border: 2px solid red;   
+    border-right: none; 
+}
+#inp1{
+    border: 2px solid red;   
+    border-left: none; 
+}
+
+
+#lb1_2{
+    border: 2px solid blue;   
+    border-right: none; 
+}
+#inp1_2{
+    border: 2px solid blue;   
+    border-left: none; 
+}
+
+.radio label {
+    display: inline-block;
+    margin-right: 1px; /* Adjust as needed for spacing */
+}
+
+.radio input[type="radio"] {
+    margin-right: 5px; /* Adjust as needed for spacing */
+}
+
+.row {
+    margin-bottom: 10px;
+}
+.form-label {
+    margin-bottom: 0;
+    padding-right: 5px;
+}
+.highlight-label {
+    font-weight: bold;
+    color: #007bff;
+}
+.level-heading {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+
+.display_section {    
+    padding-bottom: 20px;
+}
+
+.table-responsive {
+    overflow-y: auto;
+    height: 350px;
+    margin-top: 20px;
+}
+
+.table-responsive .file_table1 .A1 th,
+.table-responsive .dec_files .A3 th {
+    background-color: rgb(169, 169, 241);
+}
+
+.table-responsive .file_table1 thead th,
+.table-responsive .dec_files thead th {
+    position: sticky;
+    top: 0;
+    font-size: 13px;
+}
+
+.table-responsive .file_table1 tbody td,
+.table-responsive .dec_files tbody td {
+    font-size: 13px;
+}
+
+.file_table1, .dec_files{
+    border: 1px solid black;
+}
+#openPdf {
+    font-size: 12px;
+}
+
+.extra{
+    height: 50px;
+}
+
+
+
+.itpr4 {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    width: 100%;
+    margin-left: 0px;
+    padding: 10px 15px;
+
+}
+
+/* #B4D4FF */
+
+
+.hra_table1 {
+    border: 1px solid black;
+    border-radius: 2px;
+    padding: 0px 5px;
+}
+
+#Submitdata{
+    background-color: rgb(140, 33, 240);
+    width: 150px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 5px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+#Submitdata_2{
+    background-color: rgb(140, 33, 240);
+    width: 150px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 5px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+#Submitdata_3{
+    background-color: rgb(140, 33, 240);
+    width: 150px;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 5px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.row.r3 .col-md-12 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+}
+
+.text-left {
+    display: flex;
+    gap: 3px;
+}
+
